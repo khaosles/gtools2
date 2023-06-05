@@ -7,7 +7,7 @@ package gserver
    @Desc:
 */
 
-type BaseService[T ModelInterface] interface {
+type BaseService[T IModel] interface {
 	Create(obj T)
 	Delete(obj T)
 	DeleteByID(id string)

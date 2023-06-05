@@ -1,7 +1,7 @@
 package gregx
 
 /*
-   @File: gregex.go
+   @File: regex.go
    @Author: khaosles
    @Time: 2023/2/18 15:32
    @Desc:

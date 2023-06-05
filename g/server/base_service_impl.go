@@ -7,7 +7,7 @@ package gserver
    @Desc:
 */
 
-type BaseServiceImpl[T ModelInterface] struct {
+type BaseServiceImpl[T IModel] struct {
 }
 
 func (service BaseServiceImpl[T]) Create(obj T) {

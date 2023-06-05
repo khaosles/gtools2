@@ -2,6 +2,9 @@ package gresult
 
 import (
 	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 /*
@@ -10,6 +13,25 @@ import (
    @Time: 2023/3/7 21:54
    @Desc:
 */
+
+type Result struct {
+	ctx *gin.Context
+}
+
+func NewResult(ctx *gin.Context) *Result {
+	return &Result{ctx: ctx}
+}
+
+func (r Result) Success(data any) {
+	r.ctx.JSON(http.StatusOK, JsonResult{}.Yes(data))
+	return
+}
+
+func (r Result) Set() {
+
+}
+
+type Option func(any) *JsonResult
 
 type JsonResult struct {
 	// code
@@ -53,6 +75,6 @@ func (jsonResult JsonResult) No(err ErrorCode) JsonResult {
 }
 
 // CatchErr 异常捕获
-func (jsonResult JsonResult) CatchErr(err error) JsonResult {
+func (jsonResult JsonResult) CatchErr(err any) JsonResult {
 	return jsonResult.No(CATCH_ERROR.SetMsg(fmt.Sprintf("%v", err)))
 }

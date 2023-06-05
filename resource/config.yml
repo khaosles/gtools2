@@ -39,7 +39,3 @@ logging:
   log-in-console: true      # 是否输出到控制台
   log-in-file: true         # 是否输出到文件
   show-line: false          # 是否显示日志所在行数
-download:
-  workers: 4
-  part-size: 100MiB
-  buf-size: 10MiB

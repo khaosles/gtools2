@@ -1,14 +1,14 @@
 package gserver
 
 import (
-	"strings"
 	"time"
 
-	"github.com/google/uuid"
 	"gorm.io/gorm"
+
+	"github.com/khaosles/gtools2/g/gen"
 )
 
-type ModelInterface interface{}
+type IModel interface{}
 
 type BaseModelInt struct {
 	ID        int            `json:"id" gorm:"type:int;comment:主键"`          // 主键ID
@@ -27,6 +27,6 @@ type BaseModel struct {
 }
 
 func (b *BaseModel) BeforeCreate(tx *gorm.DB) error {
-	b.ID = strings.Replace(uuid.New().String(), "-", "", 4)
+	b.ID = gen.UuidNoSeparator()
 	return nil
 }
