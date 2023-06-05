@@ -13,18 +13,18 @@ mysql:
   log-mode: "info"
   log-zap: false
 pgsql:
-  host: ""
-  port: ""
+  host: "43.138.67.136"
+  port: "5432"
   config: ""
-  db-name: ""
-  username: ""
-  password: ""
+  db-name: "yh_oversea"
+  username: "postgres"
+  password: "GISgis123."
   prefix: ""
   singular: true
   engine: ""
   max-idle-conns: 10
   max-open-conns: 100
-  log-mode: "info"
+  log-mode: error
   log-zap: false
 redis:
   db: 0

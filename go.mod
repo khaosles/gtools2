@@ -14,6 +14,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.7.1
+	github.com/gocarina/gocsv v0.0.0-20230513223533-9ddd7fd60602
 	github.com/langwan/langgo v0.5.53
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lithammer/shortuuid/v3 v3.0.7
@@ -92,7 +93,7 @@ require (
 	go.uber.org/multierr v1.8.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
-	golang.org/x/image v0.0.0-20190802002840-cff245a6509b // indirect
+	golang.org/x/image v0.6.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
 	golang.org/x/oauth2 v0.8.0 // indirect
 	golang.org/x/sync v0.2.0 // indirect
