@@ -75,6 +75,24 @@ func StructToMap(obj interface{}) map[string]string {
 	return data
 }
 
+func StructToMapInterface(obj interface{}) map[string]any {
+	objValue := reflect.ValueOf(obj)
+	objType := objValue.Type()
+
+	// 如果传入的不是结构体指针，则直接返回空 map
+	if objType.Kind() != reflect.Ptr || objType.Elem().Kind() != reflect.Struct {
+		return map[string]any{}
+	}
+	data := make(map[string]any)
+	for i := 0; i < objValue.Elem().NumField(); i++ {
+		field := objType.Elem().Field(i)
+		value := objValue.Elem().Field(i)
+		data[field.Name] = value.Interface()
+	}
+
+	return data
+}
+
 func toString(value interface{}) string {
 	switch v := value.(type) {
 	case string:

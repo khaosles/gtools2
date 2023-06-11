@@ -1,21 +1,8 @@
 package main
 
 import (
-	"context"
-	"encoding/csv"
-	"fmt"
-	"io"
-	"log"
-	"os"
-	"strconv"
-	"time"
-
-	"github.com/apache/beam/sdks/v2/go/pkg/beam"
-	"github.com/apache/beam/sdks/v2/go/pkg/beam/x/beamx"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/gocarina/gocsv"
-	"github.com/khaosles/gtools2/core/db/pgsql"
-	gserver "github.com/khaosles/gtools2/g/server"
+	"github.com/khaosles/gtools2/components/g"
+	"github.com/khaosles/gtools2/components/g/pgsql"
 )
 
 /*
@@ -25,92 +12,43 @@ import (
    @Desc:
 */
 
-var ll = 2000
-
-type Htp struct {
-	gserver.BaseModel
-	//Point      string `json:"point" gorm:"type:geometry"`
-	Data       string `json:"data" gorm:"type:numeric[]"`
-	ReportTime time.Time
-	Version    int
-}
-
-type Row struct {
-	Data       string `csv:"data"`
-	Gid        int    `csv:"gid"`
-	Version    string `csv:"version"`
-	ReportTime string `csv:"report_time"`
-}
-
-func InsertIntoDB(rows []*Row) int64 {
-	var htps []*Htp
-	for _, row := range rows {
-		var htp Htp
-		//htp.Point = row.Point
-		version, _ := strconv.Atoi(row.Version)
-		htp.Version = version
-		reportTime, _ := time.Parse(time.DateTime, row.ReportTime)
-		htp.ReportTime = reportTime
-		htp.Data = row.Data
-		htps = append(htps, &htp)
-	}
-	// 执行插入操作
-	affected := pgsql.DB.CreateInBatches(&htps, ll).RowsAffected
-	return affected
-}
-
 func main() {
-	se := time.Now()
-	path := "/Users/yherguot/doraemon/data/gfs/stofs_2d_glo.t00z.fields.htp.csv"
-	gocsv.SetCSVReader(func(in io.Reader) gocsv.CSVReader {
-		r := csv.NewReader(in)
-		r.LazyQuotes = true
-		r.Comma = ';'
-		return r // Allows use dot as delimiter and use quotes in CSV
-	})
-	file, _ := os.Open(path)
-	var rows []*Row
-	err := gocsv.Unmarshal(file, &rows)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(len(rows))
-	var d [][]*Row
-	for i := 0; i < len(rows); i += ll {
-		end := i + ll
-		if end > len(rows) {
-			end = len(rows)
-		}
-		d = append(d, rows[i:end])
-		//InsertIntoDB(rows[i:end])
-	}
+	pgsql.DB.AutoMigrate(&g.Model{})
+	mapper := g.MapperImpl[g.Model]{DB: pgsql.DB}
+	mapper.Insert(
+		&g.Model{},
+	)
+	//a, _ := dao.SelectByID("3dc2eca4389a4ba9953e6493088cccee")
 
-	p, s := beam.NewPipelineWithRoot()
-	input := beam.CreateList(s, d)
-
-	//// 使用 ParDo 操作执行入库操作
-	_ = beam.ParDo(s, func(row []*Row) int64 {
-		return InsertIntoDB(row)
-	}, input)
+	//dao.UpdateSelective(a, map[string]any{
+	//	"remarks":   "1",
+	//	"create_by": "1111",
+	//})
+	//c := orm.NewConditions().
+	//	AndEqual("id", "30fc064892e44ce88b6c448989e59a30").
+	//	AndIsNull("remarks").Order("id").Select("id, create_time")
+	//dao.SelectByCondition(c)
+	_, _ = mapper.SelectByCondition(g.NewConditions().AndEqualTo("update_by", "").Joins("LEFT Join df_order on df_order.id=model.id"))
+	//dao.DeleteHardByCondition(c)
+	//dao.DeleteByCondition(struct {
+	//	Remark string `json:"remark"`
+	//}{""})
+	//spri := "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOAsGajbJJqD1QFY/FlnlXXIQOVIZm7Pt/UMEp9JW38bCV7v0qRvCZCf85/JGCpdYQ+ql6ykank8fs00HmRBM5uOlhboNhI86PyBqGU850WQjmOtCCgbEOCOWM4/D1favEu/p8mVqxJ7gYC4gEcgJICyMxjDBU9B4D6begtLaUpZAgMBAAECgYBVoGK4veQwZRTSq/PQDqHnWHN5YPtHbm5c2pyuXS3m0iP1MHPsPUGRDZfYO87QN9TgUBAZcL/+yR3CMhs9vi4AkOMahgvirviXDtYBrT3nIHRQpZxqEw5EYak8OBXHoIfvSaz90iMCgquMbaZ675g/XoPv32u2/w3lyRrq4G8oUQJBAPzJZ0gIsw6iFCy4+1MzPEqH5xEmx+3q4gG7tp/Y3cTVdrDa+YqOtJA/9T5bUT2KUAYXXb2Fez4xs1pdq/gsNI0CQQDjBZUDyhXg8P6R74VeVz9WX3ypKfoR9n98WOH7C/p/Hc0ylwbDm91AnbR+W883zsE0s1g9c+ZaVQCaeRiiz4f9AkEAitihJxrIJwh1Zl8whHGG8zUUgQI5HIBAJU2SsNfwb7YEHH4aRLW/jd/jd5220MOQ0tewwHF50R6BcegzlfvJ3QJAdJh6Vw7kO7oqVNNagQB4VCkIgm0/tRgPk9KmhWQ6jCzHJbNxUudrM/OLLtaCT5xNmH5/1FgBN+WuQKfvIjdKFQJBAKY06Sc4IGZErUQJKFdVAz/NTPgL6Ed4cNzIpTJfJgbX1PCkiVKL2o+aVPFgojyRVglK/t8ZisNlhr/obJEWIRo="
+	//spub := "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDgLBmo2ySag9UBWPxZZ5V1yEDlSGZuz7f1DBKfSVt/Gwle79KkbwmQn/OfyRgqXWEPqpespGp5PH7NNB5kQTObjpYW6DYSPOj8gahlPOdFkI5jrQgoGxDgjljOPw9X2rxLv6fJlasSe4GAuIBHICSAsjMYwwVPQeA+m3oLS2lKWQIDAQAB"
 	//
-	//// 错误处理
-	//errors := beam.ParDo(s, func(err int64) int64 {
-	//	return err
-	//}, inserted)
+	//println("公钥")
+	//println(spub)
+	//println("私钥")
+	//println(spri)
+	//data := "123456234567890-09876543"
+	//pub, _ := grsa.PublicKeyFromX509PKCS8(spub)
+	//pri, _ := grsa.PrivateKeyFromX509PKCS8(spri)
+	//encrypt, _ := grsa.Encrypt(data, pub)
+	//println("密文")
+	//println(encrypt)
+	//encrypt = `Y9qINbj9wCMqoXZj2LjQSo5+uG0UPuM2SXwjVwI8/LpezSe9HM92XLV8uERuYat1epwAXT0BKiSlh0qxVK9MnTnhilqCT5nBdxTJYMo3VO6m5lfwrKWsdbSm5tiB5LdDfevCmydH0A9vJ2rOhJAqKCbsraeCn9vAMbf+57rcAYY=`
 	//
-	//// 输出错误日志
-	//beam.ParDo0(s, func(errMsg int64) {
-	//	log.Println(errMsg)
-	//}, errors)
-	//
-
-	//// 运行 Apache Beam 流程
-	if err := beamx.Run(context.Background(), p); err != nil {
-		log.Fatalf("Pipeline failed: %v", err)
-	}
-	//
-	fmt.Println("数据插入成功")
-	println("耗时 =>", time.Now().Sub(se).Seconds())
-
+	//decrypt, _ := grsa.Decrypt(encrypt, pri)
+	//println("解密")
+	//println(decrypt)
 }

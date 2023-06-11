@@ -3,8 +3,8 @@ package sqlite
 import (
 	"log"
 
+	"github.com/khaosles/gtools2/components/g/internal"
 	gcfg "github.com/khaosles/gtools2/core/cfg"
-	"github.com/khaosles/gtools2/core/db/internal"
 	glog "github.com/khaosles/gtools2/core/log"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"

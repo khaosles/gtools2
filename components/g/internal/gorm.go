@@ -25,7 +25,7 @@ func (g *_gorm) Config(prefix string, singular bool, logMode string, logZap bool
 		DisableForeignKeyConstraintWhenMigrating: true,
 	}
 	_default := logger.New(NewWriter(logZap, log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
-		SlowThreshold: 200 * time.Millisecond,
+		SlowThreshold: 500 * time.Millisecond,
 		LogLevel:      logger.Info,
 		Colorful:      true,
 	})

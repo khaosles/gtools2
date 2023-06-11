@@ -7,7 +7,7 @@ import (
 	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
-	"encoding/hex"
+	"fmt"
 )
 
 // Encrypt encrypt data
@@ -18,15 +18,16 @@ func Encrypt(src string, key *rsa.PublicKey) (data string, err error) {
 	if err != nil {
 		return "", err
 	}
-	return hex.EncodeToString(ciphertext), nil
+	return base64.StdEncoding.EncodeToString(ciphertext), nil
 }
 
 // Decrypt decrypt data
 func Decrypt(text string, key *rsa.PrivateKey) (data string, err error) {
-	src, _ := hex.DecodeString(text)
+	src, _ := base64.StdEncoding.DecodeString(text)
 	h := sha256.New()
 	oaep, err := rsa.DecryptOAEP(h, rand.Reader, key, src, nil)
 	if err != nil {
+		fmt.Println(err)
 		return "", err
 	}
 	return string(oaep), nil
@@ -61,13 +62,36 @@ func CreateKeyX509PKCS1(bits int) (pub string, pri string) {
 	return pub, pri
 }
 
+// CreateKeyX509PKCS8 create rsa keys
+func CreateKeyX509PKCS8(bits int) (pub string, pri string) {
+	privateKey, _ := rsa.GenerateKey(rand.Reader, bits)
+	publicKey := &privateKey.PublicKey
+	bytePri, _ := x509.MarshalPKCS8PrivateKey(privateKey)
+	pri = base64.StdEncoding.EncodeToString(bytePri)
+	bytePub, _ := x509.MarshalPKIXPublicKey(publicKey)
+	pub = base64.StdEncoding.EncodeToString(bytePub)
+	return pub, pri
+}
+
 // PrivateKeyFromX509PKCS1 string private key to rsa.PrivateKey
 func PrivateKeyFromX509PKCS1(pri string) (*rsa.PrivateKey, error) {
 	data, err := base64.StdEncoding.DecodeString(pri)
 	if err != nil {
 		return nil, err
 	}
+	// return x509.ParsePKCS1PrivateKey(data)
 	return x509.ParsePKCS1PrivateKey(data)
+}
+
+// PrivateKeyFromX509PKCS8 string private key to rsa.PrivateKey
+func PrivateKeyFromX509PKCS8(pri string) (*rsa.PrivateKey, error) {
+	data, err := base64.StdEncoding.DecodeString(pri)
+	if err != nil {
+		return nil, err
+	}
+	// return x509.ParsePKCS1PrivateKey(data)
+	key, err := x509.ParsePKCS8PrivateKey(data)
+	return key.(*rsa.PrivateKey), err
 }
 
 // PrivateKeyToPKCS1 convert private key to a string
@@ -89,4 +113,14 @@ func PublicKeyFromX509PKCS1(pub string) (*rsa.PublicKey, error) {
 		return nil, err
 	}
 	return x509.ParsePKCS1PublicKey(data)
+}
+
+// PublicKeyFromX509PKCS8 convert public key to a string
+func PublicKeyFromX509PKCS8(pub string) (*rsa.PublicKey, error) {
+	data, err := base64.StdEncoding.DecodeString(pub)
+	if err != nil {
+		return nil, err
+	}
+	key, err := x509.ParsePKIXPublicKey(data)
+	return key.(*rsa.PublicKey), err
 }

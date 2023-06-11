@@ -15,6 +15,10 @@ func (m *Mysql) Dsn() string {
 	return m.Username + ":" + m.Password + "@tcp(" + m.Host + ":" + m.Port + ")/" + m.DbName + "?" + m.Config
 }
 
+func (m *Mysql) DsnHide() string {
+	return m.Username + ":" + "******" + "@tcp(" + m.Host + ":" + m.Port + ")/" + m.DbName + "?" + m.Config
+}
+
 func (m *Mysql) GetLogMode() string {
 	return m.LogMode
 }

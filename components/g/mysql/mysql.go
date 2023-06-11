@@ -3,8 +3,8 @@ package mysql
 import (
 	"log"
 
+	"github.com/khaosles/gtools2/components/g/internal"
 	gcfg "github.com/khaosles/gtools2/core/cfg"
-	"github.com/khaosles/gtools2/core/db/internal"
 	glog "github.com/khaosles/gtools2/core/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -29,14 +29,14 @@ func init() {
 		SkipInitializeWithVersion: true,      // 根据版本自动配置
 	}
 	if DB, err = gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config(cfg.Prefix, cfg.Singular, cfg.LogMode, cfg.LogZap)); err != nil {
-		log.Fatal("Database connection failed=> ", cfg.Dsn())
+		log.Fatal("Database connection failed -> ", cfg.DsnHide())
 		return
 	} else {
 		DB.InstanceSet("gorm:table_options", "ENGINE="+cfg.Engine)
 		sqlDB, _ := DB.DB()
 		sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
-		glog.Debug("数据库连接成功...")
+		glog.Debug("Database connection successful...")
 		return
 	}
 }

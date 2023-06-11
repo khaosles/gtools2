@@ -16,6 +16,10 @@ func (p *Pgsql) Dsn() string {
 	return "host=" + p.Host + " user=" + p.Username + " password=" + p.Password + " dbname=" + p.DbName + " port=" + p.Port + " " + p.Config
 }
 
+func (p *Pgsql) DsnHide() string {
+	return "host=" + p.Host + " user=" + p.Username + " password=" + "******" + " dbname=" + p.DbName + " port=" + p.Port + " " + p.Config
+}
+
 // LinkDsn 根据 dbname 生成 dsn
 func (p *Pgsql) LinkDsn(dbname string) string {
 	return "host=" + p.Host + " user=" + p.Username + " password=" + p.Password + " dbname=" + dbname + " port=" + p.Port + " " + p.Config
