@@ -39,8 +39,8 @@ type Mapper[T any] interface {
 	SelectCountByCondition(conditions *Conditions) (int64, error) // 根据条件查询数量
 	SelectDistinct(conditions *Conditions) ([]*T, error)          // 去重查询
 
-	SelectPage(currentPage, pageSize int, sort string) (*Pagination[T], error)                                   // 分页查询
-	SelectPageByCondition(currentPage, pageSize int, sort string, conditions Conditions) (*Pagination[T], error) // 根据条件分页查询
+	SelectPage(currentPage, pageSize int, sort string) (*Pagination[T], error)                                    // 分页查询
+	SelectPageByCondition(currentPage, pageSize int, sort string, conditions *Conditions) (*Pagination[T], error) // 根据条件分页查询
 
 	Exist(record *T) (bool, error) // 判断是否存在
 }

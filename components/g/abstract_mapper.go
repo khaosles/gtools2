@@ -166,38 +166,10 @@ func (mpr AbstractMapper[T]) SelectDistinct(conditions *Conditions) ([]*T, error
 }
 
 func (mpr AbstractMapper[T]) SelectPage(currentPage, pageSize int, sort string) (*Pagination[T], error) {
-	var pagination Pagination[T]
-	var entities []*T
-	var totalCount int64
-	var totalPages int64
-	// 计算总记录数
-	if err := mpr.DB.Model(entities).Count(&totalCount).Error; err != nil {
-		return nil, err
-	}
-	// 获取总页数
-	totalPages = totalCount / int64(pageSize)
-	if totalCount%int64(pageSize) > 0 {
-		totalPages++
-	}
-	// 当前页
-	pageIndex := (currentPage - 1) * pageSize
-	err := mpr.DB.Order(sort).
-		Offset(pageIndex).
-		Limit(pageSize).
-		Find(&entities).
-		Error
-	if err != nil {
-		return nil, err
-	}
-	pagination.CurrentPage = currentPage
-	pagination.TotalCount = totalCount
-	pagination.PageSize = pageSize
-	pagination.TotalPages = totalPages
-	pagination.DataCollection = entities
-	return &pagination, nil
+	return mpr.SelectPageByCondition(currentPage, pageSize, sort, NewConditions())
 }
 
-func (mpr AbstractMapper[T]) SelectPageByCondition(currentPage, pageSize int, sort string, conditions Conditions) (*Pagination[T], error) {
+func (mpr AbstractMapper[T]) SelectPageByCondition(currentPage, pageSize int, sort string, conditions *Conditions) (*Pagination[T], error) {
 	db := conditions.To(mpr.DB)
 	var pagination Pagination[T]
 	var entities []*T
