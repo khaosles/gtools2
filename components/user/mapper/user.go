@@ -13,25 +13,15 @@ import (
    @Desc:
 */
 
-// var wireSet = wire.NewSet(
-// 	NewDB,
-// 	wire.Bind(new(User), new(*internal.UserImpl)),
-// 	internal.NewUserImpl,
-// )
+var userMapperInstance UserMapper
 
-var UserMapper = NewUser()
-
-type User interface {
+type UserMapper interface {
 	g.Mapper[model.User]
-	Get()
 }
 
-//	func NewUser() User {
-//		wire.Build(wireSet)
-//		return &internal.UserImpl{}
-//	}
-func NewUser() User {
-	db := NewDB()
-	userImpl := internal.NewUserImpl(db)
-	return userImpl
+func NewUserMapper() UserMapper {
+	if userMapperInstance == nil {
+		userMapperInstance = internal.NewUserMapperImpl(NewDB())
+	}
+	return userMapperInstance
 }

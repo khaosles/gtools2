@@ -2,6 +2,9 @@ package service
 
 import (
 	"github.com/khaosles/gtools2/components/g"
+	"github.com/khaosles/gtools2/components/user/mapper"
+	"github.com/khaosles/gtools2/components/user/model"
+	"github.com/khaosles/gtools2/components/user/service/internal"
 )
 
 /*
@@ -11,6 +14,15 @@ import (
    @Desc:
 */
 
-type User interface {
-	g.Service[g.Model]
+var userServiceInstance UserService
+
+type UserService interface {
+	g.Service[model.User]
+}
+
+func NewUserService() UserService {
+	if userServiceInstance == nil {
+		userServiceInstance = internal.NewUserServiceImpl(mapper.NewUserMapper())
+	}
+	return userServiceInstance
 }

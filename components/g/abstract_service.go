@@ -23,6 +23,13 @@ func (srv AbstractService[T]) Save(entity *T) {
 	}
 }
 
+func (srv AbstractService[T]) Saves(entities []*T) {
+	err := srv.Mpr.InsertList(entities)
+	if err != nil {
+		glog.Error(err)
+	}
+}
+
 func (srv AbstractService[T]) DeleteByID(id string) {
 	err := srv.Mpr.DeleteByID(id)
 	if err != nil {

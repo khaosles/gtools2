@@ -2,6 +2,8 @@ package internal
 
 import (
 	"github.com/khaosles/gtools2/components/g"
+	"github.com/khaosles/gtools2/components/user/mapper"
+	"github.com/khaosles/gtools2/components/user/model"
 )
 
 /*
@@ -11,12 +13,12 @@ import (
    @Desc:
 */
 
-type UserImpl struct {
-	g.AbstractService[g.Model]
+type UserServiceImpl struct {
+	g.AbstractService[model.User]
 }
 
-func NewUserImpl() *UserImpl {
-	var userImpl UserImpl
-	// userImpl.Mpr = mapper.UserMapper
-	return &userImpl
+func NewUserServiceImpl(userMapper mapper.UserMapper) *UserServiceImpl {
+	var userServiceImpl UserServiceImpl
+	userServiceImpl.Mpr = userMapper
+	return &userServiceImpl
 }

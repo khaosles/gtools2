@@ -14,16 +14,12 @@ import (
    @Desc:
 */
 
-type UserImpl struct {
+type UserMapperImpl struct {
 	g.AbstractMapper[model.User]
 }
 
-func NewUserImpl(db *gorm.DB) *UserImpl {
-	var user UserImpl
-	user.DB = db
-	return &user
-}
-
-func (srv UserImpl) Get() {
-
+func NewUserMapperImpl(db *gorm.DB) *UserMapperImpl {
+	var userMapper UserMapperImpl
+	userMapper.DB = db
+	return &userMapper
 }

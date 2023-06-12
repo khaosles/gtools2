@@ -9,6 +9,7 @@ package g
 
 type Service[T any] interface {
 	Save(entity *T)                              // 保存
+	Saves(entities []*T)                         // 批量保存
 	DeleteByID(id string)                        // 根据id删除单个
 	DeleteByIds(ids ...string)                   // 根据多个id删除
 	Update(entity *T)                            // 更新
