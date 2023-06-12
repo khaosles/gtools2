@@ -7,7 +7,7 @@ package g
    @Desc:
 */
 
-var _ Mapper[any] = (*MapperImpl[any])(nil)
+var _ Mapper[any] = (*AbstractMapper[any])(nil)
 
 type Mapper[T any] interface {
 	Insert(record *T) error                    // 插入

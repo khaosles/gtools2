@@ -1,24 +1,10 @@
-mysql:
-  host: ""
-  port: "3306"
-  config: "charset=utf8&timeout=3s&parseTime=true&loc=Local"
-  db-name: ""
-  username: "root"
-  password: ""
-  prefix: ""
-  singular: true
-  engine: ""
-  max-idle-conns: 10
-  max-open-conns: 100
-  log-mode: "info"
-  log-zap: false
 pgsql:
-  host: "43.138.67.136"
-  port: "5432"
+  host: 39.106.122.224
+  port: 14432
   config: ""
-  db-name: "yh_oversea"
+  db-name: "template_postgis"
   username: "postgres"
-  password: "GISgis123."
+  password: Hthj150328
   prefix: ""
   singular: true
   engine: ""

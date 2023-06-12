@@ -10,7 +10,7 @@ package g
 type Service[T any] interface {
 	Save(entity *T)
 	DeleteByID(id string)
-	deleteByIds(ids string)
+	deleteByIds(ids ...string)
 	update(entity *T)
 	findById(id string) *T
 	findBy(colName string, value any) *T

@@ -13,8 +13,8 @@ import (
 func TestRsa(t *testing.T) {
 	bits := 2048
 	spub, spri := CreateKeyX509PKCS1(bits)
-	println(len(spub))
-	println(len(spri))
+	println(spub)
+	println(spri)
 	data := "0123456789"
 	pub, err := PublicKeyFromX509PKCS1(spub)
 	assert.NoError(t, err)
