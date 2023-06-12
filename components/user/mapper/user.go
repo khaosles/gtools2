@@ -19,8 +19,11 @@ import (
 // 	internal.NewUserImpl,
 // )
 
+var UserMapper = NewUser()
+
 type User interface {
 	g.Mapper[model.User]
+	Get()
 }
 
 //	func NewUser() User {

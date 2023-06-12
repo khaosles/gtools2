@@ -23,3 +23,7 @@ func NewUserImpl(db *gorm.DB) *UserImpl {
 	user.DB = db
 	return &user
 }
+
+func (srv UserImpl) Get() {
+
+}
