@@ -1,7 +1,7 @@
 package g
 
 /*
-   @File: base_service.go
+   @File: service.go
    @Author: khaosles
    @Time: 2023/6/12 01:28
    @Desc:
