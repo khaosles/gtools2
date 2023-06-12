@@ -8,13 +8,13 @@ package g
 */
 
 type Service[T any] interface {
-	Save(entity *T)
-	DeleteByID(id string)
-	deleteByIds(ids ...string)
-	update(entity *T)
-	findById(id string) *T
-	findBy(colName string, value any) *T
-	findByIds(ids ...string) []*T
-	findByCondition(conditions *Conditions) []*T
-	findAll() []*T
+	Save(entity *T)                              // 保存
+	DeleteByID(id string)                        // 根据id删除单个
+	DeleteByIds(ids ...string)                   // 根据多个id删除
+	Update(entity *T)                            // 更新
+	FindById(id string) *T                       // 根据id查找
+	FindBy(colName string, value any) *T         // 根据某个字段查找唯一值
+	FindByIds(ids ...string) []*T                // 根据id查找多个
+	FindByCondition(conditions *Conditions) []*T // 根据条件查找
+	FindAll() []*T                               // 查找全部
 }

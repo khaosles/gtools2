@@ -30,21 +30,21 @@ func (srv AbstractService[T]) DeleteByID(id string) {
 	}
 }
 
-func (srv AbstractService[T]) deleteByIds(ids ...string) {
+func (srv AbstractService[T]) DeleteByIds(ids ...string) {
 	err := srv.mpr.DeleteByIDs(ids...)
 	if err != nil {
 		glog.Error(err)
 	}
 }
 
-func (srv AbstractService[T]) update(entity *T) {
+func (srv AbstractService[T]) Update(entity *T) {
 	err := srv.mpr.Update(entity)
 	if err != nil {
 		glog.Error(err)
 	}
 }
 
-func (srv AbstractService[T]) findById(id string) *T {
+func (srv AbstractService[T]) FindById(id string) *T {
 	entity, err := srv.mpr.SelectByID(id)
 	if err != nil {
 		glog.Error(err)
@@ -52,7 +52,7 @@ func (srv AbstractService[T]) findById(id string) *T {
 	return entity
 }
 
-func (srv AbstractService[T]) findBy(colName string, value any) *T {
+func (srv AbstractService[T]) FindBy(colName string, value any) *T {
 	var entity T
 	gstru.SetField(&entity, colName, value)
 	obj, err := srv.mpr.SelectOne(&entity)
@@ -62,7 +62,7 @@ func (srv AbstractService[T]) findBy(colName string, value any) *T {
 	return obj
 }
 
-func (srv AbstractService[T]) findByIds(ids ...string) []*T {
+func (srv AbstractService[T]) FindByIds(ids ...string) []*T {
 	entities, err := srv.mpr.SelectByIDs(ids...)
 	if err != nil {
 		glog.Error(err)
@@ -70,7 +70,7 @@ func (srv AbstractService[T]) findByIds(ids ...string) []*T {
 	return entities
 }
 
-func (srv AbstractService[T]) findByCondition(conditions *Conditions) []*T {
+func (srv AbstractService[T]) FindByCondition(conditions *Conditions) []*T {
 	entities, err := srv.mpr.SelectByCondition(conditions)
 	if err != nil {
 		glog.Error(err)
@@ -78,7 +78,7 @@ func (srv AbstractService[T]) findByCondition(conditions *Conditions) []*T {
 	return entities
 }
 
-func (srv AbstractService[T]) findAll() []*T {
+func (srv AbstractService[T]) FindAll() []*T {
 	entities, err := srv.mpr.SelectAll()
 	if err != nil {
 		glog.Error(err)
