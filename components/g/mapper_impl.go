@@ -1,8 +1,9 @@
 package g
 
 import (
-	gstru "github.com/khaosles/gtools2/g/struct"
 	"gorm.io/gorm"
+
+	gstru "github.com/khaosles/gtools2/g/struct"
 )
 
 /*
@@ -164,15 +165,6 @@ func (mapper MapperImpl[T]) SelectDistinct(conditions *Conditions) ([]*T, error)
 	return entities, nil
 }
 
-func (mapper MapperImpl[T]) SelectByJoinAndCondition(joinCondition string, conditions *Conditions) ([]*T, error) {
-	var entities []*T
-	err := conditions.To(mapper.DB.Joins(joinCondition)).Find(&entities).Error
-	if err != nil {
-		return nil, err
-	}
-	return entities, nil
-}
-
 func (mapper MapperImpl[T]) SelectPage(currentPage, pageSize int, sort string) (*Pagination[T], error) {
 	var pagination Pagination[T]
 	var entities []*T
@@ -207,39 +199,6 @@ func (mapper MapperImpl[T]) SelectPage(currentPage, pageSize int, sort string) (
 
 func (mapper MapperImpl[T]) SelectPageByCondition(currentPage, pageSize int, sort string, conditions Conditions) (*Pagination[T], error) {
 	db := conditions.To(mapper.DB)
-	var pagination Pagination[T]
-	var entities []*T
-	var totalCount int64
-	var totalPages int64
-	// 计算总记录数
-	if err := db.Count(&totalCount).Error; err != nil {
-		return nil, err
-	}
-	// 获取总页数
-	totalPages = totalCount / int64(pageSize)
-	if totalCount%int64(pageSize) > 0 {
-		totalPages++
-	}
-	// 当前页
-	pageIndex := (currentPage - 1) * pageSize
-	err := db.Order(sort).
-		Offset(pageIndex).
-		Limit(pageSize).
-		Find(&entities).
-		Error
-	if err != nil {
-		return nil, err
-	}
-	pagination.CurrentPage = currentPage
-	pagination.TotalCount = totalCount
-	pagination.PageSize = pageSize
-	pagination.TotalPages = totalPages
-	pagination.DataCollection = entities
-	return &pagination, nil
-}
-
-func (mapper MapperImpl[T]) SelectPageByJoinAndCondition(joinCondition string, currentPage, pageSize int, sort string, conditions Conditions) (*Pagination[T], error) {
-	db := conditions.To(mapper.DB.Joins(joinCondition))
 	var pagination Pagination[T]
 	var entities []*T
 	var totalCount int64
