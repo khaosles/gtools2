@@ -1,4 +1,4 @@
-package gresult
+package g
 
 /*
    @File: error_code.go
