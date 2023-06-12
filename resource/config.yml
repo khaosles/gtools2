@@ -1,10 +1,10 @@
 pgsql:
-  host: ****
+  host: *
   port: 14432
   config: ""
   db-name: "template_postgis"
   username: "postgres"
-  password: ****
+  password:
   prefix: ""
   singular: true
   engine: ""
