@@ -10,7 +10,7 @@ import (
    @File: conditions.go
    @Author: khaosles
    @Time: 2023/6/11 19:53
-   @Desc:
+   @Desc: 条件查询 支持 and or select join group 调用该结构体To方法生成带查询条件的db
 */
 
 type Conditions struct {

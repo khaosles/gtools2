@@ -16,7 +16,6 @@ import (
 
 type UserImpl struct {
 	g.AbstractMapper[model.User]
-	// DB *gorm.DB
 }
 
 func NewUserImpl(db *gorm.DB) *UserImpl {

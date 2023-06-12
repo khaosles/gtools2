@@ -9,7 +9,7 @@ import (
    @File: abstract_service.go
    @Author: khaosles
    @Time: 2023/6/12 01:29
-   @Desc:
+   @Desc: service结构体继承该结构体
 */
 
 type AbstractService[T any] struct {

@@ -4,7 +4,7 @@ package g
    @File: mapper.go
    @Author: khaosles
    @Time: 2023/6/11 17:20
-   @Desc:
+   @Desc: mapper接口继承该接口
 */
 
 var _ Mapper[any] = (*AbstractMapper[any])(nil)

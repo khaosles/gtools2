@@ -3,15 +3,16 @@ package g
 import (
 	"time"
 
-	"github.com/khaosles/gtools2/g/gen"
 	"gorm.io/gorm"
+
+	"github.com/khaosles/gtools2/g/gen"
 )
 
 /*
    @File: model.go
    @Author: khaosles
    @Time: 2023/6/11 11:10
-   @Desc:
+   @Desc: model 继承该类，则拥有常见基础属性，以及自动生成无分隔符的uuid
 */
 
 type Model struct {

@@ -4,7 +4,7 @@ package g
    @File: service.go
    @Author: khaosles
    @Time: 2023/6/12 01:28
-   @Desc:
+   @Desc:  service 接口继承该接口
 */
 
 type Service[T any] interface {

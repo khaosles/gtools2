@@ -10,7 +10,7 @@ import (
    @File: abstract_mapper.go
    @Author: khaosles
    @Time: 2023/6/11 19:28
-   @Desc:
+   @Desc: mapper结构体继承该结构体
 */
 
 type AbstractMapper[T any] struct {

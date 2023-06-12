@@ -4,7 +4,7 @@ package g
    @File: pagination.go
    @Author: khaosles
    @Time: 2023/4/30 09:07
-   @Desc: 分页查询选择器
+   @Desc: 分页器，datacollection 为返回数据
 */
 
 type Pagination[T any] struct {
