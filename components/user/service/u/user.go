@@ -1,4 +1,4 @@
-package service
+package su
 
 import (
 	"github.com/khaosles/gtools2/components/g"

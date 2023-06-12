@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/khaosles/gtools2/components/user/model"
-	"github.com/khaosles/gtools2/components/user/service"
+	sd "github.com/khaosles/gtools2/components/user/service/d"
+	su "github.com/khaosles/gtools2/components/user/service/u"
 )
 
 /*
@@ -30,7 +33,8 @@ func main() {
 	//		Select("user, create_time").
 	//		AndEqualTo("user_name", "123"),
 	//)
-	service.NewUserService().Save(&model.User{UserName: "rtyuio"})
+	su.NewUserService().Save(&model.User{UserName: "rtyuio"})
+	fmt.Println(sd.DDD)
 	//s := service.NewUserService().FindBy("user_name", "123")
 	//fmt.Printf("%+v", s)
 
