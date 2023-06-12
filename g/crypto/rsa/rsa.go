@@ -13,7 +13,12 @@ import (
 // Encrypt encrypt data
 func Encrypt(src string, key *rsa.PublicKey) (data string, err error) {
 	h := sha256.New()
-	ciphertext, err := rsa.EncryptOAEP(h, rand.Reader, key, []byte(src), nil)
+
+	// 对原始数据进行SHA-1哈希处理
+	h.Write([]byte(src))
+	hashedData := h.Sum(nil)
+
+	ciphertext, err := rsa.EncryptOAEP(h, rand.Reader, key, hashedData, nil)
 
 	if err != nil {
 		return "", err

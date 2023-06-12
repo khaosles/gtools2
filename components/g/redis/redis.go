@@ -6,10 +6,11 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"go.uber.org/zap"
+
 	gcfg "github.com/khaosles/gtools2/core/cfg"
 	glog "github.com/khaosles/gtools2/core/log"
 	gerr "github.com/khaosles/gtools2/g/err"
-	"go.uber.org/zap"
 )
 
 /*

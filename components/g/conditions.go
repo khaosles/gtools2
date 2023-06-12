@@ -84,121 +84,121 @@ func (c *Conditions) Joins(joinCondition string) *Conditions {
 }
 
 func (c *Conditions) AndIn(field string, value any) *Conditions {
-	return c.sql(AND, "? in (?)", field, value)
+	return c.sql(AND, field+" in (?)", value)
 }
 
 func (c *Conditions) AndNotIn(field string, value any) *Conditions {
-	return c.sql(AND, "? not in (?)", field, value)
+	return c.sql(AND, field+" not in (?)", value)
 }
 
 func (c *Conditions) AndEqualTo(field string, value any) *Conditions {
-	return c.sql(AND, "? = ?", field, value)
+	return c.sql(AND, field+" = ?", value)
 }
 
 func (c *Conditions) AndLessThan(field string, value any) *Conditions {
-	return c.sql(AND, "? < ?", field, value)
+	return c.sql(AND, field+" < ?", value)
 }
 
 func (c *Conditions) AndLessThanOrEqualTo(field string, value any) *Conditions {
-	return c.sql(AND, "? <= ?", field, value)
+	return c.sql(AND, field+" <= ?", value)
 }
 
 func (c *Conditions) AndGreaterThan(field string, value any) *Conditions {
-	return c.sql(AND, "? > ?", field, value)
+	return c.sql(AND, field+" > ?", value)
 }
 
 func (c *Conditions) AndGreaterThanOrEqualTo(field string, value any) *Conditions {
-	return c.sql(AND, "? >= ?", field, value)
+	return c.sql(AND, field+" >= ?", value)
 }
 
 func (c *Conditions) AndNotEqualTo(field string, value any) *Conditions {
-	return c.sql(AND, "? <> ?", field, value)
+	return c.sql(AND, field+" <> ?", value)
 }
 
 func (c *Conditions) AndLike(field string, value any) *Conditions {
-	return c.sql(AND, "? like ?", field, value)
+	return c.sql(AND, field+" like ?", value)
 }
 
 func (c *Conditions) AndNotLike(field string, value any) *Conditions {
-	return c.sql(AND, "? not like ?", field, value)
+	return c.sql(AND, field+" not like ?", value)
 }
 
 func (c *Conditions) AndILike(field string, value any) *Conditions {
-	return c.sql(AND, "? ilike ?", field, value)
+	return c.sql(AND, field+" ilike ?", value)
 }
 
 func (c *Conditions) AndBetween(field string, value1, value2 any) *Conditions {
-	return c.sql(AND, "? between ? and ?", field, value1, value2)
+	return c.sql(AND, field+" between ? and ?", value1, value2)
 }
 
 func (c *Conditions) AndNotBetween(field string, value1, value2 any) *Conditions {
-	return c.sql(AND, "? not between ? and ?", field, value1, value2)
+	return c.sql(AND, field+" not between ? and ?", value1, value2)
 }
 
 func (c *Conditions) AndIsNull(field string) *Conditions {
-	return c.sql(AND, "? is null", field, nil)
+	return c.sql(AND, field+" is null")
 }
 
 func (c *Conditions) AndIsNotNull(field string) *Conditions {
-	return c.sql(AND, "? is not null", field)
+	return c.sql(AND, field+" is not null")
 }
 
 func (c *Conditions) OrIn(field string, value any) *Conditions {
-	return c.sql(OR, "? in (?)", field, value)
+	return c.sql(OR, field+" in (?)", value)
 }
 
 func (c *Conditions) OtNotIn(field string, value any) *Conditions {
-	return c.sql(OR, "? not in (?)", field, value)
+	return c.sql(OR, field+" not in (?)", value)
 }
 
 func (c *Conditions) OrEqualTo(field string, value any) *Conditions {
-	return c.sql(OR, "? = ?", field, value)
+	return c.sql(OR, field+" = ?", value)
 }
 
 func (c *Conditions) OrLessThan(field string, value any) *Conditions {
-	return c.sql(OR, "? < ?", field, value)
+	return c.sql(OR, field+" < ?", value)
 }
 
 func (c *Conditions) OrLessThanOrEqualTo(field string, value any) *Conditions {
-	return c.sql(OR, "? <= ?", field, value)
+	return c.sql(OR, field+" <= ?", value)
 }
 
 func (c *Conditions) OrGreaterThan(field string, value any) *Conditions {
-	return c.sql(OR, "? > ?", field, value)
+	return c.sql(OR, field+" > ?", value)
 }
 
 func (c *Conditions) OrGreaterThanOrEqualTo(field string, value any) *Conditions {
-	return c.sql(OR, "? >= ?", field, value)
+	return c.sql(OR, field+" >= ?", value)
 }
 
 func (c *Conditions) OrNotEqualTo(field string, value any) *Conditions {
-	return c.sql(OR, "? <> ?", field, value)
+	return c.sql(OR, field+" <> ?", value)
 }
 
 func (c *Conditions) OrLike(field string, value any) *Conditions {
-	return c.sql(OR, "? like ?", field, value)
+	return c.sql(OR, field+" like ?", value)
 }
 
 func (c *Conditions) OrNotLike(field string, value any) *Conditions {
-	return c.sql(OR, "? not like ?", field, value)
+	return c.sql(OR, field+" not like ?", value)
 }
 
 func (c *Conditions) OrILike(field string, value any) *Conditions {
-	return c.sql(OR, "? ilike ?", field, value)
+	return c.sql(OR, field+" ilike ?", value)
 }
 
 func (c *Conditions) OrIsNull(field string) *Conditions {
-	return c.sql(OR, "? is null", field)
+	return c.sql(OR, field+" is null")
 }
 
 func (c *Conditions) OrIsNotNull(field string) *Conditions {
-	return c.sql(OR, "? is not null", field)
+	return c.sql(OR, field+" is not null")
 }
 
 func (c *Conditions) OrBetween(field string, value1, value2 any) *Conditions {
-	return c.sql(OR, "? between ? and ?", field, value1, value2)
+	return c.sql(OR, field+" between ? and ?", value1, value2)
 }
 
 func (c *Conditions) OrNotBetween(field string, value1, value2 any) *Conditions {
-	return c.sql(OR, "? not between ? and ?", field, value1, value2)
+	return c.sql(OR, field+" not between ? and ?", value1, value2)
 }
