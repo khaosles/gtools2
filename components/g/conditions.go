@@ -147,7 +147,7 @@ func (c *Conditions) OrIn(field string, value any) *Conditions {
 	return c.sql(OR, "? in (?)", field, value)
 }
 
-func (c *Conditions) OtNorIn(field string, value any) *Conditions {
+func (c *Conditions) OtNotIn(field string, value any) *Conditions {
 	return c.sql(OR, "? not in (?)", field, value)
 }
 
