@@ -1,8 +1,8 @@
 package internal
 
 import (
-	muser "github.com/khaosles/gtools2/components/example/mapper/user"
-	"github.com/khaosles/gtools2/components/example/model/user"
+	"github.com/khaosles/gtools2/components/example/mapper"
+	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -14,10 +14,10 @@ import (
 */
 
 type UserService struct {
-	g.AbstractService[euser.User]
+	g.AbstractService[model.User]
 }
 
-func NewUserService(userMapper muser.UserMapper) *UserService {
+func NewUserService(userMapper mapper.UserMapper) *UserService {
 	var userImpl UserService
 	userImpl.Mpr = userMapper
 	return &userImpl

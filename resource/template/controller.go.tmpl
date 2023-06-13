@@ -1,0 +1,61 @@
+package controller
+
+import (
+     "{{.Project}}/service"
+)
+
+/*
+   @File: {{.Name}}_controller.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: Automatic code generation
+*/
+
+var {{.NameUpper}}Controller = new({{.Name}}Controller)
+
+type {{.Name}}Controller struct {
+	{{.Name}}Service service.{{.NameUpper}}Service
+}
+
+func init() {
+	{{.NameUpper}}Controller = &{{.Name}}Controller{{{.Name}}Service: service.New{{.NameUpper}}Service()}
+}
+
+func (ctl {{.Name}}Controller) Add(c *gin.Context) {
+	var entity model.{{.NameUpper}}
+	err := c.ShouldBindJSON(&entity)
+	if err != nil {
+		g.NewResult(c).No(g.SYSTEM_ERROR)
+		return
+	}
+	ctl.{{.Name}}Service.Save(&entity)
+	g.NewResult(c).Yes(nil)
+}
+
+func (ctl {{.Name}}Controller) Update(c *gin.Context) {
+	var entity model.{{.NameUpper}}
+	err := c.ShouldBindJSON(&entity)
+	if err != nil {
+		g.NewResult(c).No(g.SYSTEM_ERROR)
+		return
+	}
+	ctl.{{.Name}}Service.Update(&entity)
+	g.NewResult(c).Yes(nil)
+}
+
+func (ctl {{.Name}}Controller) DeleteById(c *gin.Context) {
+	id := c.Param("id")
+	ctl.{{.Name}}Service.DeleteByID(id)
+	g.NewResult(c).Yes(nil)
+}
+
+func (ctl {{.Name}}Controller) GetAll(c *gin.Context) {
+	entities := ctl.{{.Name}}Service.FindAll()
+	g.NewResult(c).Yes(entities)
+}
+
+func (ctl {{.Name}}Controller) GetById(c *gin.Context) {
+	id := c.Query("id")
+	entity := ctl.{{.Name}}Service.FindById(id)
+	g.NewResult(c).Yes(entity)
+}

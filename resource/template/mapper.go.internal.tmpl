@@ -1,0 +1,25 @@
+package internal
+
+import (
+	"gorm.io/gorm"
+
+	"{{.Project}}/model"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+/*
+   @File: {{.Name}}_mapper.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: Automatic code generation
+*/
+
+type {{.NameUpper}}Mapper struct {
+	g.AbstractMapper[model.{{.NameUpper}}]
+}
+
+func New{{.NameUpper}}Mapper(db *gorm.DB) *{{.NameUpper}}Mapper {
+	var {{.Name}}Mapper {{.NameUpper}}Mapper
+	{{.Name}}Mapper.DB = db
+	return &{{.Name}}Mapper
+}

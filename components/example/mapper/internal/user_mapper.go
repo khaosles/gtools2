@@ -1,10 +1,9 @@
 package internal
 
 import (
-	"gorm.io/gorm"
-
-	"github.com/khaosles/gtools2/components/example/model/user"
+	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/g"
+	"gorm.io/gorm"
 )
 
 /*
@@ -15,7 +14,7 @@ import (
 */
 
 type UserMapper struct {
-	g.AbstractMapper[euser.User]
+	g.AbstractMapper[model.User]
 }
 
 func NewUserMapper(db *gorm.DB) *UserMapper {

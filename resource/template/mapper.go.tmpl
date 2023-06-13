@@ -1,0 +1,29 @@
+package mapper
+
+import (
+	"{{.Project}}/mapper/internal"
+	"{{.Project}}/model"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+
+/*
+   @File: {{.Name}}_mapper.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: Automatic code generation
+*/
+
+
+var {{.Name}}MapperInstance {{.NameUpper}}Mapper
+
+type {{.NameUpper}}Mapper interface {
+	g.Mapper[model.{{.NameUpper}}]
+}
+
+func NewUserMapper() {{.NameUpper}}Mapper {
+	if {{.Name}}MapperInstance == nil {
+		{{.Name}}MapperInstance = internal.New{{.NameUpper}}Mapper(NewDB())
+	}
+	return {{.Name}}MapperInstance
+}

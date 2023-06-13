@@ -1,0 +1,28 @@
+package service
+
+import (
+	"{{.Project}}/mapper"
+	"{{.Project}}/model"
+	"{{.Project}}/service/internal"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+/*
+   @File: {{.Name}}_service.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: Automatic code generation
+*/
+
+var {{.Name}}ServiceInstance {{.NameUpper}}Service
+
+type {{.NameUpper}}Service interface {
+	g.Service[model.{{.NameUpper}}]
+}
+
+func New{{.NameUpper}}Service() {{.NameUpper}}Service {
+	if {{.NameUpper}}ServiceInstance == nil {
+		{{.Name}}ServiceInstance = internal.New{{.NameUpper}}Service(mapper.New{{.NameUpper}}Mapper())
+	}
+	return {{.Name}}ServiceInstance
+}

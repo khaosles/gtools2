@@ -1,0 +1,24 @@
+package internal
+
+import (
+	"{{.Project}}/mapper"
+	"{{.Project}}/model"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+/*
+   @File: {{.Name}}_service.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: Automatic code generation
+*/
+
+type {{.NameUpper}}Service struct {
+	g.AbstractService[model.{{.NameUpper}}]
+}
+
+func New{{.NameUpper}}Service({{.Name}}Mapper mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}Service {
+	var {{.Name}}Impl {{.NameUpper}}Service
+	{{.Name}}Impl.Mpr = {{.Name}}Mapper
+	return &{{.Name}}Impl
+}

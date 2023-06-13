@@ -1,9 +1,8 @@
-package muser
+package mapper
 
 import (
-	"github.com/khaosles/gtools2/components/example/mapper"
 	"github.com/khaosles/gtools2/components/example/mapper/internal"
-	"github.com/khaosles/gtools2/components/example/model/user"
+	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -17,12 +16,12 @@ import (
 var userMapperInstance UserMapper
 
 type UserMapper interface {
-	g.Mapper[euser.User]
+	g.Mapper[model.User]
 }
 
 func NewUserMapper() UserMapper {
 	if userMapperInstance == nil {
-		userMapperInstance = internal.NewUserMapper(mapper.NewDB())
+		userMapperInstance = internal.NewUserMapper(NewDB())
 	}
 	return userMapperInstance
 }

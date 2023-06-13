@@ -1,8 +1,8 @@
-package suser
+package service
 
 import (
-	muser "github.com/khaosles/gtools2/components/example/mapper/user"
-	"github.com/khaosles/gtools2/components/example/model/user"
+	muser "github.com/khaosles/gtools2/components/example/mapper"
+	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/example/service/internal"
 	"github.com/khaosles/gtools2/components/g"
 )
@@ -17,7 +17,7 @@ import (
 var userServiceInstance UserService
 
 type UserService interface {
-	g.Service[euser.User]
+	g.Service[model.User]
 }
 
 func NewUserService() UserService {
