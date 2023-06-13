@@ -49,12 +49,12 @@ func (ctl {{.Name}}Controller) DeleteById(c *gin.Context) {
 	g.NewResult(c).Yes(nil)
 }
 
-func (ctl {{.Name}}Controller) GetAll(c *gin.Context) {
+func (ctl {{.Name}}Controller) FindAll(c *gin.Context) {
 	entities := ctl.{{.Name}}Service.FindAll()
 	g.NewResult(c).Yes(entities)
 }
 
-func (ctl {{.Name}}Controller) GetById(c *gin.Context) {
+func (ctl {{.Name}}Controller) FindById(c *gin.Context) {
 	id := c.Query("id")
 	entity := ctl.{{.Name}}Service.FindById(id)
 	g.NewResult(c).Yes(entity)

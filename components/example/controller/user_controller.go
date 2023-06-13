@@ -52,12 +52,12 @@ func (ctl userController) DeleteById(c *gin.Context) {
 	g.NewResult(c).Yes(nil)
 }
 
-func (ctl userController) GetAll(c *gin.Context) {
+func (ctl userController) FIndAll(c *gin.Context) {
 	entities := ctl.userService.FindAll()
 	g.NewResult(c).Yes(entities)
 }
 
-func (ctl userController) GetById(c *gin.Context) {
+func (ctl userController) FindById(c *gin.Context) {
 	id := c.Query("id")
 	entity := ctl.userService.FindById(id)
 	g.NewResult(c).Yes(entity)
