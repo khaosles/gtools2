@@ -36,6 +36,11 @@ type IdMixin struct {
 	ID string `json:"id" gorm:"primaryKey;column:id;type:varchar(32);comment:主键"` // 主键ID
 }
 
+func (m *IdMixin) BeforeCreate(tx *gorm.DB) error {
+	m.ID = gen.UuidNoSeparator()
+	return nil
+}
+
 type Model struct {
 	IdMixin
 	PgTimeMixin
@@ -43,19 +48,9 @@ type Model struct {
 	Remarks string `json:"remarks,omitempty" gorm:"column:remarks;default:null;comment:备注"` // 备注
 }
 
-func (m *Model) BeforeCreate(tx *gorm.DB) error {
-	m.ID = gen.UuidNoSeparator()
-	return nil
-}
-
 type ModelNoPg struct {
 	IdMixin
 	TimeMixin
 	AuthMixin
 	Remarks string `json:"remarks,omitempty" gorm:"column:remarks;default:null;comment:备注"` // 备注
-}
-
-func (m *ModelNoPg) BeforeCreate(tx *gorm.DB) error {
-	m.ID = gen.UuidNoSeparator()
-	return nil
 }
