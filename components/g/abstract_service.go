@@ -60,13 +60,13 @@ func (srv AbstractService[T]) FindById(id string) *T {
 }
 
 func (srv AbstractService[T]) FindBy(colName string, value any) *T {
-	var entity T
-	gstru.SetField(&entity, colName, value)
-	obj, err := srv.Mpr.SelectOne(&entity)
+	var record T
+	gstru.SetField(&record, colName, value)
+	entity, err := srv.Mpr.SelectOne(&record)
 	if err != nil {
 		glog.Error(err)
 	}
-	return obj
+	return entity
 }
 
 func (srv AbstractService[T]) FindByIds(ids ...string) []*T {
