@@ -46,9 +46,9 @@ func (ctl userController) Update(c *gin.Context) {
 	g.NewResult(c).Yes(nil)
 }
 
-func (ctl userController) Delete(c *gin.Context) {
+func (ctl userController) DeleteById(c *gin.Context) {
 	id := c.Param("id")
-	ctl.userService.DeleteByID(id)
+	ctl.userService.DeleteById(id)
 	g.NewResult(c).Yes(nil)
 }
 

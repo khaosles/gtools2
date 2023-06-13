@@ -17,10 +17,10 @@ type Mapper[T any] interface {
 
 	Delete(record *T) error                             // 删除
 	DeleteHard(record *T) error                         // 硬删除
-	DeleteByID(id string) error                         // 根据id删除
-	DeleteHardByID(id string) error                     // 根据id硬删除
-	DeleteByIDs(ids ...string) error                    // 根据多个id批量删除
-	DeleteHardByIDs(ids ...string) error                // 根据多个id批量硬删除
+	DeleteById(id string) error                         // 根据id删除
+	DeleteHardById(id string) error                     // 根据id硬删除
+	DeleteByIds(ids ...string) error                    // 根据多个id批量删除
+	DeleteHardByIds(ids ...string) error                // 根据多个id批量硬删除
 	DeleteByCondition(conditions *Conditions) error     // 根据条件删除
 	DeleteHardByCondition(conditions *Conditions) error // 根据条件硬删除
 
@@ -29,8 +29,8 @@ type Mapper[T any] interface {
 	UpdateSelectiveByCondition(record *T, conditions *Conditions) error // 根据条件更新部分字段
 	UpdateByCondition(record *T, conditions *Conditions) error          // 根据条件更新全部字段
 
-	SelectByID(id string) (*T, error)                             // 根据id查询
-	SelectByIDs(ids ...string) ([]*T, error)                      // 根据多个id查询
+	SelectById(id string) (*T, error)                             // 根据id查询
+	SelectByIds(ids ...string) ([]*T, error)                      // 根据多个id查询
 	SelectOne(record *T) (*T, error)                              // 根据记录查询一个
 	Select(record *T) ([]*T, error)                               // 根据记录查询多个
 	SelectAll() ([]*T, error)                                     // 查询所有

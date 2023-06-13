@@ -30,15 +30,15 @@ func (srv AbstractService[T]) Saves(entities []*T) {
 	}
 }
 
-func (srv AbstractService[T]) DeleteByID(id string) {
-	err := srv.Mpr.DeleteByID(id)
+func (srv AbstractService[T]) DeleteById(id string) {
+	err := srv.Mpr.DeleteById(id)
 	if err != nil {
 		glog.Error(err)
 	}
 }
 
 func (srv AbstractService[T]) DeleteByIds(ids ...string) {
-	err := srv.Mpr.DeleteByIDs(ids...)
+	err := srv.Mpr.DeleteByIds(ids...)
 	if err != nil {
 		glog.Error(err)
 	}
@@ -52,7 +52,7 @@ func (srv AbstractService[T]) Update(entity *T) {
 }
 
 func (srv AbstractService[T]) FindById(id string) *T {
-	entity, err := srv.Mpr.SelectByID(id)
+	entity, err := srv.Mpr.SelectById(id)
 	if err != nil {
 		glog.Error(err)
 	}
@@ -70,7 +70,7 @@ func (srv AbstractService[T]) FindBy(colName string, value any) *T {
 }
 
 func (srv AbstractService[T]) FindByIds(ids ...string) []*T {
-	entities, err := srv.Mpr.SelectByIDs(ids...)
+	entities, err := srv.Mpr.SelectByIds(ids...)
 	if err != nil {
 		glog.Error(err)
 	}

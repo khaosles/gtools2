@@ -44,19 +44,19 @@ func (mpr AbstractMapper[T]) DeleteHard(record *T) error {
 	return mpr.DB.Unscoped().Delete(record).Error
 }
 
-func (mpr AbstractMapper[T]) DeleteByID(id string) error {
+func (mpr AbstractMapper[T]) DeleteById(id string) error {
 	return mpr.DB.Delete(new(T), "id = ?", id).Error
 }
 
-func (mpr AbstractMapper[T]) DeleteHardByID(id string) error {
+func (mpr AbstractMapper[T]) DeleteHardById(id string) error {
 	return mpr.DB.Unscoped().Delete(new(T), "id = ?", id).Error
 }
 
-func (mpr AbstractMapper[T]) DeleteByIDs(ids ...string) error {
+func (mpr AbstractMapper[T]) DeleteByIds(ids ...string) error {
 	return mpr.DB.Delete(new(T), "id in (?)", ids).Error
 }
 
-func (mpr AbstractMapper[T]) DeleteHardByIDs(ids ...string) error {
+func (mpr AbstractMapper[T]) DeleteHardByIds(ids ...string) error {
 	return mpr.DB.Unscoped().Delete(new(T), "id in (?)", ids).Error
 }
 
@@ -84,7 +84,7 @@ func (mpr AbstractMapper[T]) UpdateSelectiveByCondition(record *T, conditions *C
 	return conditions.To(mpr.DB).Model(new(T)).Updates(record).Error
 }
 
-func (mpr AbstractMapper[T]) SelectByID(id string) (*T, error) {
+func (mpr AbstractMapper[T]) SelectById(id string) (*T, error) {
 	var record T
 	err := mpr.DB.Where("id = ?", id).First(&record).Error
 	if err != nil {
@@ -93,7 +93,7 @@ func (mpr AbstractMapper[T]) SelectByID(id string) (*T, error) {
 	return &record, nil
 }
 
-func (mpr AbstractMapper[T]) SelectByIDs(ids ...string) ([]*T, error) {
+func (mpr AbstractMapper[T]) SelectByIds(ids ...string) ([]*T, error) {
 	var records []*T
 	err := mpr.DB.Where("id = (?)", ids).First(&records).Error
 	if err != nil {
