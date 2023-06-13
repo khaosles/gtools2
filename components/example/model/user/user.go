@@ -1,4 +1,4 @@
-package model
+package euser
 
 import (
 	"github.com/khaosles/gtools2/components/g"
