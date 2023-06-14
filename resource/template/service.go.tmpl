@@ -1,7 +1,9 @@
 package service
 
 import (
-	"{{.Project}}/mapper"
+	"sync"
+
+    "{{.Project}}/mapper"
 	"{{.Project}}/model"
 	"{{.Project}}/service/internal"
 	"github.com/khaosles/gtools2/components/g"
@@ -14,15 +16,20 @@ import (
    @Desc: Automatic code generation
 */
 
-var {{.Name}}ServiceInstance {{.NameUpper}}Service
+var (
+    {{.Name}}ServiceInstance {{.NameUpper}}Service
+	once                sync.Once
+)
 
 type {{.NameUpper}}Service interface {
 	g.Service[model.{{.NameUpper}}]
 }
 
 func New{{.NameUpper}}Service() {{.NameUpper}}Service {
-	if {{.NameUpper}}ServiceInstance == nil {
-		{{.Name}}ServiceInstance = internal.New{{.NameUpper}}Service(mapper.New{{.NameUpper}}Mapper())
-	}
+    once.Do(func() {
+        if {{.NameUpper}}ServiceInstance == nil {
+            {{.Name}}ServiceInstance = internal.New{{.NameUpper}}Service(mapper.New{{.NameUpper}}Mapper())
+        }
+    })
 	return {{.Name}}ServiceInstance
 }

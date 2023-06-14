@@ -10,6 +10,8 @@ COMMIT?=$(shell git rev-parse --short HEAD)
 BUILD_TIME?=$(shell date -u '+%Y-%m-%d_%H:%M:%S')
 PROJECT?=github.com/khaosles/gtools2
 
+# go install -a -v github.com/go-bindata/go-bindata/...@latest
+
 build:
 	go build -ldflags "-X ${PROJECT}/pkg/handler.Release=${RELEASE} \
 	-X ${PROJECT}/pkg/handler.Commit=${COMMIT} -X ${PROJECT}/pkg/handler.BuildTime=${BUILD_TIME}" \

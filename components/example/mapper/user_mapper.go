@@ -1,6 +1,8 @@
 package mapper
 
 import (
+	"sync"
+
 	"github.com/khaosles/gtools2/components/example/mapper/internal"
 	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/g"
@@ -13,15 +15,20 @@ import (
    @Desc:
 */
 
-var userMapperInstance UserMapper
+var (
+	userMapperInstance UserMapper
+	once               sync.Once
+)
 
 type UserMapper interface {
 	g.Mapper[model.User]
 }
 
 func NewUserMapper() UserMapper {
-	if userMapperInstance == nil {
-		userMapperInstance = internal.NewUserMapper(NewDB())
-	}
+	once.Do(func() {
+		if userMapperInstance == nil {
+			userMapperInstance = internal.NewUserMapper(NewDB())
+		}
+	})
 	return userMapperInstance
 }

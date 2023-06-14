@@ -1,9 +1,8 @@
 package mapper
 
 import (
-	"gorm.io/gorm"
-
 	"github.com/khaosles/gtools2/components/g/pgsql"
+	"gorm.io/gorm"
 )
 
 /*
@@ -14,5 +13,5 @@ import (
 */
 
 func NewDB() *gorm.DB {
-	return pgsql.DB
+	return pgsql.NewPgsql(nil)
 }

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -16,14 +17,19 @@ import (
    @Desc:
 */
 
-var UserController = new(userController)
+var (
+	UserController = new(userController)
+	once           sync.Once
+)
 
 type userController struct {
 	userService service.UserService
 }
 
 func init() {
-	UserController = &userController{userService: service.NewUserService()}
+	once.Do(func() {
+		UserController = &userController{userService: service.NewUserService()}
+	})
 }
 
 func (ctl userController) Add(c *gin.Context) {
@@ -59,7 +65,7 @@ func (ctl userController) FindAll(c *gin.Context) {
 	g.NewResult(c).Yes(entities)
 	go func() {
 		println("123")
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * 2)
 		println("....")
 	}()
 }

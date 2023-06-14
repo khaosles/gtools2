@@ -44,6 +44,17 @@ func init() {
 
 	// 创建viper
 	Viper = viper.New()
+
+	////从打包后的文件中读取配置
+	//bytesContent, err := data.Asset("resource/config.yml")
+	//if err != nil {
+	//	panic("Asset() can not found setting file")
+	//}
+	////设置要读取的文件类型
+	//viper.SetConfigType("yml")
+	////读取
+	//viper.ReadConfig(bytes.NewBuffer(bytesContent))
+
 	Viper.SetConfigFile(cfg)
 	Viper.SetConfigType("yml")
 

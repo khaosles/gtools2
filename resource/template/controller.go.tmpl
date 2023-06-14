@@ -1,7 +1,12 @@
 package controller
 
 import (
-     "{{.Project}}/service"
+	"sync"
+
+	"github.com/gin-gonic/gin"
+	"{{.Project}}/model"
+	"{{.Project}}/service"
+	"github.com/khaosles/gtools2/components/g"
 )
 
 /*
@@ -11,14 +16,19 @@ import (
    @Desc: Automatic code generation
 */
 
-var {{.NameUpper}}Controller = new({{.Name}}Controller)
+var (
+	{{.NameUpper}}Controller = new({{.Name}}Controller)
+	once           sync.Once
+)
 
 type {{.Name}}Controller struct {
 	{{.Name}}Service service.{{.NameUpper}}Service
 }
 
 func init() {
-	{{.NameUpper}}Controller = &{{.Name}}Controller{{{.Name}}Service: service.New{{.NameUpper}}Service()}
+	once.Do(func() {
+		{{.NameUpper}}Controller = &{{.Name}}Controller{{{.Name}}Service: service.New{{.NameUpper}}Service()}
+	})
 }
 
 func (ctl {{.Name}}Controller) Add(c *gin.Context) {
@@ -45,7 +55,7 @@ func (ctl {{.Name}}Controller) Update(c *gin.Context) {
 
 func (ctl {{.Name}}Controller) DeleteById(c *gin.Context) {
 	id := c.Param("id")
-	ctl.{{.Name}}Service.DeleteByID(id)
+	ctl.{{.Name}}Service.DeleteById(id)
 	g.NewResult(c).Yes(nil)
 }
 

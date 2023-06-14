@@ -13,8 +13,8 @@ import (
    @Desc: 跨域
 */
 
-// Cross 处理跨域请求,支持options访问
-func Cross() gin.HandlerFunc {
+// CrossDomain 处理跨域请求,支持options访问
+func CrossDomain() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
 		if len(origin) == 0 {

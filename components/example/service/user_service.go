@@ -1,7 +1,9 @@
 package service
 
 import (
-	muser "github.com/khaosles/gtools2/components/example/mapper"
+	"sync"
+
+	"github.com/khaosles/gtools2/components/example/mapper"
 	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/example/service/internal"
 	"github.com/khaosles/gtools2/components/g"
@@ -14,15 +16,20 @@ import (
    @Desc:
 */
 
-var userServiceInstance UserService
+var (
+	userServiceInstance UserService
+	once                sync.Once
+)
 
 type UserService interface {
 	g.Service[model.User]
 }
 
 func NewUserService() UserService {
-	if userServiceInstance == nil {
-		userServiceInstance = internal.NewUserService(muser.NewUserMapper())
-	}
+	once.Do(func() {
+		if userServiceInstance == nil {
+			userServiceInstance = internal.NewUserService(mapper.NewUserMapper())
+		}
+	})
 	return userServiceInstance
 }

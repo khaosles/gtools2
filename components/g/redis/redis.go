@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/khaosles/gtools2/core/cfg/config"
 	"go.uber.org/zap"
 
 	gcfg "github.com/khaosles/gtools2/core/cfg"
@@ -22,8 +23,10 @@ import (
 
 var Client *redis.Client
 
-func init() {
-	cfg := gcfg.GCfg.Redis
+func NewRedis(cfg *config.Redis) {
+	if cfg == nil {
+		cfg = &gcfg.GCfg.Redis
+	}
 	Client = redis.NewClient(&redis.Options{
 		Addr:               cfg.Addr,
 		Password:           cfg.Password,

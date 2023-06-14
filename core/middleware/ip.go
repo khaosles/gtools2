@@ -13,7 +13,7 @@ import (
    @Desc:
 */
 
-func GetIp() gin.HandlerFunc {
+func ObtainIp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// GetIP returns the client IP and whether the request has been
 		ip := c.ClientIP()
