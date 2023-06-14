@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/example/service"
@@ -55,6 +57,11 @@ func (ctl userController) DeleteById(c *gin.Context) {
 func (ctl userController) FIndAll(c *gin.Context) {
 	entities := ctl.userService.FindAll()
 	g.NewResult(c).Yes(entities)
+	go func() {
+		println("123")
+		time.Sleep(time.Second * 10)
+		println("....")
+	}()
 }
 
 func (ctl userController) FindById(c *gin.Context) {

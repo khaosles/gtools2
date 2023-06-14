@@ -16,10 +16,9 @@ func main() {
 	r := gin.Default()
 	r.POST("/add", controller.UserController.Add)
 	r.POST("/update", controller.UserController.Update)
-	r.DELETE("/:id", controller.UserController.Delete)
-	r.GET("/getById", controller.UserController.GetById)
-	r.GET("/getAll", controller.UserController.GetAll)
+	r.DELETE("/delete/:id", controller.UserController.DeleteById)
+	r.GET("/findById", controller.UserController.FindById)
+	r.GET("/findAll", controller.UserController.FIndAll)
 
 	panic(r.Run(":8000"))
-	//fmt.Println(service.NewUserService().FindAll())
 }
