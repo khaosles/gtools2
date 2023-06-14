@@ -21,7 +21,7 @@ import (
    @Desc: 全局异常捕获
 */
 
-func ExceptCatch() gin.HandlerFunc {
+func ErrorHandling() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -54,7 +54,6 @@ func ExceptCatch() gin.HandlerFunc {
 				)
 				c.JSON(http.StatusOK, g.NewJsonResult().CatchErr(err))
 			}
-
 		}()
 		c.Next()
 	}

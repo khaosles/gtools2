@@ -7,14 +7,14 @@ import (
 )
 
 /*
-   @File: cross.go
+   @File: cors.go
    @Author: khaosles
    @Time: 2023/4/12 12:07
    @Desc: 跨域
 */
 
-// CrossDomain 处理跨域请求,支持options访问
-func CrossDomain() gin.HandlerFunc {
+// Cors 处理跨域请求,支持options访问
+func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
 		if len(origin) == 0 {
