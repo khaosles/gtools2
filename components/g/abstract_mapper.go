@@ -17,6 +17,10 @@ type AbstractMapper[T any] struct {
 	DB *gorm.DB
 }
 
+func (mpr AbstractMapper[T]) Save(record *T) error {
+	return mpr.DB.Save(record).Error
+}
+
 func (mpr AbstractMapper[T]) Insert(record *T) error {
 	return mpr.DB.Create(record).Error
 }

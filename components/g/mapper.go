@@ -10,6 +10,7 @@ package g
 var _ Mapper[any] = (*AbstractMapper[any])(nil)
 
 type Mapper[T any] interface {
+	Save(record *T) error                      // 插入或者更新
 	Insert(record *T) error                    // 插入
 	InsertList(records []*T) error             // 批量插入
 	InsertBatch(records []*T, batch int) error // 批量插入, 自定义batch
