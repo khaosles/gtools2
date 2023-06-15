@@ -17,7 +17,7 @@ type AbstractService[T any] struct {
 }
 
 func (srv AbstractService[T]) Save(entity *T) {
-	err := srv.Mpr.Insert(entity)
+	err := srv.Mpr.Save(entity)
 	if err != nil {
 		glog.Error(err)
 	}
