@@ -27,6 +27,5 @@ var (
 	NOT_FOUND_ERROR      = ErrorCode{40400, "请求数据不存在"} // 数据不存在
 	FORBIDDEN_ERROR      = ErrorCode{40300, "禁止访问"}    // 数据禁止访问
 	SYSTEM_ERROR         = ErrorCode{50000, "操作失败"}    // 系统内部出错
-	CUSTOM_ERROR         = ErrorCode{50010, ""}        // 自定义
-	CATCH_ERROR          = ErrorCode{50011, ""}        // 捕获的错误异常
+	CATCH_ERROR          = ErrorCode{50010, ""}        // 捕获的错误异常
 )
