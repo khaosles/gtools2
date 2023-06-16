@@ -9,13 +9,14 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+
 	"github.com/khaosles/gtools2/components/g"
 	glog "github.com/khaosles/gtools2/core/log"
-	"go.uber.org/zap"
 )
 
 /*
-   @File: except.go
+   @File: error_handling.go
    @Author: khaosles
    @Time: 2023/3/6 10:13
    @Desc: 全局异常捕获

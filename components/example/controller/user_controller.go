@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/example/service"
 	"github.com/khaosles/gtools2/components/g"

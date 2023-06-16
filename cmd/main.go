@@ -17,7 +17,7 @@ import (
 
 func main() {
 
-	filepath := gpath.Join(gpath.RootPath(), "resource", "template", "mapper.go.internal.tmpl")
+	filepath := gpath.Join(gpath.RootPath(), "resource", "template", "service.go.internal.tmpl")
 	tmpl, err := template.ParseFiles(filepath)
 	if err != nil {
 		panic(err)
@@ -29,13 +29,15 @@ func main() {
 		Date      string
 		Project   string
 	}{
-		Name:      "user",
-		NameUpper: "User",
+		Name:      "metaData",
+		NameUpper: "MetaData",
 		Date:      time.Now().Format(time.DateTime),
-		Project:   "github.com/khaosles/gtools2/components/example",
+		Project:   "data-search/app",
 	}
 
-	fp, _ := os.Create(gpath.Join(gpath.RootPath(), "components/example/mapper/internal/user_mapper1.go"))
+	p := gpath.Join(gpath.RootPath(), "app/service/internal/meta_data_service.go")
+	gpath.MkParentDir(p)
+	fp, _ := os.Create(p)
 
 	err = tmpl.Execute(fp, data)
 	if err != nil {
