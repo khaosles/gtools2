@@ -3,6 +3,7 @@ module github.com/khaosles/gtools2
 go 1.20
 
 require (
+	github.com/W1llyu/ourjson v0.0.0-20180613080540-341d4810db86
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1764
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.5+incompatible
 	github.com/aquilax/truncate v1.0.0

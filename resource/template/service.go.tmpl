@@ -27,7 +27,7 @@ type {{.NameUpper}}Service interface {
 
 func New{{.NameUpper}}Service() {{.NameUpper}}Service {
     once.Do(func() {
-        if {{.NameUpper}}ServiceInstance == nil {
+        if {{.Name}}ServiceInstance == nil {
             {{.Name}}ServiceInstance = internal.New{{.NameUpper}}Service(mapper.New{{.NameUpper}}Mapper())
         }
     })
