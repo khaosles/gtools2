@@ -1,8 +1,6 @@
 package g
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 
 	"github.com/khaosles/gtools2/g/gen"
@@ -21,14 +19,14 @@ type AuthMixin struct {
 }
 
 type PgTimeMixin struct {
-	CreateTime time.Time      `json:"createTime,omitempty" gorm:"autoCreateTime;column:create_time;type:timestamptz;comment:创建时间"` // 创建时间
-	UpdateTime time.Time      `json:"updateTime,omitempty" gorm:"autoUpdateTime;column:update_time;type:timestamptz;comment:更新时间"` // 更新时间
+	CreateTime Timestamp      `json:"createTime,omitempty" gorm:"autoCreateTime;column:create_time;type:timestamptz;comment:创建时间"` // 创建时间
+	UpdateTime Timestamp      `json:"updateTime,omitempty" gorm:"autoUpdateTime;column:update_time;type:timestamptz;comment:更新时间"` // 更新时间
 	DeleteTime gorm.DeletedAt `json:"-" gorm:"index;column:delete_time;type:timestamptz;comment:删除时间"`                             // 删除标记
 }
 
 type TimeMixin struct {
-	CreateTime time.Time      `json:"createTime,omitempty" gorm:"autoCreateTime;column:create_time;type:datetime;comment:创建时间"` // 创建时间
-	UpdateTime time.Time      `json:"updateTime,omitempty" gorm:"autoUpdateTime;column:update_time;type:datetime;comment:更新时间"` // 更新时间
+	CreateTime Timestamp      `json:"createTime,omitempty" gorm:"autoCreateTime;column:create_time;type:datetime;comment:创建时间"` // 创建时间
+	UpdateTime Timestamp      `json:"updateTime,omitempty" gorm:"autoUpdateTime;column:update_time;type:datetime;comment:更新时间"` // 更新时间
 	DeleteTime gorm.DeletedAt `json:"-" gorm:"index;column:delete_time;type:datetime;comment:删除时间"`                             // 删除标记
 }
 
