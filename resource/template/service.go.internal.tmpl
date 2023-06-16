@@ -7,18 +7,18 @@ import (
 )
 
 /*
-   @File: {{.Name}}_service.go
+   @File: {{.Name}}_service_impl.go
    @Author: khaosles
    @Time: {{.Date}}
    @Desc: Automatic code generation
 */
 
-type {{.NameUpper}}Service struct {
+type {{.NameUpper}}ServiceImpl struct {
 	g.AbstractService[model.{{.NameUpper}}]
 }
 
-func New{{.NameUpper}}Service({{.Name}}Mapper mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}Service {
-	var {{.Name}}Impl {{.NameUpper}}Service
-	{{.Name}}Impl.Mpr = {{.Name}}Mapper
-	return &{{.Name}}Impl
+func New{{.NameUpper}}ServiceImpl({{.Name}}Mapper mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}ServiceImpl {
+	var {{.Name}}ServiceImpl {{.NameUpper}}ServiceImpl
+	{{.Name}}ServiceImpl.Mpr = {{.Name}}Mapper
+	return &{{.Name}}ServiceImpl
 }

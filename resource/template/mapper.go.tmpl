@@ -18,7 +18,7 @@ import (
 
 var (
     {{.Name}}MapperInstance {{.NameUpper}}Mapper
-	once               sync.Once
+	once{{.NameUpper}}      sync.Once
 )
 
 type {{.NameUpper}}Mapper interface {
@@ -26,9 +26,9 @@ type {{.NameUpper}}Mapper interface {
 }
 
 func New{{.NameUpper}}Mapper() {{.NameUpper}}Mapper {
-	once.Do(func() {
+	once{{.NameUpper}}.Do(func() {
         if {{.Name}}MapperInstance == nil {
-            {{.Name}}MapperInstance = internal.New{{.NameUpper}}Mapper(NewDB())
+            {{.Name}}MapperInstance = internal.New{{.NameUpper}}MapperImpl(NewDB())
         }
     })
 	return {{.Name}}MapperInstance

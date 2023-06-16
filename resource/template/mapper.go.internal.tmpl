@@ -8,18 +8,18 @@ import (
 )
 
 /*
-   @File: {{.Name}}_mapper.go
+   @File: {{.Name}}_mapper_impl.go
    @Author: khaosles
    @Time: {{.Date}}
    @Desc: Automatic code generation
 */
 
-type {{.NameUpper}}Mapper struct {
+type {{.NameUpper}}MapperImpl struct {
 	g.AbstractMapper[model.{{.NameUpper}}]
 }
 
-func New{{.NameUpper}}Mapper(db *gorm.DB) *{{.NameUpper}}Mapper {
-	var {{.Name}}Mapper {{.NameUpper}}Mapper
-	{{.Name}}Mapper.DB = db
-	return &{{.Name}}Mapper
+func New{{.NameUpper}}MapperImpl(db *gorm.DB) *{{.NameUpper}}MapperImpl {
+	var {{.Name}}MapperImpl {{.NameUpper}}MapperImpl
+	{{.Name}}MapperImpl.DB = db
+	return &{{.Name}}MapperImpl
 }

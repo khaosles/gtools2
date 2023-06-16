@@ -18,7 +18,7 @@ import (
 
 var (
     {{.Name}}ServiceInstance {{.NameUpper}}Service
-	once                sync.Once
+	once{{.NameUpper}}       sync.Once
 )
 
 type {{.NameUpper}}Service interface {
@@ -26,9 +26,9 @@ type {{.NameUpper}}Service interface {
 }
 
 func New{{.NameUpper}}Service() {{.NameUpper}}Service {
-    once.Do(func() {
+    once{{.NameUpper}}.Do(func() {
         if {{.Name}}ServiceInstance == nil {
-            {{.Name}}ServiceInstance = internal.New{{.NameUpper}}Service(mapper.New{{.NameUpper}}Mapper())
+            {{.Name}}ServiceInstance = internal.New{{.NameUpper}}ServiceImpl(mapper.New{{.NameUpper}}Mapper())
         }
     })
 	return {{.Name}}ServiceInstance
