@@ -115,7 +115,7 @@ func (mpr AbstractMapper[T]) SelectOne(record *T) (*T, error) {
 	return &entity, nil
 }
 
-func (mpr AbstractMapper[T]) SelectOneByConditions(record *T, conditions Conditions) (*T, error) {
+func (mpr AbstractMapper[T]) SelectOneByConditions(record *T, conditions *Conditions) (*T, error) {
 	var entity T
 	err := conditions.To(mpr.DB).Where(record).First(&entity).Error
 	if err != nil {
