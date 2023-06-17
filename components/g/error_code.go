@@ -20,6 +20,7 @@ func (e ErrorCode) SetMsg(msg string) ErrorCode {
 var (
 	SUCCESS              = ErrorCode{20000, "ok"}      // 运行成功
 	PARAMS_ERROR         = ErrorCode{40000, "请求参数错误"}  // 参数错误
+	DUPLICATE_USERNAME   = ErrorCode{40001, "用户名已存在"}  // 参数错误
 	NOT_LOGIN_ERROR      = ErrorCode{40100, "未登录"}     // 账号未登录
 	NO_AUTH_ERROR        = ErrorCode{40101, "账号无权限"}   // 账号无权限
 	TOKEN_EXPIRE         = ErrorCode{40102, "登录信息过期"}  // 登录过期
