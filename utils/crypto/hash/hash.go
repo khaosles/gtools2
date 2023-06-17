@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 
 	"golang.org/x/crypto/bcrypt"
@@ -42,15 +43,13 @@ func Md5(orig string, salt string) string {
 
 // BcryptHash 使用 bcrypt 对密码进行加密
 func BcryptHash(password string) string {
-	// 第一次加密
 	encrypt1, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	// aes加密
-	return string(encrypt1)
+	return base64.StdEncoding.EncodeToString(encrypt1)
 }
 
 // BcryptCheck 对比明文密码和数据库的哈希值
 func BcryptCheck(password, hash string) bool {
-
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	decodeString, _ := base64.StdEncoding.DecodeString(hash)
+	err := bcrypt.CompareHashAndPassword(decodeString, []byte(password))
 	return err == nil
 }

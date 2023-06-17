@@ -10,5 +10,8 @@ import "testing"
 */
 
 func TestMd5(t *testing.T) {
-	println(Sha1("111", "123"))
+	r := BcryptHash("123")
+	println(r)
+	println(BcryptCheck("123", r))
+	//println(Sha1("111", "123"))
 }
