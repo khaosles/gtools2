@@ -144,7 +144,7 @@ func (mpr AbstractMapper[T]) SelectAll() ([]*T, error) {
 
 func (mpr AbstractMapper[T]) SelectCount(record *T) (int64, error) {
 	var count int64
-	err := mpr.DB.Where(record).Count(&count).Error
+	err := mpr.DB.Model(new(T)).Where(record).Count(&count).Error
 	if err != nil {
 		return 0, err
 	}
@@ -162,7 +162,7 @@ func (mpr AbstractMapper[T]) SelectByCondition(conditions *Conditions) ([]*T, er
 
 func (mpr AbstractMapper[T]) SelectCountByCondition(conditions *Conditions) (int64, error) {
 	var count int64
-	err := conditions.To(mpr.DB).Count(&count).Error
+	err := conditions.To(mpr.DB).Model(new(T)).Count(&count).Error
 	if err != nil {
 		return 0, err
 	}
