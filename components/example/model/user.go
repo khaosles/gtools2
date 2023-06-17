@@ -13,7 +13,7 @@ import (
 
 type User struct {
 	g.Model
-	UserName string
+	UserName string `json:"userName,omitempty"`
 }
 
 func (User) TableName() string {

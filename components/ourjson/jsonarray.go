@@ -1,5 +1,11 @@
 package ourjson
 
+import (
+	"encoding/json"
+
+	glog "github.com/khaosles/gtools2/core/log"
+)
+
 type JsonArray struct {
 	s []*Value
 }
@@ -101,4 +107,20 @@ func (j *JsonArray) GetNullBoolean(index int) (*Boolean, error) {
 		return nil, err
 	}
 	return val.NullBoolean()
+}
+
+func (j *JsonArray) String() string {
+	if j.s == nil {
+		return ""
+	}
+	data, err := json.Marshal(j.s)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return string(data)
+}
+
+func (j *JsonArray) Value() []*Value {
+	return j.s
 }

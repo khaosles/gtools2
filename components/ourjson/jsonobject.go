@@ -1,6 +1,10 @@
-//
-
 package ourjson
+
+import (
+	"encoding/json"
+
+	glog "github.com/khaosles/gtools2/core/log"
+)
 
 type JsonObject struct {
 	m map[string]*Value
@@ -27,8 +31,6 @@ func (j *JsonObject) Get(key string) (*Value, error) {
 }
 
 // Get a child node of JsonObject from this parent node
-// This will raise an error when the value is not existed or not a JsonObject
-// Considering having a recover function with it
 func (j *JsonObject) GetJsonObject(key string) *JsonObject {
 	val, err := j.Get(key)
 	if err != nil {
@@ -38,8 +40,6 @@ func (j *JsonObject) GetJsonObject(key string) *JsonObject {
 }
 
 // Get a child node of JsonArray from this parent node
-// This will raise an error when the value if not existed or not a JsonArray
-// Considering having a recover function with it
 func (j *JsonObject) GetJsonArray(key string) *JsonArray {
 	val, err := j.Get(key)
 	if err != nil {
@@ -64,15 +64,6 @@ func (j *JsonObject) GetInt(key string) (int, error) {
 	return val.Int()
 }
 
-// Get an integer which could be null
-// example:
-//
-//	   i, _ := jsonObject.GetNullInt("age")
-//	   if !i.Valid {
-//	       fmt.Println("null age")
-//	   } else {
-//	       fmt.Printf("the age is %d", i.Value)
-//		  }
 func (j *JsonObject) GetNullInt(key string) (*Integer, error) {
 	val, err := j.Get(key)
 	if err != nil {
@@ -121,19 +112,6 @@ func (j *JsonObject) GetBoolean(key string) (bool, error) {
 	return val.Boolean()
 }
 
-// Get a boolean which could be null
-// example:
-//
-//	   isHit, _ := jsonObject.GetNullBoolean("is_hit")
-//	   if !i.Valid {
-//	       fmt.Println("unknown")
-//	       return
-//	   }
-//		  if i.Value {
-//	       fmt.Println("hit!")
-//	   } else {
-//		      fmt.Println("now hit)
-//	   }
 func (j *JsonObject) GetNullBoolean(key string) (*Boolean, error) {
 	val, err := j.Get(key)
 	if err != nil {
@@ -144,4 +122,20 @@ func (j *JsonObject) GetNullBoolean(key string) (*Boolean, error) {
 
 func (j *JsonObject) Put(key string, val interface{}) {
 	j.m[key] = &Value{val}
+}
+
+func (j *JsonObject) String() string {
+	if j.m == nil {
+		return ""
+	}
+	data, err := json.Marshal(j.m)
+	if err != nil {
+		glog.Error(err)
+		return ""
+	}
+	return string(data)
+}
+
+func (j *JsonObject) Value() map[string]*Value {
+	return j.m
 }

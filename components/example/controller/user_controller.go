@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/khaosles/gtools2/components/ourjson"
 
 	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/example/service"
@@ -74,5 +75,7 @@ func (ctl userController) FindAll(c *gin.Context) {
 func (ctl userController) FindById(c *gin.Context) {
 	id := c.Query("id")
 	entity := ctl.userService.FindById(id)
-	g.NewResult(c).Yes(entity)
+	jsonObject := ourjson.NewJsonObject()
+	jsonObject.Put("aaa", entity)
+	g.NewResult(c).Yes(jsonObject.Value())
 }
