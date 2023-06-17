@@ -1,10 +1,10 @@
 package gstru
 
 import (
-	"encoding/json"
 	"reflect"
 	"strings"
 
+	"github.com/bytedance/sonic"
 	"github.com/iancoleman/strcase"
 )
 
@@ -100,7 +100,7 @@ func toString(value interface{}) string {
 	case string:
 		return v
 	default:
-		b, _ := json.Marshal(v)
+		b, _ := sonic.Marshal(v)
 		return string(b)
 	}
 }

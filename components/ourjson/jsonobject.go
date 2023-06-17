@@ -1,8 +1,7 @@
 package ourjson
 
 import (
-	"encoding/json"
-
+	"github.com/bytedance/sonic"
 	glog "github.com/khaosles/gtools2/core/log"
 )
 
@@ -128,7 +127,7 @@ func (j *JsonObject) String() string {
 	if j.m == nil {
 		return ""
 	}
-	data, err := json.Marshal(j.m)
+	data, err := sonic.Marshal(j.m)
 	if err != nil {
 		glog.Error(err)
 		return ""

@@ -2,12 +2,14 @@
 
 package ourjson
 
-import "encoding/json"
+import (
+	"github.com/bytedance/sonic"
+)
 
 func ParseObject(jsonStr string) (*JsonObject, error) {
 	value := new(Value)
 
-	err := json.Unmarshal([]byte(jsonStr), &value.data)
+	err := sonic.Unmarshal([]byte(jsonStr), &value.data)
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +20,7 @@ func ParseObject(jsonStr string) (*JsonObject, error) {
 func ParseArray(jsonStr string) (*JsonArray, error) {
 	value := new(Value)
 
-	err := json.Unmarshal([]byte(jsonStr), &value.data)
+	err := sonic.Unmarshal([]byte(jsonStr), &value.data)
 	if err != nil {
 		return nil, err
 	}

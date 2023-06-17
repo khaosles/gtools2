@@ -18,7 +18,7 @@ import (
 
 var (
 	{{.NameUpper}}Controller = new({{.Name}}Controller)
-	once           sync.Once
+	once{{.NameUpper}}         sync.Once
 )
 
 type {{.Name}}Controller struct {
