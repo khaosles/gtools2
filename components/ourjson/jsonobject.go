@@ -20,7 +20,6 @@ func NewJsonObject() *JsonObject {
 	return &JsonObject{m: map[string]*Value{}}
 }
 
-// Check if the key is existed
 func (j *JsonObject) HasKey(key string) bool {
 	if j.m == nil {
 		return false
@@ -36,7 +35,6 @@ func (j *JsonObject) Get(key string) (*Value, error) {
 	return j.m[key], nil
 }
 
-// Get a child node of JsonObject from this parent node
 func (j *JsonObject) GetJsonObject(key string) *JsonObject {
 	val, err := j.Get(key)
 	if err != nil {
@@ -45,7 +43,6 @@ func (j *JsonObject) GetJsonObject(key string) *JsonObject {
 	return val.JsonObject()
 }
 
-// Get a child node of JsonArray from this parent node
 func (j *JsonObject) GetJsonArray(key string) *JsonArray {
 	val, err := j.Get(key)
 	if err != nil {
