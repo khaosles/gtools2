@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/iancoleman/strcase"
-
 	gpath "github.com/khaosles/gtools2/g/path"
 )
 

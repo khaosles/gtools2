@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/khaosles/gtools2/components/g/sqlite"
 	"golang.org/x/sys/unix"
 )
 
@@ -18,6 +19,8 @@ import (
    @Time: 2023/6/15 21:10
    @Desc:
 */
+
+var a = sqlite.NewSqlite(nil)
 
 const ONE = 209 * 2
 
