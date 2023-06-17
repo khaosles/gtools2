@@ -1,9 +1,17 @@
 package ourjson
 
 import (
-	"encoding/json"
 	"strconv"
+
+	"github.com/bytedance/sonic"
 )
+
+/*
+   @File: value.go
+   @Author: khaosles
+   @Time: 2023/6/16 19:28
+   @Desc:
+*/
 
 const (
 	JSONOBJECTTYPE = "JsonObject"
@@ -17,7 +25,7 @@ type Value struct {
 }
 
 func (v *Value) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.data)
+	return sonic.Marshal(v.data)
 }
 
 func (v *Value) JsonObject() *JsonObject {
@@ -29,7 +37,6 @@ func (v *Value) JsonObject() *JsonObject {
 		mapValue[key] = &Value{val}
 	}
 	return &JsonObject{
-		//Value: Value{v.data},
 		m: mapValue,
 	}
 }

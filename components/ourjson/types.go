@@ -2,6 +2,13 @@ package ourjson
 
 import "strconv"
 
+/*
+   @File: types.go
+   @Author: khaosles
+   @Time: 2023/6/16 19:28
+   @Desc:
+*/
+
 // ---------- Boolean ----------
 type Boolean struct {
 	Valid bool

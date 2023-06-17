@@ -5,6 +5,13 @@ import (
 	"fmt"
 )
 
+/*
+   @File: errors.go
+   @Author: khaosles
+   @Time: 2023/6/16 19:28
+   @Desc:
+*/
+
 var (
 	IndexOutOfRangeError = errors.New("index out of range")
 	ValueNotNumberError  = errors.New("value is not number")

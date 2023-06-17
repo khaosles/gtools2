@@ -1,10 +1,15 @@
-//
-
 package ourjson
 
 import (
 	"github.com/bytedance/sonic"
 )
+
+/*
+   @File: json.go
+   @Author: khaosles
+   @Time: 2023/6/16 19:28
+   @Desc:
+*/
 
 func ParseObject(jsonStr string) (*JsonObject, error) {
 	value := new(Value)

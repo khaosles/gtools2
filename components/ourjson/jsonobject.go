@@ -5,6 +5,13 @@ import (
 	glog "github.com/khaosles/gtools2/core/log"
 )
 
+/*
+   @File: jsonobject.go
+   @Author: khaosles
+   @Time: 2023/6/16 19:28
+   @Desc:
+*/
+
 type JsonObject struct {
 	m map[string]*Value
 }
