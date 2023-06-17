@@ -11,7 +11,7 @@ import (
 
 	gcfg "github.com/khaosles/gtools2/core/cfg"
 	glog "github.com/khaosles/gtools2/core/log"
-	gerr "github.com/khaosles/gtools2/g/err"
+	gerr "github.com/khaosles/gtools2/utils/err"
 )
 
 /*

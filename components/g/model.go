@@ -3,7 +3,7 @@ package g
 import (
 	"gorm.io/gorm"
 
-	"github.com/khaosles/gtools2/g/gen"
+	"github.com/khaosles/gtools2/utils/gen"
 )
 
 /*

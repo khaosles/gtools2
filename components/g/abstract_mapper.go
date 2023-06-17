@@ -3,7 +3,7 @@ package g
 import (
 	"gorm.io/gorm"
 
-	gstru "github.com/khaosles/gtools2/g/struct"
+	gstru "github.com/khaosles/gtools2/utils/struct"
 )
 
 /*

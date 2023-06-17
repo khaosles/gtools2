@@ -1,0 +1,20 @@
+package model
+
+import "github.com/khaosles/gtools2/components/g"
+
+
+/*
+   @File: {{.NameSnake}}.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: Automatic code generation
+*/
+
+type {{.NameUpper}} struct {
+	g.Model
+}
+
+func ({{.NameUpper}}) TableName() string {
+	return "{{.NameSnake}}"
+}
+

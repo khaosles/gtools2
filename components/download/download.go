@@ -11,9 +11,9 @@ import (
 	"path/filepath"
 
 	gcfg "github.com/khaosles/gtools2/core/cfg"
-	gpath "github.com/khaosles/gtools2/g/path"
-	gprogress "github.com/khaosles/gtools2/g/progress"
-	gsize "github.com/khaosles/gtools2/g/size"
+	gpath "github.com/khaosles/gtools2/utils/path"
+	gprogress "github.com/khaosles/gtools2/utils/progress"
+	gsize "github.com/khaosles/gtools2/utils/size"
 	"github.com/panjf2000/ants"
 )
 

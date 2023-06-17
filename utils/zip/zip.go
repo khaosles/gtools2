@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	gpath "github.com/khaosles/gtools2/g/path"
+	gpath "github.com/khaosles/gtools2/utils/path"
 )
 
 /*

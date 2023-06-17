@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/iancoleman/strcase"
-	gpath "github.com/khaosles/gtools2/g/path"
+	gpath "github.com/khaosles/gtools2/utils/path"
 )
 
 /*
@@ -20,7 +20,7 @@ func main() {
 	project := "data-search/app"
 	modelName := "metaData"
 	root := gpath.Join(gpath.RootPath(), "app")
-	for _, name := range []string{"service.go.internal.tmpl", "service.go.tmpl", "mapper.go.internal.tmpl", "mapper.go.tmpl"} {
+	for _, name := range []string{"service.go.internal.tmpl", "service.go.tmpl", "mapper.go.internal.tmpl", "mapper.go.tmpl", "model.go.tmpl"} {
 		filepath := gpath.Join(gpath.RootPath(), "resource", "template", name)
 		tmpl, err := template.ParseFiles(filepath)
 		if err != nil {
@@ -30,11 +30,13 @@ func main() {
 		data := struct {
 			Name      string
 			NameUpper string
+			NameSnake string
 			Date      string
 			Project   string
 		}{
 			Name:      strcase.ToLowerCamel(modelName),
 			NameUpper: strcase.ToCamel(modelName),
+			NameSnake: strcase.ToSnake(modelName),
 			Date:      time.Now().Format(time.DateTime),
 			Project:   project,
 		}
@@ -48,6 +50,8 @@ func main() {
 			path = gpath.Join(root, "/mapper/internal/"+strcase.ToSnake(modelName)+"_mapper_impl.go")
 		case "mapper.go.tmpl":
 			path = gpath.Join(root, "/mapper/"+strcase.ToSnake(modelName)+"_mapper.go")
+		case "model.go.tmpl":
+			path = gpath.Join(root, "/model/"+strcase.ToSnake(modelName)+".go")
 		}
 
 		gpath.MkParentDir(path)

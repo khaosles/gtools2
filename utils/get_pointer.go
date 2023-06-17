@@ -1,4 +1,4 @@
-package g
+package utils
 
 /*
    @File: get_pointer.go
