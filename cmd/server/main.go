@@ -8,7 +8,6 @@ package main
 */
 
 func main() {
-
 	// mapper.AAA.Insert(&model.User{
 	// 	UserName: "123",
 	// })

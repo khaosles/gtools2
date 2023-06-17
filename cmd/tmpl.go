@@ -13,7 +13,7 @@ import (
 */
 
 func main() {
-	project := "data-search/app"
+	project := "admin-server/app"
 	root := gpath.Join(gpath.RootPath(), "app")
 	models := []string{
 		"sys_config",
@@ -24,9 +24,9 @@ func main() {
 		"sys_dictionary_data",
 		"sys_user",
 		"sys_role",
-		"sys_menu",
+		"sys_permission",
 		"sys_user_role",
-		"sys_role_menu",
+		"sys_role_permission",
 	}
 
 	for _, model := range models {

@@ -26,8 +26,8 @@ type {{.Name}}Controller struct {
 }
 
 func init() {
-	once.Do(func() {
-		{{.NameUpper}}Controller = &{{.Name}}Controller{{{.Name}}Service: service.New{{.NameUpper}}Service()}
+	once{{.NameUpper}}.Do(func() {
+		{{.NameUpper}}Controller = &{{.Name}}Controller{ {{.Name}}Service: service.New{{.NameUpper}}Service()}
 	})
 }
 

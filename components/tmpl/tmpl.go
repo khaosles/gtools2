@@ -1,6 +1,7 @@
 package tmpl
 
 import (
+	"fmt"
 	"os"
 	"text/template"
 	"time"
@@ -17,8 +18,12 @@ import (
 */
 
 func Run(project, modelName, root string) {
-	for _, name := range []string{"service.go.internal.tmpl", "service.go.tmpl", "mapper.go.internal.tmpl", "mapper.go.tmpl", "model.go.tmpl"} {
+	for _, name := range []string{"service.go.internal.tmpl",
+		"service.go.tmpl", "mapper.go.internal.tmpl",
+		"mapper.go.tmpl", "model.go.tmpl", "controller.go.tmpl",
+	} {
 		filepath := gpath.Join(gpath.RootPath(), "resource", "template", name)
+		fmt.Println(filepath)
 		tmpl, err := template.ParseFiles(filepath)
 		if err != nil {
 			panic(err)
@@ -48,6 +53,8 @@ func Run(project, modelName, root string) {
 			path = gpath.Join(root, "/mapper/"+strcase.ToSnake(modelName)+"_mapper.go")
 		case "model.go.tmpl":
 			path = gpath.Join(root, "/model/"+strcase.ToSnake(modelName)+".go")
+		case "controller.go.tmpl":
+			path = gpath.Join(root, "/controller/"+strcase.ToSnake(modelName)+"_controller.go")
 		}
 
 		gpath.MkParentDir(path)
