@@ -3,6 +3,7 @@ package redis
 import (
 	"context"
 	"log"
+	"sync"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -21,7 +22,37 @@ import (
    @Desc:
 */
 
-var Client *redis.Client
+var (
+	Client *redis.Client
+	once   sync.Once
+)
+
+func init() {
+	once.Do(func() {
+		cfg := &gcfg.GCfg.Redis
+		Client = redis.NewClient(&redis.Options{
+			Addr:               cfg.Addr,
+			Password:           cfg.Password,
+			DB:                 cfg.DB,
+			MaxRetries:         cfg.MaxRetries,
+			DialTimeout:        cfg.DialTimeout,
+			ReadTimeout:        cfg.ReadTimeout,
+			WriteTimeout:       cfg.WriteTimeout,
+			PoolSize:           cfg.PoolSize,
+			MinIdleConns:       cfg.MinIdleConns,
+			MaxConnAge:         cfg.MaxConnAge,
+			PoolTimeout:        cfg.PoolTimeout,
+			IdleTimeout:        cfg.IdleTimeout,
+			IdleCheckFrequency: cfg.IdleCheckFrequency,
+		})
+		pong, err := Client.Ping(context.Background()).Result()
+		if err != nil {
+			log.Fatalln("redis connect ping failed, err:", zap.Error(err))
+		} else {
+			glog.Debug("redis connect ping response:", zap.String("pong", pong))
+		}
+	})
+}
 
 func NewRedis(cfg *config.Redis) {
 	if cfg == nil {

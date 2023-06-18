@@ -16,21 +16,21 @@ func main() {
 	project := "admin-server/app"
 	root := gpath.Join(gpath.RootPath(), "app")
 	models := []string{
-		//"sys_config",
-		//"sys_config_data",
-		"log_login",
-		"log_operator",
-		//"sys_dictionary",
-		//"sys_dictionary_data",
-		//"sys_user",
-		//"sys_role",
-		//"sys_permission",
-		//"sys_user_role",
-		//"sys_role_permission",
+		"sys_config",
+		"sys_config_data",
+		//"log_login",
+		//"log_operator",
+		"sys_dictionary",
+		"sys_dictionary_data",
+		"sys_user",
+		"sys_role",
+		"sys_permission",
+		"sys_user_role",
+		"sys_role_permission",
 	}
 
 	for _, model := range models {
-		tmpl.Run(project, model, root, "log")
+		tmpl.Run(project, model, root, "system")
 	}
 
 }
