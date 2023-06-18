@@ -17,7 +17,7 @@ import (
    @Desc:
 */
 
-func Run(project, modelName, root string) {
+func Run(project, modelName, root, pkg string) {
 	for _, name := range []string{"service.go.internal.tmpl",
 		"service.go.tmpl", "mapper.go.internal.tmpl",
 		"mapper.go.tmpl", "model.go.tmpl", "controller.go.tmpl",
@@ -34,27 +34,29 @@ func Run(project, modelName, root string) {
 			NameSnake string
 			Date      string
 			Project   string
+			Pkg       string
 		}{
 			Name:      strcase.ToLowerCamel(modelName),
 			NameUpper: strcase.ToCamel(modelName),
 			NameSnake: strcase.ToSnake(modelName),
 			Date:      time.Now().Format(time.DateTime),
 			Project:   project,
+			Pkg:       pkg,
 		}
 		var path string
 		switch name {
 		case "service.go.internal.tmpl":
 			path = gpath.Join(root, "/service/internal/"+strcase.ToSnake(modelName)+"_service_impl.go")
 		case "service.go.tmpl":
-			path = gpath.Join(root, "/service/"+strcase.ToSnake(modelName)+"_service.go")
+			path = gpath.Join(root, "/service/"+pkg+"/"+strcase.ToSnake(modelName)+"_service.go")
 		case "mapper.go.internal.tmpl":
 			path = gpath.Join(root, "/mapper/internal/"+strcase.ToSnake(modelName)+"_mapper_impl.go")
 		case "mapper.go.tmpl":
-			path = gpath.Join(root, "/mapper/"+strcase.ToSnake(modelName)+"_mapper.go")
+			path = gpath.Join(root, "/mapper/"+pkg+"/"+strcase.ToSnake(modelName)+"_mapper.go")
 		case "model.go.tmpl":
-			path = gpath.Join(root, "/model/"+strcase.ToSnake(modelName)+".go")
+			path = gpath.Join(root, "/model/"+pkg+"/"+strcase.ToSnake(modelName)+".go")
 		case "controller.go.tmpl":
-			path = gpath.Join(root, "/controller/"+strcase.ToSnake(modelName)+"_controller.go")
+			path = gpath.Join(root, "/controller/"+pkg+"/"+strcase.ToSnake(modelName)+"_controller.go")
 		}
 
 		gpath.MkParentDir(path)

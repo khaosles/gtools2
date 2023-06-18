@@ -1,10 +1,10 @@
-package service
+package {{.Pkg}}
 
 import (
 	"sync"
 
-    "{{.Project}}/mapper"
-	"{{.Project}}/model"
+	{{.Pkg}}Mapper "{{.Project}}/mapper/{{.Pkg}}"
+	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"{{.Project}}/service/internal"
 	"github.com/khaosles/gtools2/components/g"
 )
@@ -22,7 +22,7 @@ var (
 )
 
 type {{.NameUpper}}Service interface {
-	g.Service[model.{{.NameUpper}}]
+	g.Service[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
 func New{{.NameUpper}}Service() {{.NameUpper}}Service {

@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/khaosles/gtools2/components/g/result"
 	"go.uber.org/zap"
 
-	"github.com/khaosles/gtools2/components/g"
 	glog "github.com/khaosles/gtools2/core/log"
 )
 
@@ -53,7 +53,13 @@ func ErrorHandling() gin.HandlerFunc {
 					zap.String("request", string(httpRequest)),
 					zap.String("stack", string(debug.Stack())),
 				)
-				c.JSON(http.StatusOK, g.NewJsonResult().CatchErr(err))
+				errorCode, ok := err.(result.ErrorCode)
+				if ok {
+					c.JSON(http.StatusOK, result.NewJsonResult().No(errorCode))
+				} else {
+					errorCode = result.NewInternalError(err)
+				}
+				c.JSON(http.StatusOK, result.NewJsonResult().No(errorCode))
 			}
 		}()
 		c.Next()

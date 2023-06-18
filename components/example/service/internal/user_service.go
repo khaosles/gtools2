@@ -14,7 +14,7 @@ import (
 */
 
 type UserService struct {
-	g.AbstractService[model.User]
+	g.BaseService[model.User]
 }
 
 func NewUserService(userMapper mapper.UserMapper) *UserService {

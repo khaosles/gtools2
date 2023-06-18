@@ -3,7 +3,7 @@ package internal
 import (
 	"gorm.io/gorm"
 
-	"{{.Project}}/model"
+	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -15,7 +15,7 @@ import (
 */
 
 type {{.NameUpper}}MapperImpl struct {
-	g.AbstractMapper[model.{{.NameUpper}}]
+	g.BaseMapper[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
 func New{{.NameUpper}}MapperImpl(db *gorm.DB) *{{.NameUpper}}MapperImpl {

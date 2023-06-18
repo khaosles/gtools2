@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/khaosles/gtools2/components/g"
+	"github.com/khaosles/gtools2/components/g/result"
 	glog "github.com/khaosles/gtools2/core/log"
 	"github.com/unrolled/secure"
 )
@@ -25,7 +25,7 @@ func SSLRedirect() gin.HandlerFunc {
 		err := middleware.Process(c.Writer, c.Request)
 		if err != nil {
 			glog.Error(err)
-			c.JSON(http.StatusOK, g.NewJsonResult().CatchErr(err))
+			c.JSON(http.StatusOK, result.NewJsonResult().No(result.NewInternalError(err)))
 			return
 		}
 		// 继续往下处理

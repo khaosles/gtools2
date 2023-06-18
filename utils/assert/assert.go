@@ -3,6 +3,8 @@ package assert
 import (
 	"strings"
 
+	"github.com/khaosles/gtools2/components/g/result"
+	glog "github.com/khaosles/gtools2/core/log"
 	gsafe "github.com/khaosles/gtools2/utils/safe"
 )
 
@@ -15,54 +17,55 @@ import (
 
 func IsNull(obj any, msg string) {
 	if obj == nil {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsNotNull(obj any, msg string) {
 	if obj != nil {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsBlank(s string, msg string) {
 	if strings.TrimSpace(s) == "" {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsNotBlank(s string, msg string) {
 	if strings.TrimSpace(s) != "" {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsEmpty[T gsafe.Numeric](num T, msg string) {
 	if num == 0 {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsTrue(expr bool, msg string) {
 	if expr == true {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsFalse(expr bool, msg string) {
 	if expr == false {
-		panic(msg)
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func ExecSuccess(err error, msg string) {
 	if err != nil {
-		panic(msg)
+		glog.Error(err)
+		panic(result.NewInternalError(msg))
 	}
 }
 
 func CheckCount(count int, msg string) {
 	if count < 1 {
-		panic(msg)
+		panic(result.NewInternalError(msg))
 	}
 }

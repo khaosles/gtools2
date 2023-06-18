@@ -1,11 +1,10 @@
-package controller
+package {{.Pkg}}
 
 import (
 	"sync"
 
-	"github.com/gin-gonic/gin"
-	"{{.Project}}/model"
-	"{{.Project}}/service"
+	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
+	{{.Pkg}}Service "{{.Project}}/service/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -22,50 +21,13 @@ var (
 )
 
 type {{.Name}}Controller struct {
-	{{.Name}}Service service.{{.NameUpper}}Service
+	g.BaseController[{{.Pkg}}Model.{{.NameUpper}} ]
+	{{.Name}}Service {{.Pkg}}Service.{{.NameUpper}}Service
 }
 
 func init() {
 	once{{.NameUpper}}.Do(func() {
-		{{.NameUpper}}Controller = &{{.Name}}Controller{ {{.Name}}Service: service.New{{.NameUpper}}Service()}
+		{{.NameUpper}}Controller = &{{.Name}}Controller{ {{.Name}}Service: {{.Pkg}}Service.New{{.NameUpper}}Service()}
 	})
 }
 
-func (ctl {{.Name}}Controller) Add(c *gin.Context) {
-	var entity model.{{.NameUpper}}
-	err := c.ShouldBindJSON(&entity)
-	if err != nil {
-		g.NewResult(c).No(g.SYSTEM_ERROR)
-		return
-	}
-	ctl.{{.Name}}Service.Save(&entity)
-	g.NewResult(c).Yes(nil)
-}
-
-func (ctl {{.Name}}Controller) Update(c *gin.Context) {
-	var entity model.{{.NameUpper}}
-	err := c.ShouldBindJSON(&entity)
-	if err != nil {
-		g.NewResult(c).No(g.SYSTEM_ERROR)
-		return
-	}
-	ctl.{{.Name}}Service.Update(&entity)
-	g.NewResult(c).Yes(nil)
-}
-
-func (ctl {{.Name}}Controller) DeleteById(c *gin.Context) {
-	id := c.Param("id")
-	ctl.{{.Name}}Service.DeleteById(id)
-	g.NewResult(c).Yes(nil)
-}
-
-func (ctl {{.Name}}Controller) FindAll(c *gin.Context) {
-	entities := ctl.{{.Name}}Service.FindAll()
-	g.NewResult(c).Yes(entities)
-}
-
-func (ctl {{.Name}}Controller) FindById(c *gin.Context) {
-	id := c.Query("id")
-	entity := ctl.{{.Name}}Service.FindById(id)
-	g.NewResult(c).Yes(entity)
-}

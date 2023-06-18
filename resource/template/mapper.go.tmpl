@@ -1,10 +1,10 @@
-package mapper
+package {{.Pkg}}
 
 import (
 	"sync"
 
     "{{.Project}}/mapper/internal"
-	"{{.Project}}/model"
+	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -22,13 +22,13 @@ var (
 )
 
 type {{.NameUpper}}Mapper interface {
-	g.Mapper[model.{{.NameUpper}}]
+	g.Mapper[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
 func New{{.NameUpper}}Mapper() {{.NameUpper}}Mapper {
 	once{{.NameUpper}}.Do(func() {
         if {{.Name}}MapperInstance == nil {
-            {{.Name}}MapperInstance = internal.New{{.NameUpper}}MapperImpl(NewDB())
+            {{.Name}}MapperInstance = internal.New{{.NameUpper}}MapperImpl(mapper.NewDB())
         }
     })
 	return {{.Name}}MapperInstance

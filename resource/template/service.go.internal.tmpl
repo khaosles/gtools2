@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"{{.Project}}/mapper"
-	"{{.Project}}/model"
+	{{.Pkg}}Mapper "{{.Project}}/mapper/{{.Pkg}}"
+	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -14,10 +14,10 @@ import (
 */
 
 type {{.NameUpper}}ServiceImpl struct {
-	g.AbstractService[model.{{.NameUpper}}]
+	g.BaseService[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
-func New{{.NameUpper}}ServiceImpl({{.Name}}Mapper mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}ServiceImpl {
+func New{{.NameUpper}}ServiceImpl({{.Name}}Mapper {{.Pkg}}Mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}ServiceImpl {
 	var {{.Name}}ServiceImpl {{.NameUpper}}ServiceImpl
 	{{.Name}}ServiceImpl.Mpr = {{.Name}}Mapper
 	return &{{.Name}}ServiceImpl

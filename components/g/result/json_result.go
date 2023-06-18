@@ -1,11 +1,4 @@
-package g
-
-import (
-	"fmt"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
-)
+package result
 
 /*
    @File: json_result.go
@@ -13,24 +6,6 @@ import (
    @Time: 2023/3/7 21:54
    @Desc:
 */
-
-type Result struct {
-	ctx *gin.Context
-}
-
-func NewResult(ctx *gin.Context) *Result {
-	return &Result{ctx: ctx}
-}
-
-func (r Result) Yes(data any) {
-	r.ctx.JSON(http.StatusOK, NewJsonResult().Yes(data))
-	return
-}
-
-func (r Result) No(code ErrorCode) {
-	r.ctx.JSON(http.StatusOK, NewJsonResult().No(code))
-	return
-}
 
 type JsonResult struct {
 	// code
@@ -75,9 +50,4 @@ func (jr *JsonResult) Yes(data interface{}) *JsonResult {
 // No is run failed
 func (jr *JsonResult) No(err ErrorCode) *JsonResult {
 	return jr.SetCode(err.Code).SetMsg(err.Msg)
-}
-
-// CatchErr 异常捕获
-func (jr *JsonResult) CatchErr(err any) *JsonResult {
-	return jr.No(CATCH_ERROR.SetMsg(fmt.Sprintf("%v", err)))
 }

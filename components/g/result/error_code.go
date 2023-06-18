@@ -1,4 +1,6 @@
-package g
+package result
+
+import "fmt"
 
 /*
    @File: error_code.go
@@ -12,9 +14,33 @@ type ErrorCode struct {
 	Msg  string `json:"msg"`
 }
 
-func (e ErrorCode) SetMsg(msg string) ErrorCode {
-	e.Msg = msg
+func (e ErrorCode) SetMsg(msg any) ErrorCode {
+	e.Msg = fmt.Sprintf("%v", msg)
 	return e
+}
+
+func (e ErrorCode) Error() string {
+	return e.Msg
+}
+
+func NewAssertError(msg any) ErrorCode {
+	return ErrorCode{Code: 40000}.SetMsg(msg)
+}
+
+func NewAuthError(msg any) ErrorCode {
+	return ErrorCode{Code: 40100}.SetMsg(msg)
+}
+
+func NewNotFoundError(msg any) ErrorCode {
+	return ErrorCode{Code: 40400}.SetMsg(msg)
+}
+
+func NewForbiddenError(msg any) ErrorCode {
+	return ErrorCode{Code: 40300}.SetMsg(msg)
+}
+
+func NewInternalError(msg any) ErrorCode {
+	return ErrorCode{Code: 50000}.SetMsg(msg)
 }
 
 var (
@@ -28,5 +54,4 @@ var (
 	NOT_FOUND_ERROR      = ErrorCode{40400, "请求数据不存在"} // 数据不存在
 	FORBIDDEN_ERROR      = ErrorCode{40300, "禁止访问"}    // 数据禁止访问
 	SYSTEM_ERROR         = ErrorCode{50000, "操作失败"}    // 系统内部出错
-	CATCH_ERROR          = ErrorCode{50010, ""}        // 捕获的错误异常
 )

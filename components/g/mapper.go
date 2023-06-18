@@ -7,7 +7,7 @@ package g
    @Desc: mapper接口继承该接口
 */
 
-var _ Mapper[any] = (*AbstractMapper[any])(nil)
+var _ Mapper[any] = (*BaseMapper[any])(nil)
 
 type Mapper[T any] interface {
 	Save(record *T) error                      // 插入或者更新

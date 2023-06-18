@@ -14,7 +14,7 @@ import (
 */
 
 type UserMapper struct {
-	g.AbstractMapper[model.User]
+	g.BaseMapper[model.User]
 }
 
 func NewUserMapper(db *gorm.DB) *UserMapper {
