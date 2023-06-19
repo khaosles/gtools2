@@ -70,6 +70,18 @@ func IsEmpty[T any](arr []T, msg string) {
 	}
 }
 
+func IsEmptyPointer(obj any, msg string) {
+	if obj == nil {
+		panic(result.NewInternalError(msg))
+	}
+}
+
+func IsNotEmptyPointer(obj any, msg string) {
+	if obj != nil {
+		panic(result.NewInternalError(msg))
+	}
+}
+
 func CheckCount(count int, msg string) {
 	if count < 1 {
 		panic(result.NewInternalError(msg))
