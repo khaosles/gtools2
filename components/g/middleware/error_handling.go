@@ -54,9 +54,7 @@ func ErrorHandling() gin.HandlerFunc {
 					zap.String("stack", string(debug.Stack())),
 				)
 				errorCode, ok := err.(result.ErrorCode)
-				if ok {
-					c.JSON(http.StatusOK, result.NewJsonResult().No(errorCode))
-				} else {
+				if !ok {
 					errorCode = result.NewInternalError(err)
 				}
 				c.JSON(http.StatusOK, result.NewJsonResult().No(errorCode))
