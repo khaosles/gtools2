@@ -59,7 +59,7 @@ func IsFalse(expr bool, msg string) {
 }
 
 func IsEmpty[T any](arr []T, msg string) {
-	if len(arr) != 0 {
+	if len(arr) == 0 {
 		panic(result.NewAssertError(msg))
 	}
 }
