@@ -2,6 +2,7 @@ package assert
 
 import (
 	"strings"
+	"time"
 
 	"github.com/khaosles/gtools2/components/g/result"
 	glog "github.com/khaosles/gtools2/core/log"
@@ -57,27 +58,33 @@ func IsFalse(expr bool, msg string) {
 	}
 }
 
-func ExecSuccess(err error, msg string) {
-	if err != nil {
-		glog.Error(err)
-		panic(result.NewInternalError(msg))
-	}
-}
-
 func IsEmpty[T any](arr []T, msg string) {
 	if len(arr) != 0 {
-		panic(result.NewInternalError(msg))
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsEmptyPointer(obj any, msg string) {
 	if obj == nil {
-		panic(result.NewInternalError(msg))
+		panic(result.NewAssertError(msg))
 	}
 }
 
 func IsNotEmptyPointer(obj any, msg string) {
 	if obj != nil {
+		panic(result.NewAssertError(msg))
+	}
+}
+
+func IsEmptyTime(t time.Time, msg string) {
+	if t.IsZero() {
+		panic(result.NewAssertError(msg))
+	}
+}
+
+func ExecSuccess(err error, msg string) {
+	if err != nil {
+		glog.Error(err)
 		panic(result.NewInternalError(msg))
 	}
 }
