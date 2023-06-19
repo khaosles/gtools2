@@ -39,7 +39,7 @@ func IsNotBlank(s string, msg string) {
 	}
 }
 
-func IsEmpty[T gsafe.Numeric](num T, msg string) {
+func IsZero[T gsafe.Numeric](num T, msg string) {
 	if num == 0 {
 		panic(result.NewAssertError(msg))
 	}
@@ -60,6 +60,12 @@ func IsFalse(expr bool, msg string) {
 func ExecSuccess(err error, msg string) {
 	if err != nil {
 		glog.Error(err)
+		panic(result.NewInternalError(msg))
+	}
+}
+
+func IsEmpty[T any](arr []T, msg string) {
+	if len(arr) != 0 {
 		panic(result.NewInternalError(msg))
 	}
 }
