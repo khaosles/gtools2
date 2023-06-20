@@ -1,6 +1,7 @@
 package ourjson
 
 import (
+	"sort"
 	"sync"
 
 	"github.com/bytedance/sonic"
@@ -174,4 +175,24 @@ func (j *JsonObject) Value() map[string]*Value {
 	defer j.mutex.Unlock()
 	j.mutex.Lock()
 	return j.m
+}
+
+func (j *JsonObject) Sort() {
+	defer j.mutex.Unlock()
+	j.mutex.Lock()
+	// 提取 map 中的键到切片
+	keys := make([]string, 0, len(j.m))
+	for key := range j.m {
+		keys = append(keys, key)
+	}
+
+	// 对键进行排序
+	sort.Strings(keys)
+
+	newM := make(map[string]*Value)
+	// 根据排序后的键遍历输出值
+	for _, key := range keys {
+		newM[key] = j.m[key]
+	}
+	j.m = newM
 }
