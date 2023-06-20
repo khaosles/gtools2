@@ -41,6 +41,19 @@ func (v *Value) JsonObject() *JsonObject {
 	}
 }
 
+func (v *Value) JsonOrderObject() *JsonOrderObject {
+	if _, ok := v.data.(map[string]interface{}); !ok {
+		panic(ValueTransformTypeError{JSONOBJECTTYPE})
+	}
+	mapValue := make(map[string]*Value)
+	for key, val := range v.data.(map[string]interface{}) {
+		mapValue[key] = &Value{val}
+	}
+	return &JsonOrderObject{
+		m: mapValue,
+	}
+}
+
 func (v *Value) JsonArray() *JsonArray {
 	if _, ok := v.data.([]interface{}); !ok {
 		panic(ValueTransformTypeError{JSONARRAYTYPE})
