@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/bytedance/sonic"
+	"github.com/elliotchance/orderedmap/v2"
 )
 
 /*
@@ -42,15 +43,17 @@ func (v *Value) JsonObject() *JsonObject {
 }
 
 func (v *Value) JsonOrderObject() *JsonOrderObject {
-	if _, ok := v.data.(map[string]interface{}); !ok {
+	if _, ok := v.data.(orderedmap.OrderedMap[string, *Value]); !ok {
 		panic(ValueTransformTypeError{JSONOBJECTTYPE})
 	}
-	mapValue := make(map[string]*Value)
+	mapValue := orderedmap.OrderedMap[string, *Value]{}
 	for key, val := range v.data.(map[string]interface{}) {
-		mapValue[key] = &Value{val}
+		//mapValue[key] = &Value{val}
+		mapValue.Set(key, &Value{val})
+
 	}
 	return &JsonOrderObject{
-		m: mapValue,
+		m: &mapValue,
 	}
 }
 
