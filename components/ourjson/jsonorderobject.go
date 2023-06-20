@@ -172,8 +172,8 @@ func (j *JsonOrderObject) String() string {
 	return string(data)
 }
 
-func (j *JsonOrderObject) Value() *orderedmap.OrderedMap[string, *Value] {
+func (j *JsonOrderObject) Value() orderedmap.OrderedMap[string, *Value] {
 	defer j.mutex.Unlock()
 	j.mutex.Lock()
-	return j.m
+	return *j.m
 }
