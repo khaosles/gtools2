@@ -25,8 +25,6 @@ func NewJsonObject() *JsonObject {
 }
 
 func (j *JsonObject) HasKey(key string) bool {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	if j.m == nil {
 		return false
 	}
@@ -52,8 +50,6 @@ func (j *JsonObject) GetJsonObject(key string) *JsonObject {
 }
 
 func (j *JsonObject) GetJsonArray(key string) *JsonArray {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		panic(err)
@@ -62,8 +58,6 @@ func (j *JsonObject) GetJsonArray(key string) *JsonArray {
 }
 
 func (j *JsonObject) GetString(key string) (string, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return "", err
@@ -72,8 +66,6 @@ func (j *JsonObject) GetString(key string) (string, error) {
 }
 
 func (j *JsonObject) GetInt(key string) (int, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return 0, err
@@ -82,8 +74,6 @@ func (j *JsonObject) GetInt(key string) (int, error) {
 }
 
 func (j *JsonObject) GetNullInt(key string) (*Integer, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return nil, err
@@ -92,8 +82,6 @@ func (j *JsonObject) GetNullInt(key string) (*Integer, error) {
 }
 
 func (j *JsonObject) GetInt64(key string) (int64, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return 0, err
@@ -102,8 +90,6 @@ func (j *JsonObject) GetInt64(key string) (int64, error) {
 }
 
 func (j *JsonObject) GetNullLong(key string) (*Long, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return nil, err
@@ -112,8 +98,6 @@ func (j *JsonObject) GetNullLong(key string) (*Long, error) {
 }
 
 func (j *JsonObject) GetFloat64(key string) (float64, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return 0, err
@@ -122,8 +106,6 @@ func (j *JsonObject) GetFloat64(key string) (float64, error) {
 }
 
 func (j *JsonObject) GetNullFloat(key string) (*Float, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return nil, err
@@ -132,8 +114,6 @@ func (j *JsonObject) GetNullFloat(key string) (*Float, error) {
 }
 
 func (j *JsonObject) GetBoolean(key string) (bool, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return false, err
@@ -142,8 +122,6 @@ func (j *JsonObject) GetBoolean(key string) (bool, error) {
 }
 
 func (j *JsonObject) GetNullBoolean(key string) (*Boolean, error) {
-	defer j.mutex.Unlock()
-	j.mutex.Lock()
 	val, err := j.Get(key)
 	if err != nil {
 		return nil, err

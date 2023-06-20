@@ -27,8 +27,6 @@ func (s *Map[K, V]) Put(key K, value V) {
 }
 
 func (s *Map[K, V]) HasKey(key K) bool {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
 	_, ok := s.m[key]
 	return ok
 }
