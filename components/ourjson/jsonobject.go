@@ -177,7 +177,7 @@ func (j *JsonObject) Value() map[string]*Value {
 	return j.m
 }
 
-func (j *JsonObject) Sort() {
+func (j *JsonObject) Sort() *JsonObject {
 	defer j.mutex.Unlock()
 	j.mutex.Lock()
 	// 提取 map 中的键到切片
@@ -185,14 +185,13 @@ func (j *JsonObject) Sort() {
 	for key := range j.m {
 		keys = append(keys, key)
 	}
-
 	// 对键进行排序
 	sort.Strings(keys)
-
 	newM := make(map[string]*Value)
 	// 根据排序后的键遍历输出值
 	for _, key := range keys {
 		newM[key] = j.m[key]
 	}
 	j.m = newM
+	return j
 }
