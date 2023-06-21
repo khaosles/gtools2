@@ -34,13 +34,16 @@ func TestRsa(t *testing.T) {
 
 func TestSign(t *testing.T) {
 	bits := 2048
-	spub, spri := CreateKeyX509PKCS1(bits)
+	spub, spri := CreateKeyX509PKCS8(bits)
 	data := "0123456789"
-	pub, err := PublicKeyFromX509PKCS1(spub)
+	pub, err := PublicKeyFromX509PKCS8(spub)
 	assert.NoError(t, err)
 
-	pri, err := PrivateKeyFromX509PKCS1(spri)
+	pri, err := PrivateKeyFromX509PKCS8(spri)
 	assert.NoError(t, err)
+	fmt.Println(data)
+	fmt.Println(pub)
+	fmt.Println(pri)
 
 	sign, err := Sign(pri, []byte(data))
 	fmt.Println(hex.EncodeToString(sign))
