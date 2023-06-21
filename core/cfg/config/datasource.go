@@ -19,6 +19,7 @@ type Datasource struct {
 	Singular     bool   `mapstructure:"singular" default:"true" yaml:"singular" json:"singular"`
 	MaxIdleConns int    `mapstructure:"max-idle-conns" default:"10" yaml:"max-idle-conns" json:"maxIdleConns"`
 	MaxOpenConns int    `mapstructure:"max-open-conns" default:"100" yaml:"max-open-conns" json:"maxOpenConns"`
+	MaxLifeTime  int    `mapstructure:"max-life-time" default:"5" yaml:"max-life-time" json:"maxLifeTime"`
 	LogMode      string `mapstructure:"log-mode" default:"debug" yaml:"log-mode" json:"logMode"`
 	LogZap       bool   `mapstructure:"log-zap" default:"false" yaml:"log-zap" json:"logZap"`
 }

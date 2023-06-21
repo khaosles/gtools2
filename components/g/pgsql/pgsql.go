@@ -2,6 +2,7 @@ package pgsql
 
 import (
 	"sync"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -59,6 +60,7 @@ func NewPgsql(cfg *config.Pgsql) *gorm.DB {
 			sqlDB, _ := pdb.DB()
 			sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
 			sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
+			sqlDB.SetConnMaxLifetime(time.Minute * time.Duration(cfg.MaxLifeTime))
 			glog.Debug("Database connection successful...")
 		}
 	})

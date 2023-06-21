@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"log"
+	"time"
 
 	"github.com/khaosles/gtools2/components/g/internal"
 	"github.com/khaosles/gtools2/core/cfg/config"
@@ -56,6 +57,7 @@ func NewMysql(cfg *config.Mysql) *gorm.DB {
 		sqlDB, _ := mydb.DB()
 		sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
+		sqlDB.SetConnMaxLifetime(time.Minute * time.Duration(cfg.MaxLifeTime))
 		glog.Debug("Database connection successful...")
 		return mydb
 	}

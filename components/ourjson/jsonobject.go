@@ -1,6 +1,9 @@
 package ourjson
 
 import (
+	"sort"
+	"sync"
+
 	"github.com/bytedance/sonic"
 	glog "github.com/khaosles/gtools2/core/log"
 )
@@ -13,7 +16,8 @@ import (
 */
 
 type JsonObject struct {
-	m map[string]*Value
+	m     map[string]*Value
+	mutex sync.Mutex
 }
 
 func NewJsonObject() *JsonObject {
@@ -29,6 +33,8 @@ func (j *JsonObject) HasKey(key string) bool {
 }
 
 func (j *JsonObject) Get(key string) (*Value, error) {
+	defer j.mutex.Unlock()
+	j.mutex.Lock()
 	if !j.HasKey(key) {
 		return nil, KeyNotFoundError{key}
 	}
@@ -124,10 +130,14 @@ func (j *JsonObject) GetNullBoolean(key string) (*Boolean, error) {
 }
 
 func (j *JsonObject) Put(key string, val interface{}) {
+	defer j.mutex.Unlock()
+	j.mutex.Lock()
 	j.m[key] = &Value{val}
 }
 
 func (j *JsonObject) String() string {
+	defer j.mutex.Unlock()
+	j.mutex.Lock()
 	if j.m == nil {
 		return ""
 	}
@@ -140,5 +150,26 @@ func (j *JsonObject) String() string {
 }
 
 func (j *JsonObject) Value() map[string]*Value {
+	defer j.mutex.Unlock()
+	j.mutex.Lock()
 	return j.m
+}
+
+func (j *JsonObject) Sort() *JsonObject {
+	defer j.mutex.Unlock()
+	j.mutex.Lock()
+	// 提取 map 中的键到切片
+	keys := make([]string, 0, len(j.m))
+	for key := range j.m {
+		keys = append(keys, key)
+	}
+	// 对键进行排序
+	sort.Strings(keys)
+	newM := make(map[string]*Value)
+	// 根据排序后的键遍历输出值
+	for _, key := range keys {
+		newM[key] = j.m[key]
+	}
+	j.m = newM
+	return j
 }
