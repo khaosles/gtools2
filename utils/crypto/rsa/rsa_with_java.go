@@ -9,6 +9,7 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
+	"sync"
 )
 
 /*
@@ -17,6 +18,9 @@ import (
    @Time: 2023/6/21 11:40
    @Desc:
 */
+
+var rsaWithJavaInstance RsaWithJava
+var once sync.Once
 
 type RsaWithJava interface {
 	// Encrypt 与java匹配的加密
@@ -32,7 +36,12 @@ type RsaWithJava interface {
 }
 
 func GetRsaWithJavaInstance() RsaWithJava {
-	return &rsaWithJava{}
+	once.Do(func() {
+		if rsaWithJavaInstance == nil {
+			rsaWithJavaInstance = &rsaWithJava{}
+		}
+	})
+	return rsaWithJavaInstance
 }
 
 type rsaWithJava struct{}
