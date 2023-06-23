@@ -7,7 +7,7 @@ import (
 )
 
 /*
-   @File: model.go
+   @File: base_model.go
    @Author: khaosles
    @Time: 2023/6/11 11:10
    @Desc: model 继承该类，则拥有常见基础属性，以及自动生成无分隔符的uuid
@@ -39,14 +39,14 @@ func (m *IdMixin) BeforeCreate(tx *gorm.DB) error {
 	return nil
 }
 
-type Model struct {
+type BaseModel struct {
 	IdMixin
 	PgTimeMixin
 	AuthMixin
 	Remarks string `json:"remarks,omitempty" gorm:"column:remarks;default:null;comment:备注"` // 备注
 }
 
-type ModelNoPg struct {
+type BaseModelNoPg struct {
 	IdMixin
 	TimeMixin
 	AuthMixin
