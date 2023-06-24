@@ -5,7 +5,7 @@ import (
 
 	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
-	gerr "github.com/khaosles/gtools2/utils/err"
+	"github.com/khaosles/gtools2/utils/assert"
 )
 
 /*
@@ -25,9 +25,7 @@ type {{.NameUpper}}Service interface {
 }
 
 func Get{{.NameUpper}}ServiceInstance() {{.NameUpper}}Service {
-    if {{.Name}}ServiceInstance == nil {
-        panic(gerr.NotImplementedException.New("{{.NameUpper}}Service not implemented."))
-    }
+    assert.IsNotImplemented({{.Name}}ServiceInstance, "{{.NameUpper}}Service not implemented.")
 	return {{.Name}}ServiceInstance
 }
 

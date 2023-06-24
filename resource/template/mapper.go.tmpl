@@ -5,7 +5,7 @@ import (
 	
 	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
-	gerr "github.com/khaosles/gtools2/utils/err"
+	"github.com/khaosles/gtools2/utils/assert"
 )
 
 
@@ -26,9 +26,7 @@ type {{.NameUpper}}Mapper interface {
 }
 
 func Get{{.NameUpper}}MapperInstance() {{.NameUpper}}Mapper {
-    if {{.Name}}MapperInstance == nil {
-        panic(gerr.NotImplementedException.New("{{.NameUpper}}Mapper not implemented."))
-    }
+    assert.IsNotImplemented({{.Name}}MapperInstance, "{{.NameUpper}}Mapper not implemented.")
 	return {{.Name}}MapperInstance
 }
 
