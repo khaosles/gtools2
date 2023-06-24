@@ -6,6 +6,8 @@ import (
 
 	"github.com/khaosles/gtools2/components/g/result"
 	glog "github.com/khaosles/gtools2/core/log"
+	gerr "github.com/khaosles/gtools2/utils/err"
+	gpath "github.com/khaosles/gtools2/utils/path"
 	gsafe "github.com/khaosles/gtools2/utils/safe"
 )
 
@@ -79,6 +81,24 @@ func IsNotEmptyPointer(obj any, msg string) {
 func IsEmptyTime(t time.Time, msg string) {
 	if t.IsZero() {
 		panic(result.NewAssertError(msg))
+	}
+}
+
+func IsFile(file string, msg string) {
+	if gpath.IsFile(file) {
+		panic(result.NewAssertError(msg))
+	}
+}
+
+func IsNotFile(file string, msg string) {
+	if !gpath.IsFile(file) {
+		panic(result.NewAssertError(msg))
+	}
+}
+
+func IsNotImplemented(point any, msg string) {
+	if point == nil {
+		panic(gerr.NotImplementedException.New(msg))
 	}
 }
 
