@@ -7,10 +7,9 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/khaosles/gtools2/core/cfg/config"
+	"github.com/khaosles/gtools2/core/config"
 	"go.uber.org/zap"
 
-	gcfg "github.com/khaosles/gtools2/core/cfg"
 	glog "github.com/khaosles/gtools2/core/log"
 	gerr "github.com/khaosles/gtools2/utils/err"
 )
@@ -27,9 +26,8 @@ var (
 	once   sync.Once
 )
 
-func init() {
+func InitRedis(cfg *config.Redis) {
 	once.Do(func() {
-		cfg := &gcfg.GCfg.Redis
 		Client = redis.NewClient(&redis.Options{
 			Addr:               cfg.Addr,
 			Password:           cfg.Password,
@@ -52,33 +50,6 @@ func init() {
 			glog.Debug("redis connect ping response:", zap.String("pong", pong))
 		}
 	})
-}
-
-func NewRedis(cfg *config.Redis) {
-	if cfg == nil {
-		cfg = &gcfg.GCfg.Redis
-	}
-	Client = redis.NewClient(&redis.Options{
-		Addr:               cfg.Addr,
-		Password:           cfg.Password,
-		DB:                 cfg.DB,
-		MaxRetries:         cfg.MaxRetries,
-		DialTimeout:        cfg.DialTimeout,
-		ReadTimeout:        cfg.ReadTimeout,
-		WriteTimeout:       cfg.WriteTimeout,
-		PoolSize:           cfg.PoolSize,
-		MinIdleConns:       cfg.MinIdleConns,
-		MaxConnAge:         cfg.MaxConnAge,
-		PoolTimeout:        cfg.PoolTimeout,
-		IdleTimeout:        cfg.IdleTimeout,
-		IdleCheckFrequency: cfg.IdleCheckFrequency,
-	})
-	pong, err := Client.Ping(context.Background()).Result()
-	if err != nil {
-		log.Fatalln("redis connect ping failed, err:", zap.Error(err))
-	} else {
-		glog.Debug("redis connect ping response:", zap.String("pong", pong))
-	}
 }
 
 //  /////////////////////////// 字符串 ///////////////////////////

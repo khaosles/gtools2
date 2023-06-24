@@ -1,11 +1,8 @@
 package sqlite
 
 import (
-	"log"
-
 	"github.com/khaosles/gtools2/components/g/internal"
-	gcfg "github.com/khaosles/gtools2/core/cfg"
-	"github.com/khaosles/gtools2/core/cfg/config"
+	"github.com/khaosles/gtools2/core/config"
 	glog "github.com/khaosles/gtools2/core/log"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -18,41 +15,19 @@ import (
    @Desc:
 */
 
-var sdb *gorm.DB
-
-//
-//func init() {
-//	var err error
-//	cfg := gcfg.GCfg.Sqlite
-//	if DB, err = gorm.Open(sqlite.Open(cfg.Dsn()), internal.Gorm.Config(
-//		cfg.Prefix, cfg.Singular, cfg.LogMode, cfg.LogZap),
-//	); err != nil {
-//		log.Fatal("Database connection failed=> ", cfg.Dsn())
-//		return
-//	} else {
-//		sqlDB, _ := DB.DB()
-//		sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
-//		sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
-//		glog.Debug("数据库连接成功...")
-//
-//	}
-//}
-
 func NewSqlite(cfg *config.Sqlite) *gorm.DB {
-	if cfg == nil {
-		cfg = &gcfg.GCfg.Sqlite
-	}
 	var err error
-	if sdb, err = gorm.Open(sqlite.Open(cfg.Dsn()), internal.Gorm.Config(
+	var db *gorm.DB
+	if db, err = gorm.Open(sqlite.Open(cfg.Dsn()), internal.Gorm.Config(
 		cfg.Prefix, cfg.Singular, cfg.LogMode, cfg.LogZap),
 	); err != nil {
-		log.Fatal("Database connection failed=> ", cfg.Dsn())
+		glog.Error("Database connection failed=> ", cfg.Dsn())
 		return nil
 	} else {
-		sqlDB, _ := sdb.DB()
+		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
 		glog.Debug("Database connection successful...")
 	}
-	return sdb
+	return db
 }

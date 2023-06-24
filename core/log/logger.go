@@ -11,7 +11,7 @@ import (
 	"os"
 	"time"
 
-	gcfg "github.com/khaosles/gtools2/core/cfg"
+	"github.com/khaosles/gtools2/core/config"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -19,12 +19,13 @@ import (
 
 const ONE_DAY = time.Hour * 24
 
+var prefix string
+
 var logger *zap.SugaredLogger
 
-func init() {
+func InitLogger(logCfg config.Logging) {
 
-	logCfg := gcfg.GCfg.Logging
-
+	prefix = logCfg.Prefix
 	encoder := zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
 		MessageKey:     "message",
 		LevelKey:       "level",
@@ -47,7 +48,7 @@ func init() {
 
 	var cores []zapcore.Core
 	if logCfg.LogInFile {
-		path := logPath()
+		path := logPath(logCfg.Path)
 		hook, _ := rotatelogs.New(
 			path+"/%Y-%m-%d.log",
 			rotatelogs.WithLinkName(path),
@@ -70,8 +71,7 @@ func init() {
 	logger = log.Sugar()
 }
 
-func logPath() string {
-	path := gcfg.GCfg.Logging.Path
+func logPath(path string) string {
 	if path == "" {
 		wk, _ := os.Getwd()
 		path = wk + "/logs"
@@ -81,7 +81,7 @@ func logPath() string {
 }
 
 func encodeTime(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(gcfg.GCfg.Logging.Prefix + t.In(time.FixedZone("CTS", 8*3600)).Format("2006-01-02 15:04:05.000"))
+	enc.AppendString(prefix + t.In(time.FixedZone("CTS", 8*3600)).Format("2006-01-02 15:04:05.000"))
 }
 
 func levelChoice(level string) zapcore.Level {

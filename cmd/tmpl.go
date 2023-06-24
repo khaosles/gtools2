@@ -16,37 +16,21 @@ func main() {
 	project := "data-oversea/app"
 	root := gpath.Join(gpath.RootPath(), "app")
 	models := map[string][]string{
-		"log": {
-			"LogApi",
-			"LogTask",
-		},
-		"task": {
-			"Order",
-			"TmpSubProduct",
-			"Product",
-			"Task",
-			"SubProduct",
-		},
+		//"log": {
+		//	"LogApi",
+		//	"LogTask",
+		//},
+		//"task": {
+		//	"Order",
+		//	"TmpSubProduct",
+		//	"Product",
+		//	"Task",
+		//	"SubProduct",
+		//},
 		"system": {
-			"SeaGrid",
+			"sys_meta_data",
 			"SysConfig",
-			"SysOrderInfo",
-			"SysProductInfo",
-			"TimedTask",
-			"VersionControl",
 		},
-
-		//"sys_config",
-		//"sys_config_data",
-		////"log_login",
-		////"log_operator",
-		//"sys_dictionary",
-		//"sys_dictionary_data",
-		//"sys_user",
-		//"sys_role",
-		//"sys_permission",
-		//"sys_user_role",
-		//"sys_role_permission",
 	}
 
 	for pkg, models := range models {

@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/khaosles/gtools2/core/cfg/config"
+	"github.com/khaosles/gtools2/core/config"
 	"github.com/spf13/viper"
 )
 
