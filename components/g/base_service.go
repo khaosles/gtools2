@@ -12,47 +12,47 @@ import (
 */
 
 type BaseService[T any] struct {
-	Mpr Mapper[T]
+	Mapper Mapper[T]
 }
 
 func (srv BaseService[T]) Save(entity *T) error {
-	return srv.Mpr.Save(entity)
+	return srv.Mapper.Save(entity)
 }
 
 func (srv BaseService[T]) Saves(entities []*T) error {
-	return srv.Mpr.InsertList(entities)
+	return srv.Mapper.InsertList(entities)
 }
 
 func (srv BaseService[T]) DeleteById(id string) error {
-	return srv.Mpr.DeleteById(id)
+	return srv.Mapper.DeleteById(id)
 }
 
 func (srv BaseService[T]) DeleteByIds(ids ...string) error {
-	return srv.Mpr.DeleteByIds(ids...)
+	return srv.Mapper.DeleteByIds(ids...)
 }
 
 func (srv BaseService[T]) Update(entity *T) error {
-	return srv.Mpr.Update(entity)
+	return srv.Mapper.Update(entity)
 }
 
 func (srv BaseService[T]) FindById(id string) (*T, error) {
-	return srv.Mpr.SelectById(id)
+	return srv.Mapper.SelectById(id)
 }
 
 func (srv BaseService[T]) FindBy(colName string, value any) (*T, error) {
 	var record T
 	gstru.SetField(&record, colName, value)
-	return srv.Mpr.SelectOne(&record)
+	return srv.Mapper.SelectOne(&record)
 }
 
 func (srv BaseService[T]) FindByIds(ids ...string) ([]*T, error) {
-	return srv.Mpr.SelectByIds(ids...)
+	return srv.Mapper.SelectByIds(ids...)
 }
 
 func (srv BaseService[T]) FindByCondition(conditions *Conditions) ([]*T, error) {
-	return srv.Mpr.SelectByCondition(conditions)
+	return srv.Mapper.SelectByCondition(conditions)
 }
 
 func (srv BaseService[T]) FindAll() ([]*T, error) {
-	return srv.Mpr.SelectAll()
+	return srv.Mapper.SelectAll()
 }

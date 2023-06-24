@@ -3,6 +3,7 @@ package internal
 import (
 	{{.Pkg}}Mapper "{{.Project}}/mapper/{{.Pkg}}"
 	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
+	{{.Pkg}}Service "{{.Project}}/service/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -17,8 +18,13 @@ type {{.NameUpper}}ServiceImpl struct {
 	g.BaseService[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
+
+func init() {
+	{{.Pkg}}Service.Inject{{.NameUpper}}Service(New{{.NameUpper}}ServiceImpl({{.Pkg}}Mapper.Get{{.NameUpper}}MapperInstance()))
+}
+
 func New{{.NameUpper}}ServiceImpl({{.Name}}Mapper {{.Pkg}}Mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}ServiceImpl {
 	var {{.Name}}ServiceImpl {{.NameUpper}}ServiceImpl
-	{{.Name}}ServiceImpl.Mpr = {{.Name}}Mapper
+	{{.Name}}ServiceImpl.Mapper = {{.Name}}Mapper
 	return &{{.Name}}ServiceImpl
 }

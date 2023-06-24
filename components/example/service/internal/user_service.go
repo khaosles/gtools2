@@ -19,6 +19,6 @@ type UserService struct {
 
 func NewUserService(userMapper mapper.UserMapper) *UserService {
 	var userImpl UserService
-	userImpl.Mpr = userMapper
+	userImpl.Mapper = userMapper
 	return &userImpl
 }

@@ -12,7 +12,7 @@ import (
 */
 
 type User struct {
-	g.Model
+	g.BaseModel
 	UserName string `json:"userName,omitempty"`
 }
 

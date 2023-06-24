@@ -3,10 +3,9 @@ package {{.Pkg}}
 import (
 	"sync"
 	
-    "{{.Project}}/mapper"
-    "{{.Project}}/mapper/internal"
 	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
 	"github.com/khaosles/gtools2/components/g"
+	gerr "github.com/khaosles/gtools2/utils/err"
 )
 
 
@@ -26,11 +25,17 @@ type {{.NameUpper}}Mapper interface {
 	g.Mapper[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
-func New{{.NameUpper}}Mapper() {{.NameUpper}}Mapper {
-	once{{.NameUpper}}.Do(func() {
-        if {{.Name}}MapperInstance == nil {
-            {{.Name}}MapperInstance = internal.New{{.NameUpper}}MapperImpl(mapper.NewDB())
-        }
-    })
+func Get{{.NameUpper}}MapperInstance() {{.NameUpper}}Mapper {
+    if {{.Name}}MapperInstance == nil {
+        panic(gerr.NotImplementedException.New("{{.NameUpper}}Mapper not implemented."))
+    }
 	return {{.Name}}MapperInstance
+}
+
+func Inject{{.NameUpper}}Mapper({{.Name}}Mapper {{.NameUpper}}Mapper) {
+	once{{.NameUpper}}.Do(func() {
+		if {{.Name}}MapperInstance == nil {
+			{{.Name}}MapperInstance = {{.Name}}Mapper
+		}
+	})
 }

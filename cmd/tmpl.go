@@ -13,24 +13,45 @@ import (
 */
 
 func main() {
-	project := "admin-server/app"
+	project := "data-oversea/app"
 	root := gpath.Join(gpath.RootPath(), "app")
-	models := []string{
-		"sys_config",
-		"sys_config_data",
-		//"log_login",
-		//"log_operator",
-		"sys_dictionary",
-		"sys_dictionary_data",
-		"sys_user",
-		"sys_role",
-		"sys_permission",
-		"sys_user_role",
-		"sys_role_permission",
+	models := map[string][]string{
+		"log": {
+			"LogApi",
+			"LogTask",
+		},
+		"task": {
+			"Order",
+			"TmpSubProduct",
+			"Product",
+			"Task",
+			"SubProduct",
+		},
+		"system": {
+			"SeaGrid",
+			"SysConfig",
+			"SysOrderInfo",
+			"SysProductInfo",
+			"TimedTask",
+			"VersionControl",
+		},
+
+		//"sys_config",
+		//"sys_config_data",
+		////"log_login",
+		////"log_operator",
+		//"sys_dictionary",
+		//"sys_dictionary_data",
+		//"sys_user",
+		//"sys_role",
+		//"sys_permission",
+		//"sys_user_role",
+		//"sys_role_permission",
 	}
 
-	for _, model := range models {
-		tmpl.Run(project, model, root, "system")
+	for pkg, models := range models {
+		for _, model := range models {
+			tmpl.Run(project, model, root, pkg)
+		}
 	}
-
 }

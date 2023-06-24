@@ -16,14 +16,14 @@ import (
 */
 
 type BaseController[T any] struct {
-	Srv Service[T]
+	Service Service[T]
 }
 
 func (ctl BaseController[T]) Add(c *gin.Context) {
 	var entity T
 	err := c.ShouldBindJSON(&entity)
 	assert.ExecSuccess(err, "参数错误")
-	err = ctl.Srv.Save(&entity)
+	err = ctl.Service.Save(&entity)
 	assert.ExecSuccess(err, "保存失败")
 	c.JSON(http.StatusOK, result.NewJsonResult().Yes(nil))
 }
@@ -32,7 +32,7 @@ func (ctl BaseController[T]) Update(c *gin.Context) {
 	var entity T
 	err := c.ShouldBindJSON(&entity)
 	assert.ExecSuccess(err, "参数错误")
-	err = ctl.Srv.Update(&entity)
+	err = ctl.Service.Update(&entity)
 	assert.ExecSuccess(err, "更新失败")
 	c.JSON(http.StatusOK, result.NewJsonResult().Yes(nil))
 }
@@ -40,13 +40,13 @@ func (ctl BaseController[T]) Update(c *gin.Context) {
 func (ctl BaseController[T]) DeleteById(c *gin.Context) {
 	id := c.Param("id")
 	assert.IsBlank(id, "id不能为空")
-	err := ctl.Srv.DeleteById(id)
+	err := ctl.Service.DeleteById(id)
 	assert.ExecSuccess(err, "删除失败")
 	c.JSON(http.StatusOK, result.NewJsonResult().Yes(nil))
 }
 
 func (ctl BaseController[T]) FindAll(c *gin.Context) {
-	entities, err := ctl.Srv.FindAll()
+	entities, err := ctl.Service.FindAll()
 	assert.ExecSuccess(err, "查询失败")
 	c.JSON(http.StatusOK, result.NewJsonResult().Yes(entities))
 }
@@ -54,7 +54,7 @@ func (ctl BaseController[T]) FindAll(c *gin.Context) {
 func (ctl BaseController[T]) FindById(c *gin.Context) {
 	id := c.Query("id")
 	assert.IsBlank(id, "id不能为空")
-	entity, err := ctl.Srv.FindById(id)
+	entity, err := ctl.Service.FindById(id)
 	assert.ExecSuccess(err, "查询失败")
 	c.JSON(http.StatusOK, result.NewJsonResult().Yes(entity))
 }

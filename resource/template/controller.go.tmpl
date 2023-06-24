@@ -21,13 +21,14 @@ var (
 )
 
 type {{.Name}}Controller struct {
-	g.BaseController[{{.Pkg}}Model.{{.NameUpper}} ]
-	{{.Name}}Service {{.Pkg}}Service.{{.NameUpper}}Service
+	g.BaseController[{{.Pkg}}Model.{{.NameUpper}}]
 }
 
 func init() {
 	once{{.NameUpper}}.Do(func() {
-		{{.NameUpper}}Controller = &{{.Name}}Controller{ {{.Name}}Service: {{.Pkg}}Service.New{{.NameUpper}}Service()}
+        var {{.Name}} {{.Name}}Controller
+        {{.Name}}.Service = {{.Pkg}}Service.Get{{.NameUpper}}ServiceInstance()
+        {{.NameUpper}}Controller = &{{.Name}}
 	})
 }
 
