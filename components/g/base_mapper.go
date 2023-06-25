@@ -37,7 +37,7 @@ func (mpr BaseMapper[T]) InsertBatch(records []*T, batch int) error {
 }
 
 func (mpr BaseMapper[T]) InsertOrSelect(record *T) error {
-	return mpr.DB.FirstOrCreate(record).Error
+	return mpr.DB.FirstOrCreate(record, record).Error
 }
 
 func (mpr BaseMapper[T]) Delete(record *T) error {
