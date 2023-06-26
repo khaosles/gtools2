@@ -19,7 +19,9 @@ const timeLayout = time.DateTime
 type Timestamp time.Time
 
 func (ts *Timestamp) UnmarshalJSON(data []byte) error {
-	t, err := time.Parse(`"`+timeLayout+`"`, string(data))
+	// 加载上海时区
+	location, _ := time.LoadLocation("Asia/Shanghai")
+	t, err := time.ParseInLocation(`"`+timeLayout+`"`, string(data), location)
 	if err != nil {
 		return err
 	}
