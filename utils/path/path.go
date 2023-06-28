@@ -162,6 +162,11 @@ func RootPath() string {
 	return rootPath
 }
 
+func RootPathExec() string {
+	rootPath, _ := os.Executable()
+	return rootPath
+}
+
 func Rename(src, dst string) error {
 	err := os.Rename(src, dst)
 	if err != nil {
@@ -242,9 +247,7 @@ func CleanPath(p string) string {
 		}
 		buf[0] = '/'
 	}
-
 	trailing := n > 1 && p[n-1] == '/'
-
 	// A bit more clunky without a 'lazybuf' like the path package, but the loop
 	// gets completely inlined (bufApp calls).
 	// So in contrast to the path package this loop has no expensive function
@@ -271,7 +274,6 @@ func CleanPath(p string) string {
 			if w > 1 {
 				// can backtrack
 				w--
-
 				if len(buf) == 0 {
 					for w > 1 && p[w] != '/' {
 						w--
@@ -282,7 +284,6 @@ func CleanPath(p string) string {
 					}
 				}
 			}
-
 		default:
 			// Real path element.
 			// Add slash if needed
@@ -290,7 +291,6 @@ func CleanPath(p string) string {
 				bufApp(&buf, p, w, '/')
 				w++
 			}
-
 			// Copy element
 			for r < n && p[r] != '/' {
 				bufApp(&buf, p, w, p[r])
@@ -305,7 +305,6 @@ func CleanPath(p string) string {
 		bufApp(&buf, p, w, '/')
 		w++
 	}
-
 	// If the original string was not modified (or only shortened at the end),
 	// return the respective substring of the original string.
 	// Otherwise return a new string from the buffer.
