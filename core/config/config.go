@@ -16,4 +16,5 @@ type Config struct {
 	Logging Logging `mapstructure:"logging" json:"logging" yaml:"logging"`
 	Redis   Redis   `mapstructure:"redis" json:"redis" yaml:"redis"`
 	Etcd    Etcd    `mapstructure:"etcd" json:"etcd" yaml:"etcd"`
+	Rpc     Rpc     `mapstructure:"rpc" json:"rpc" yaml:"rpc"`
 }
