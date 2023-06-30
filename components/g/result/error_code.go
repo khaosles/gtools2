@@ -53,5 +53,6 @@ var (
 	TOKEN_REMOTING_LOGIN = ErrorCode{40103, "账号异地登录"}  // 异地登录
 	NOT_FOUND_ERROR      = ErrorCode{40400, "请求数据不存在"} // 数据不存在
 	FORBIDDEN_ERROR      = ErrorCode{40300, "禁止访问"}    // 数据禁止访问
+	LIMIT_ERROR          = ErrorCode{40301, "限制访问"}    // 数据禁止访问
 	SYSTEM_ERROR         = ErrorCode{50000, "操作失败"}    // 系统内部出错
 )

@@ -10,10 +10,9 @@ import (
 	"os"
 	"path/filepath"
 
-	gcfg "github.com/khaosles/gtools2/core/cfg"
+	//gcfg "github.com/khaosles/gtools2/core/cfg"
 	gpath "github.com/khaosles/gtools2/utils/path"
 	gprogress "github.com/khaosles/gtools2/utils/progress"
-	gsize "github.com/khaosles/gtools2/utils/size"
 	"github.com/panjf2000/ants"
 )
 
@@ -32,17 +31,17 @@ const name = "download"
 var instance *Instance
 
 func (d *Instance) Run() error {
-	err := gcfg.GetComponentConfiguration(name, d)
-	if err != nil {
-		return err
-	}
-	instance = d
-	d.bufSize, _ = gsize.RAMInBytes(d.BufSize)
-	d.partSize, _ = gsize.RAMInBytes(d.PartSize)
-	pool, _ = ants.NewPoolWithFunc(instance.Workers, func(i interface{}) {
-		params := i.(*invokeParams)
-		downloadPartToFile(params)
-	})
+	//err := gcfg.GetComponentConfiguration(name, d)
+	//if err != nil {
+	//	return err
+	//}
+	//instance = d
+	//d.bufSize, _ = gsize.RAMInBytes(d.BufSize)
+	//d.partSize, _ = gsize.RAMInBytes(d.PartSize)
+	//pool, _ = ants.NewPoolWithFunc(instance.Workers, func(i interface{}) {
+	//	params := i.(*invokeParams)
+	//	downloadPartToFile(params)
+	//})
 	return nil
 }
 
