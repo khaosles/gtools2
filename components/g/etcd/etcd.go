@@ -77,9 +77,9 @@ func UnRegister(addr, serverName string) error {
 	return nil
 }
 
-func Put(key, value string) error {
+func Put(key, value string, opts ...clientv3.OpOption) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	_, err := client.Put(ctx, key, value)
+	_, err := client.Put(ctx, key, value, opts...)
 	cancel()
 	if err != nil {
 		return err
@@ -95,4 +95,14 @@ func Get(key string, opts ...clientv3.OpOption) ([]*mvccpb.KeyValue, error) {
 		return nil, err
 	}
 	return resp.Kvs, nil
+}
+
+func Del(key string, opts ...clientv3.OpOption) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	_, err := client.Delete(ctx, key, opts...)
+	cancel()
+	if err != nil {
+		return err
+	}
+	return nil
 }
