@@ -28,8 +28,9 @@ func NewRocketmqConsumer(rocketmqCfg *config.Rocketmq, groupName string) rocketm
 		consumer.WithRetry(rocketmqCfg.Retry),
 	)
 	if err != nil {
-		glog.Error(err)
+		glog.Error("rocketmq consumer connection failed -> ", err.Error())
 	}
+	glog.Info("rocketmq consumer connection successful...")
 	return pushConsumer
 }
 
@@ -40,8 +41,9 @@ func NewRocketmqProducer(rocketmqCfg *config.Rocketmq) rocketmq.Producer {
 		producer.WithRetry(rocketmqCfg.Retry),
 	)
 	if err != nil {
-		glog.Error(err)
+		glog.Error("rocketmq producer connection failed -> ", err.Error())
 	}
+	glog.Info("rocketmq producer connection successful...")
 	return newProducer
 }
 
