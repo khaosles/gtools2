@@ -14,4 +14,5 @@ type Rocketmq struct {
 	SecurityToken string   `mapstructure:"security-token" default:"" yaml:"security-token" json:"securityToken"`
 	Topic         string   `mapstructure:"topic" default:"" yaml:"topic" json:"topic"`
 	LogLevel      string   `mapstructure:"log-level" default:"" yaml:"log-level" json:"logLevel"`
+	Retry         int      `mapstructure:"retry" default:"" yaml:"lretry" json:"retry"`
 }
