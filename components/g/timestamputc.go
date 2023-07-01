@@ -17,7 +17,6 @@ import (
 type TimestampUTC time.Time
 
 func (ts *TimestampUTC) UnmarshalJSON(data []byte) error {
-	// 加载上海时区
 	t, err := time.Parse(`"`+timeLayout+`"`, string(data))
 	if err != nil {
 		return err

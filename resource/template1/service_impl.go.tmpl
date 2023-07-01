@@ -1,0 +1,29 @@
+package impl
+
+import (
+	"{{.Project}}/mapper"
+	"{{.Project}}/model"
+	"{{.Project}}/service"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+/*
+   @File: {{.NameSnake}}_service_impl.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: auto-generated code
+*/
+
+type {{.NameUpper}}ServiceImpl struct {
+	g.BaseService[model.{{.NameUpper}}]
+}
+
+func init() {
+	service.Register{{.NameUpper}}Service(New{{.NameUpper}}ServiceImpl(mapper.Get{{.NameUpper}}MapperInstance()))
+}
+
+func New{{.NameUpper}}ServiceImpl({{.Name}}Mapper mapper.{{.NameUpper}}Mapper) *{{.NameUpper}}ServiceImpl {
+	var {{.Name}}ServiceImpl {{.NameUpper}}ServiceImpl
+	{{.Name}}ServiceImpl.Mapper = {{.Name}}Mapper
+	return &{{.Name}}ServiceImpl
+}

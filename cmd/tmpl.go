@@ -13,7 +13,7 @@ import (
 */
 
 func main() {
-	project := "data-oversea/app"
+	project := "node/db"
 	root := gpath.Join(gpath.RootPath(), "app")
 	models := map[string][]string{
 		//"log": {
@@ -28,14 +28,14 @@ func main() {
 		//	"SubProduct",
 		//},
 		"system": {
+			"sys_config",
 			"sys_meta_data",
-			"SysConfig",
 		},
 	}
 
 	for pkg, models := range models {
 		for _, model := range models {
-			tmpl.Run(project, model, root, pkg)
+			tmpl.Run1(project, model, root, pkg)
 		}
 	}
 }

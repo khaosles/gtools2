@@ -1,0 +1,40 @@
+package mapper
+
+import (
+	"sync"
+	
+	"{{.Project}}/configures"
+	"{{.Project}}/model"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+
+/*
+   @File: {{.NameSnake}}_mapper.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: auto-generated code
+*/
+
+var (
+    {{.Name}}MapperInstance {{.NameUpper}}Mapper
+	{{.Name}}MapperOnce     sync.Once
+)
+
+type {{.NameUpper}}Mapper interface {
+	g.Mapper[model.{{.NameUpper}}]
+}
+
+func Get{{.NameUpper}}MapperInstance() {{.NameUpper}}Mapper {
+    {{.Name}}MapperOnce.Do(func() {
+        {{.Name}}Mpr := {{.Name}}Mapper{}
+        {{.Name}}Mpr.DB = configures.GetDBInstance()
+        {{.Name}}MapperInstance = &{{.Name}}Mpr
+    })
+	return {{.Name}}MapperInstance
+}
+
+type {{.Name}}Mapper struct {
+	g.BaseMapper[model.{{.NameUpper}}]
+}
+

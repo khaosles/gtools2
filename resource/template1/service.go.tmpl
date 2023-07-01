@@ -1,9 +1,9 @@
-package {{.Pkg}}
+package service
 
 import (
 	"sync"
 
-	{{.Pkg}}Model "{{.Project}}/model/{{.Pkg}}"
+	"{{.Project}}/model"
 	"github.com/khaosles/gtools2/components/g"
 	"github.com/khaosles/gtools2/utils/assert"
 )
@@ -17,11 +17,11 @@ import (
 
 var (
     {{.Name}}ServiceInstance {{.NameUpper}}Service
-	once{{.NameUpper}}       sync.Once
+	{{.Name}}ServiceOnce     sync.Once
 )
 
 type {{.NameUpper}}Service interface {
-	g.Service[{{.Pkg}}Model.{{.NameUpper}}]
+	g.Service[model.{{.NameUpper}}]
 }
 
 func Get{{.NameUpper}}ServiceInstance() {{.NameUpper}}Service {
@@ -29,10 +29,8 @@ func Get{{.NameUpper}}ServiceInstance() {{.NameUpper}}Service {
 	return {{.Name}}ServiceInstance
 }
 
-func Inject{{.NameUpper}}Service({{.Name}}Service {{.NameUpper}}Service) {
-	once{{.NameUpper}}.Do(func() {
-		if {{.Name}}ServiceInstance == nil {
-			{{.Name}}ServiceInstance = {{.Name}}Service
-		}
+func Register{{.NameUpper}}Service({{.Name}}Service {{.NameUpper}}Service) {
+	{{.Name}}ServiceOnce.Do(func() {
+        {{.Name}}ServiceInstance = {{.Name}}Service
 	})
 }

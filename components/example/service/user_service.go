@@ -3,10 +3,9 @@ package service
 import (
 	"sync"
 
-	"github.com/khaosles/gtools2/components/example/mapper"
 	"github.com/khaosles/gtools2/components/example/model"
-	"github.com/khaosles/gtools2/components/example/service/internal"
 	"github.com/khaosles/gtools2/components/g"
+	"github.com/khaosles/gtools2/utils/assert"
 )
 
 /*
@@ -18,18 +17,20 @@ import (
 
 var (
 	userServiceInstance UserService
-	once                sync.Once
+	userServiceOnce     sync.Once
 )
 
 type UserService interface {
 	g.Service[model.User]
 }
 
-func NewUserService() UserService {
-	once.Do(func() {
-		if userServiceInstance == nil {
-			userServiceInstance = internal.NewUserService(mapper.NewUserMapper())
-		}
-	})
+func GetUserServiceInstance() UserService {
+	assert.IsNotImplemented(userServiceInstance, "UserService not implement.")
 	return userServiceInstance
+}
+
+func RegisterUserService(userService UserService) {
+	userServiceOnce.Do(func() {
+		userServiceInstance = userService
+	})
 }

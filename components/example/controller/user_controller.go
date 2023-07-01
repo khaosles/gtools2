@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"sync"
-
 	"github.com/khaosles/gtools2/components/example/model"
 	"github.com/khaosles/gtools2/components/example/service"
 	"github.com/khaosles/gtools2/components/g"
@@ -15,10 +13,7 @@ import (
    @Desc:
 */
 
-var (
-	UserController = new(userController)
-	once           sync.Once
-)
+var UserController = new(userController)
 
 type userController struct {
 	g.BaseController[model.User]
@@ -26,7 +21,7 @@ type userController struct {
 }
 
 func init() {
-	once.Do(func() {
-		UserController = &userController{userService: service.NewUserService()}
-	})
+	var userController userController
+	userController.Service = service.GetUserServiceInstance()
+	UserController = &userController
 }

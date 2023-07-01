@@ -1,8 +1,9 @@
-package internal
+package impl
 
 import (
 	"github.com/khaosles/gtools2/components/example/mapper"
 	"github.com/khaosles/gtools2/components/example/model"
+	"github.com/khaosles/gtools2/components/example/service"
 	"github.com/khaosles/gtools2/components/g"
 )
 
@@ -13,12 +14,16 @@ import (
    @Desc:
 */
 
-type UserService struct {
+type UserServiceImpl struct {
 	g.BaseService[model.User]
 }
 
-func NewUserService(userMapper mapper.UserMapper) *UserService {
-	var userImpl UserService
+func init() {
+	service.RegisterUserService(NewUserService(mapper.GetUserMapperInstance()))
+}
+
+func NewUserService(userMapper mapper.UserMapper) *UserServiceImpl {
+	var userImpl UserServiceImpl
 	userImpl.Mapper = userMapper
 	return &userImpl
 }

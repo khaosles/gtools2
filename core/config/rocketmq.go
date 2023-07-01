@@ -12,4 +12,5 @@ type Rocketmq struct {
 	AccessKey     string   `mapstructure:"access-key" default:"" yaml:"access-key" json:"accessKey"`
 	SecretKey     string   `mapstructure:"secret-key" default:"" yaml:"secret-key" json:"secretKey"`
 	SecurityToken string   `mapstructure:"security-token" default:"" yaml:"security-token" json:"securityToken"`
+	Topic         string   `mapstructure:"topic" default:"" yaml:"topic" json:"topic"`
 }
