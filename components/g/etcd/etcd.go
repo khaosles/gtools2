@@ -21,7 +21,7 @@ import (
 
 var client *clientv3.Client
 
-func InitEtcd(etcdCfg config.Etcd) {
+func InitEtcd(etcdCfg *config.Etcd) {
 	var err error
 	client, err = clientv3.New(clientv3.Config{
 		Endpoints:   etcdCfg.Nodes,
