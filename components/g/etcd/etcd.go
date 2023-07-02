@@ -19,11 +19,11 @@ import (
    @Desc:
 */
 
-var client *clientv3.Client
+var Client *clientv3.Client
 
 func InitEtcd(etcdCfg *config.Etcd) {
 	var err error
-	client, err = clientv3.New(clientv3.Config{
+	Client, err = clientv3.New(clientv3.Config{
 		Endpoints:   etcdCfg.Nodes,
 		DialTimeout: time.Duration(etcdCfg.Timeout) * time.Second,
 		Username:    etcdCfg.Username,
@@ -36,11 +36,11 @@ func InitEtcd(etcdCfg *config.Etcd) {
 }
 
 func Register(addr, serverName string, ttl int64) error {
-	em, err := endpoints.NewManager(client, serverName)
+	em, err := endpoints.NewManager(Client, serverName)
 	if err != nil {
 		return err
 	}
-	lease, _ := client.Grant(context.TODO(), ttl)
+	lease, _ := Client.Grant(context.TODO(), ttl)
 	err = em.AddEndpoint(
 		context.TODO(),
 		fmt.Sprintf("%s/%s", serverName, addr),
@@ -50,7 +50,7 @@ func Register(addr, serverName string, ttl int64) error {
 	if err != nil {
 		return err
 	}
-	alive, err := client.KeepAlive(context.TODO(), lease.ID)
+	alive, err := Client.KeepAlive(context.TODO(), lease.ID)
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func Register(addr, serverName string, ttl int64) error {
 }
 
 func UnRegister(addr, serverName string) error {
-	em, err := endpoints.NewManager(client, serverName)
+	em, err := endpoints.NewManager(Client, serverName)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func UnRegister(addr, serverName string) error {
 
 func Put(key, value string, opts ...clientv3.OpOption) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	_, err := client.Put(ctx, key, value, opts...)
+	_, err := Client.Put(ctx, key, value, opts...)
 	cancel()
 	if err != nil {
 		return err
@@ -87,7 +87,7 @@ func Put(key, value string, opts ...clientv3.OpOption) error {
 
 func Get(key string, opts ...clientv3.OpOption) ([]*mvccpb.KeyValue, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	resp, err := client.Get(ctx, key, opts...)
+	resp, err := Client.Get(ctx, key, opts...)
 	cancel()
 	if err != nil {
 		return nil, err
@@ -97,7 +97,7 @@ func Get(key string, opts ...clientv3.OpOption) ([]*mvccpb.KeyValue, error) {
 
 func Del(key string, opts ...clientv3.OpOption) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-	_, err := client.Delete(ctx, key, opts...)
+	_, err := Client.Delete(ctx, key, opts...)
 	cancel()
 	if err != nil {
 		return err
