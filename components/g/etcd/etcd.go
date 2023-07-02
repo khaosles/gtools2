@@ -21,7 +21,7 @@ import (
 
 var client *clientv3.Client
 
-func NewEtcd(etcdCfg config.Etcd) {
+func InitEtcd(etcdCfg config.Etcd) {
 	var err error
 	client, err = clientv3.New(clientv3.Config{
 		Endpoints:   etcdCfg.Nodes,
@@ -36,7 +36,6 @@ func NewEtcd(etcdCfg config.Etcd) {
 }
 
 func Register(addr, serverName string, ttl int64) error {
-	glog.Info("etcd register: ", addr)
 	em, err := endpoints.NewManager(client, serverName)
 	if err != nil {
 		return err
@@ -58,14 +57,13 @@ func Register(addr, serverName string, ttl int64) error {
 	go func() {
 		for {
 			<-alive
-			glog.Debug("etcd server keep alive")
+			glog.Debug(addr + " keep alive")
 		}
 	}()
 	return nil
 }
 
 func UnRegister(addr, serverName string) error {
-	glog.Info("etcd un register %s\b", addr)
 	em, err := endpoints.NewManager(client, serverName)
 	if err != nil {
 		return err
