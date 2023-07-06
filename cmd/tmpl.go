@@ -13,7 +13,7 @@ import (
 */
 
 func main() {
-	project := "node/db"
+	project := "download/db"
 	root := gpath.Join(gpath.RootPath(), "app")
 	models := map[string][]string{
 		//"log": {
@@ -29,7 +29,15 @@ func main() {
 		//},
 		"system": {
 			"sys_config",
-			"sys_meta_data",
+			"SysOrderInfo",
+			"SysProductInfo",
+			"TimedTask",
+			"VersionControl",
+			"LogTask",
+			"Order",
+			"Product",
+			"Task",
+			"LogApi",
 		},
 	}
 
