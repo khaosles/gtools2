@@ -50,16 +50,17 @@ func Register(addr, serverName string, ttl int64) error {
 	if err != nil {
 		return err
 	}
-	alive, err := Client.KeepAlive(context.TODO(), lease.ID)
+	//alive, err := Client.KeepAlive(context.TODO(), lease.ID)
+	_, err = Client.KeepAlive(context.TODO(), lease.ID)
 	if err != nil {
 		return err
 	}
-	go func() {
-		for {
-			<-alive
-			glog.Debug(addr + " keep alive")
-		}
-	}()
+	//go func() {
+	//	for {
+	//		<-alive
+	//		glog.Debug(addr + " keep alive")
+	//	}
+	//}()
 	return nil
 }
 
