@@ -20,8 +20,8 @@ type Number[T Numeric] struct {
 	mutex sync.Mutex
 }
 
-func NewSafeNumber[T Numeric](i T) Number[T] {
-	return Number[T]{value: i}
+func NewSafeNumber[T Numeric](i T) *Number[T] {
+	return &Number[T]{value: i}
 }
 
 func (n *Number[T]) Inc() {
