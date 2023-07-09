@@ -16,7 +16,7 @@ import (
 */
 
 func NewRocketmqProducer(rocketmqCfg *config.Rocketmq) rocketmq.Producer {
-	rlog.SetLogger(logger)
+	rlog.SetLogLevel("error")
 	newProducer, err := rocketmq.NewProducer(
 		producer.WithNameServer(rocketmqCfg.NameServer),
 		producer.WithRetry(rocketmqCfg.Retry),

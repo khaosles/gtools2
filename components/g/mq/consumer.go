@@ -16,7 +16,7 @@ import (
 */
 
 func NewRocketmqConsumer(rocketmqCfg *config.Rocketmq, groupName string) rocketmq.PushConsumer {
-	rlog.SetLogger(logger)
+	rlog.SetLogLevel("error")
 	pushConsumer, err := rocketmq.NewPushConsumer(
 		consumer.WithNameServer(rocketmqCfg.NameServer),
 		consumer.WithGroupName(groupName),
