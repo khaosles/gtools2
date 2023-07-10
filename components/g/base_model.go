@@ -1,7 +1,7 @@
 package g
 
 import (
-	"github.com/khaosles/gtools2/components/snowflake"
+	"github.com/khaosles/gtools2/utils/gen"
 	"gorm.io/gorm"
 )
 
@@ -34,9 +34,9 @@ type IdMixin struct {
 }
 
 func (m *IdMixin) BeforeCreate(tx *gorm.DB) error {
-	node, _ := snowflake.NewNode(0)
-	m.ID = node.Generate().String()
-	//m.ID = gen.UuidNoSeparator()
+	//node, _ := snowflake.NewNode(0)
+	//m.ID = node.Generate().String()
+	m.ID = gen.UuidNoSeparator()
 	return nil
 }
 
