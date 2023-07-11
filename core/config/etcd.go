@@ -8,10 +8,9 @@ package config
 */
 
 type Etcd struct {
-	Nodes      []string `mapstructure:"nodes" default:"" yaml:"nodes" json:"nodes"`
-	Username   string   `mapstructure:"username" default:"" yaml:"username" json:"username"`
-	Password   string   `mapstructure:"password" default:"" yaml:"password" json:"password"`
-	Timeout    int      `mapstructure:"timeout" default:"10" yaml:"timeout" json:"timeout"`
-	TTl        int64    `mapstructure:"ttl" default:"10" yaml:"ttl" json:"ttl"`
-	ServerName string   `mapstructure:"server-name" default:"" yaml:"server-name" json:"serverName"`
+	Nodes    []string `mapstructure:"nodes" default:"" yaml:"nodes" json:"nodes"`
+	Username string   `mapstructure:"username" default:"" yaml:"username" json:"username"`
+	Password string   `mapstructure:"password" default:"" yaml:"password" json:"password"`
+	Timeout  int      `mapstructure:"timeout" default:"10" yaml:"timeout" json:"timeout"`
+	TTl      int64    `mapstructure:"ttl" default:"10" yaml:"ttl" json:"ttl"`
 }
