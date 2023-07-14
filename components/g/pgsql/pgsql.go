@@ -33,7 +33,7 @@ func NewPgsql(cfg *config.Pgsql) *gorm.DB {
 		sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
 		sqlDB.SetConnMaxLifetime(time.Minute * time.Duration(cfg.MaxLifeTime))
-		glog.Debug("Database connection successful...")
+		glog.Info("Database connection successful...")
 	}
 	return pdb
 }
