@@ -17,173 +17,173 @@ type BaseDao[T any] struct {
 	DB *gorm.DB
 }
 
-func (mpr BaseDao[T]) Save(record *T) error {
-	return mpr.DB.Save(record).Error
+func (dao BaseDao[T]) Save(record *T) error {
+	return dao.DB.Save(record).Error
 }
 
-func (mpr BaseDao[T]) Insert(record *T) error {
-	return mpr.DB.Create(record).Error
+func (dao BaseDao[T]) Insert(record *T) error {
+	return dao.DB.Create(record).Error
 }
 
-func (mpr BaseDao[T]) InsertList(records []*T) error {
-	return mpr.DB.CreateInBatches(records, len(records)).Error
+func (dao BaseDao[T]) InsertList(records []*T) error {
+	return dao.DB.CreateInBatches(records, len(records)).Error
 }
 
-func (mpr BaseDao[T]) InsertBatch(records []*T, batch int) error {
+func (dao BaseDao[T]) InsertBatch(records []*T, batch int) error {
 	if batch < 1 {
 		batch = len(records)
 	}
-	return mpr.DB.CreateInBatches(records, batch).Error
+	return dao.DB.CreateInBatches(records, batch).Error
 }
 
-func (mpr BaseDao[T]) InsertOrSelect(record *T) error {
-	return mpr.DB.FirstOrCreate(record, record).Error
+func (dao BaseDao[T]) InsertOrSelect(record *T) error {
+	return dao.DB.FirstOrCreate(record, record).Error
 }
 
-func (mpr BaseDao[T]) Delete(record *T) error {
-	return mpr.DB.Delete(record).Error
+func (dao BaseDao[T]) Delete(record *T) error {
+	return dao.DB.Delete(record).Error
 }
 
-func (mpr BaseDao[T]) DeleteHard(record *T) error {
-	return mpr.DB.Unscoped().Delete(record).Error
+func (dao BaseDao[T]) DeleteHard(record *T) error {
+	return dao.DB.Unscoped().Delete(record).Error
 }
 
-func (mpr BaseDao[T]) DeleteById(id string) error {
-	return mpr.DB.Delete(new(T), "id = ?", id).Error
+func (dao BaseDao[T]) DeleteById(id string) error {
+	return dao.DB.Delete(new(T), "id = ?", id).Error
 }
 
-func (mpr BaseDao[T]) DeleteHardById(id string) error {
-	return mpr.DB.Unscoped().Delete(new(T), "id = ?", id).Error
+func (dao BaseDao[T]) DeleteHardById(id string) error {
+	return dao.DB.Unscoped().Delete(new(T), "id = ?", id).Error
 }
 
-func (mpr BaseDao[T]) DeleteByIds(ids ...string) error {
-	return mpr.DB.Delete(new(T), "id in (?)", ids).Error
+func (dao BaseDao[T]) DeleteByIds(ids ...string) error {
+	return dao.DB.Delete(new(T), "id in (?)", ids).Error
 }
 
-func (mpr BaseDao[T]) DeleteHardByIds(ids ...string) error {
-	return mpr.DB.Unscoped().Delete(new(T), "id in (?)", ids).Error
+func (dao BaseDao[T]) DeleteHardByIds(ids ...string) error {
+	return dao.DB.Unscoped().Delete(new(T), "id in (?)", ids).Error
 }
 
-func (mpr BaseDao[T]) DeleteByCondition(conditions *Conditions) error {
-	return conditions.To(mpr.DB).Delete(new(T)).Error
+func (dao BaseDao[T]) DeleteByCondition(conditions *Conditions) error {
+	return conditions.To(dao.DB).Delete(new(T)).Error
 }
 
-func (mpr BaseDao[T]) DeleteHardByCondition(conditions *Conditions) error {
-	return conditions.To(mpr.DB).Unscoped().Delete(new(T)).Error
+func (dao BaseDao[T]) DeleteHardByCondition(conditions *Conditions) error {
+	return conditions.To(dao.DB).Unscoped().Delete(new(T)).Error
 }
 
-func (mpr BaseDao[T]) Update(record *T) error {
-	return mpr.DB.Save(record).Error
+func (dao BaseDao[T]) Update(record *T) error {
+	return dao.DB.Save(record).Error
 }
 
-func (mpr BaseDao[T]) UpdateSelective(record *T, values any) error {
-	return mpr.DB.Model(record).Updates(values).Error
+func (dao BaseDao[T]) UpdateSelective(record *T, values any) error {
+	return dao.DB.Model(record).Updates(values).Error
 }
 
-func (mpr BaseDao[T]) UpdateByCondition(record *T, conditions *Conditions) error {
-	return conditions.To(mpr.DB).Model(new(T)).Updates(gstru.StructToMapInterface(record)).Error
+func (dao BaseDao[T]) UpdateByCondition(record *T, conditions *Conditions) error {
+	return conditions.To(dao.DB).Model(new(T)).Updates(gstru.StructToMapInterface(record)).Error
 }
 
-func (mpr BaseDao[T]) UpdateSelectiveByCondition(record *T, conditions *Conditions) error {
-	return conditions.To(mpr.DB).Model(new(T)).Updates(record).Error
+func (dao BaseDao[T]) UpdateSelectiveByCondition(record *T, conditions *Conditions) error {
+	return conditions.To(dao.DB).Model(new(T)).Updates(record).Error
 }
 
-func (mpr BaseDao[T]) SelectById(id string) (*T, error) {
+func (dao BaseDao[T]) SelectById(id string) (*T, error) {
 	var record T
-	err := mpr.DB.Where("id = ?", id).First(&record).Error
+	err := dao.DB.Where("id = ?", id).First(&record).Error
 	if err != nil {
 		return nil, err
 	}
 	return &record, nil
 }
 
-func (mpr BaseDao[T]) SelectByIds(ids ...string) ([]*T, error) {
+func (dao BaseDao[T]) SelectByIds(ids ...string) ([]*T, error) {
 	var records []*T
-	err := mpr.DB.Where("id = (?)", ids).First(&records).Error
+	err := dao.DB.Where("id = (?)", ids).First(&records).Error
 	if err != nil {
 		return nil, err
 	}
 	return records, nil
 }
 
-func (mpr BaseDao[T]) SelectOne(record *T) (*T, error) {
+func (dao BaseDao[T]) SelectOne(record *T) (*T, error) {
 	var entity T
-	err := mpr.DB.Where(record).First(&entity).Error
+	err := dao.DB.Where(record).First(&entity).Error
 	if err != nil {
 		return nil, err
 	}
 	return &entity, nil
 }
 
-func (mpr BaseDao[T]) SelectOneByConditions(record *T, conditions *Conditions) (*T, error) {
+func (dao BaseDao[T]) SelectOneByConditions(record *T, conditions *Conditions) (*T, error) {
 	var entity T
-	err := conditions.To(mpr.DB).Where(record).First(&entity).Error
+	err := conditions.To(dao.DB).Where(record).First(&entity).Error
 	if err != nil {
 		return nil, err
 	}
 	return &entity, nil
 }
 
-func (mpr BaseDao[T]) Select(record *T) ([]*T, error) {
+func (dao BaseDao[T]) Select(record *T) ([]*T, error) {
 	var entities []*T
-	err := mpr.DB.Where(record).Find(&entities).Error
+	err := dao.DB.Where(record).Find(&entities).Error
 	if err != nil {
 		return nil, err
 	}
 	return entities, nil
 }
 
-func (mpr BaseDao[T]) SelectAll() ([]*T, error) {
+func (dao BaseDao[T]) SelectAll() ([]*T, error) {
 	var entities []*T
-	err := mpr.DB.Find(&entities).Error
+	err := dao.DB.Find(&entities).Error
 	if err != nil {
 		return nil, err
 	}
 	return entities, nil
 }
 
-func (mpr BaseDao[T]) SelectCount(record *T) (int64, error) {
+func (dao BaseDao[T]) SelectCount(record *T) (int64, error) {
 	var count int64
-	err := mpr.DB.Model(new(T)).Where(record).Count(&count).Error
+	err := dao.DB.Model(new(T)).Where(record).Count(&count).Error
 	if err != nil {
 		return 0, err
 	}
 	return count, nil
 }
 
-func (mpr BaseDao[T]) SelectByCondition(conditions *Conditions) ([]*T, error) {
+func (dao BaseDao[T]) SelectByCondition(conditions *Conditions) ([]*T, error) {
 	var entities []*T
-	err := conditions.To(mpr.DB).Find(&entities).Error
+	err := conditions.To(dao.DB).Find(&entities).Error
 	if err != nil {
 		return nil, err
 	}
 	return entities, nil
 }
 
-func (mpr BaseDao[T]) SelectCountByCondition(conditions *Conditions) (int64, error) {
+func (dao BaseDao[T]) SelectCountByCondition(conditions *Conditions) (int64, error) {
 	var count int64
-	err := conditions.To(mpr.DB).Model(new(T)).Count(&count).Error
+	err := conditions.To(dao.DB).Model(new(T)).Count(&count).Error
 	if err != nil {
 		return 0, err
 	}
 	return count, nil
 }
 
-func (mpr BaseDao[T]) SelectDistinct(conditions *Conditions) ([]*T, error) {
+func (dao BaseDao[T]) SelectDistinct(conditions *Conditions) ([]*T, error) {
 	var entities []*T
-	err := conditions.To(mpr.DB).Distinct().Find(&entities).Error
+	err := conditions.To(dao.DB).Distinct().Find(&entities).Error
 	if err != nil {
 		return nil, err
 	}
 	return entities, nil
 }
 
-func (mpr BaseDao[T]) SelectPage(currentPage, pageSize int, sort string) (*Pagination[T], error) {
-	return mpr.SelectPageByCondition(currentPage, pageSize, sort, NewConditions())
+func (dao BaseDao[T]) SelectPage(currentPage, pageSize int, sort string) (*Pagination[T], error) {
+	return dao.SelectPageByCondition(currentPage, pageSize, sort, NewConditions())
 }
 
-func (mpr BaseDao[T]) SelectPageByCondition(currentPage, pageSize int, sort string, conditions *Conditions) (*Pagination[T], error) {
-	db := conditions.To(mpr.DB)
+func (dao BaseDao[T]) SelectPageByCondition(currentPage, pageSize int, sort string, conditions *Conditions) (*Pagination[T], error) {
+	db := conditions.To(dao.DB)
 	var pagination Pagination[T]
 	var entities []*T
 	var totalCount int64
@@ -215,8 +215,8 @@ func (mpr BaseDao[T]) SelectPageByCondition(currentPage, pageSize int, sort stri
 	return &pagination, nil
 }
 
-func (mpr BaseDao[T]) Exist(record *T) (bool, error) {
-	count, err := mpr.SelectCount(record)
+func (dao BaseDao[T]) Exist(record *T) (bool, error) {
+	count, err := dao.SelectCount(record)
 	if err != nil {
 		return false, err
 	}
