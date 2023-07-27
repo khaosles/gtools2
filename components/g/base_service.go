@@ -12,7 +12,7 @@ import (
 */
 
 type BaseService[T any] struct {
-	Mapper Mapper[T]
+	Mapper Dao[T]
 }
 
 func (srv BaseService[T]) Save(entity *T) error {

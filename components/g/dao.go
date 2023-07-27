@@ -1,15 +1,15 @@
 package g
 
 /*
-   @File: mapper.go
+   @File: dao.go
    @Author: khaosles
    @Time: 2023/6/11 17:20
-   @Desc: mapper接口继承该接口
+   @Desc: Dao 接口继承该接口
 */
 
-var _ Mapper[any] = (*BaseMapper[any])(nil)
+var _ Dao[any] = (*BaseDao[any])(nil)
 
-type Mapper[T any] interface {
+type Dao[T any] interface {
 	Save(record *T) error                      // 插入或者更新
 	Insert(record *T) error                    // 插入
 	InsertList(records []*T) error             // 批量插入

@@ -20,7 +20,7 @@ var (
 )
 
 type UserMapper interface {
-	g.Mapper[model.User]
+	g.Dao[model.User]
 }
 
 func GetUserMapperInstance() UserMapper {
@@ -33,5 +33,5 @@ func GetUserMapperInstance() UserMapper {
 }
 
 type userMapper struct {
-	g.BaseMapper[model.User]
+	g.BaseDao[model.User]
 }
