@@ -38,7 +38,7 @@ func Init(etcdCfg *config.Etcd) {
 	glog.Info("etcd connection successful...")
 }
 
-func Register(addr, serverName string, ttl int64) error {
+func Register(serverName, addr string, ttl int64) error {
 	em, err := endpoints.NewManager(Client, serverName)
 	if err != nil {
 		return err
@@ -60,13 +60,12 @@ func Register(addr, serverName string, ttl int64) error {
 	go func() {
 		for {
 			<-alive
-			//glog.Debug(addr + " keep alive")
 		}
 	}()
 	return nil
 }
 
-func UnRegister(addr, serverName string) error {
+func Unregister(serverName, addr string) error {
 	em, err := endpoints.NewManager(Client, serverName)
 	if err != nil {
 		return err
