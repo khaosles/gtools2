@@ -3,6 +3,9 @@ package etcd
 import (
 	"context"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/khaosles/gtools2/core/config"
@@ -21,7 +24,7 @@ import (
 
 var Client *clientv3.Client
 
-func InitEtcd(etcdCfg *config.Etcd) {
+func Init(etcdCfg *config.Etcd) {
 	var err error
 	Client, err = clientv3.New(clientv3.Config{
 		Endpoints:   etcdCfg.Nodes,
@@ -103,4 +106,41 @@ func Del(key string, opts ...clientv3.OpOption) error {
 		return err
 	}
 	return nil
+}
+
+func PutWithLease(key, val string, ttl int64, opts ...clientv3.OpOption) error {
+	// 设置租约
+	lease, err := Client.Grant(context.Background(), ttl)
+	if err != nil {
+		return err
+	}
+	opts = append(opts, clientv3.WithLease(lease.ID))
+	// 添加带租约的key
+	_, err = Client.Put(context.Background(), key, val, opts...)
+	if err != nil {
+		return err
+	}
+	// 续约
+	alive, err := Client.KeepAlive(context.Background(), lease.ID)
+	if err != nil {
+		return err
+	}
+	go func() {
+		for {
+			<-alive
+		}
+	}()
+	return nil
+}
+
+func Exit(key string, opts ...clientv3.OpOption) {
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL, syscall.SIGHUP, syscall.SIGQUIT)
+	s := <-ch
+	_ = Del(key, opts...)
+	if i, ok := s.(syscall.Signal); ok {
+		os.Exit(int(i))
+	} else {
+		os.Exit(0)
+	}
 }
