@@ -21,7 +21,7 @@ const ONE_DAY = time.Hour * 24
 
 var prefix string
 
-var logger *zap.SugaredLogger
+var L *zap.SugaredLogger
 
 func Init(logCfg *config.Logging) {
 
@@ -68,7 +68,7 @@ func Init(logCfg *config.Logging) {
 	if logCfg.ShowLine {
 		log = log.WithOptions(zap.AddCaller())
 	}
-	logger = log.Sugar()
+	L = log.Sugar()
 }
 
 func logPath(path string) string {
@@ -102,21 +102,40 @@ func levelChoice(level string) zapcore.Level {
 }
 
 func Debug(args ...interface{}) {
-	logger.Debug(args...)
+	L.Debug(args...)
+}
+
+func Debugf(fmt string, args ...interface{}) {
+	L.Debugf(fmt, args...)
 }
 
 func Info(args ...interface{}) {
-	logger.Info(args...)
+	L.Info(args...)
+}
+
+func Infof(fmt string, args ...interface{}) {
+	L.Infof(fmt, args...)
 }
 
 func Warn(args ...interface{}) {
-	logger.Warn(args...)
+	L.Warn(args...)
+}
+func Warnf(fmt string, args ...interface{}) {
+	L.Warnf(fmt, args...)
 }
 
 func Error(args ...interface{}) {
-	logger.Error(args...)
+	L.Error(args...)
+}
+
+func Errorf(fmt string, args ...interface{}) {
+	L.Errorf(fmt, args...)
 }
 
 func Panic(args ...interface{}) {
-	logger.Panic(args...)
+	L.Panic(args...)
+}
+
+func Panicf(fmt string, args ...interface{}) {
+	L.Panicf(fmt, args...)
 }
