@@ -23,7 +23,7 @@ const ONE_DAY = time.Hour * 24
 
 var prefix string
 
-var L *zap.SugaredLogger
+var Logger *zap.SugaredLogger
 
 func Init(logCfg *config.Logging) {
 
@@ -36,7 +36,7 @@ func Init(logCfg *config.Logging) {
 		CallerKey:      "caller",
 		EncodeLevel:    zapcore.CapitalLevelEncoder,
 		EncodeTime:     encodeTime,
-		EncodeCaller:   customCallerEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 	})
 
@@ -71,7 +71,7 @@ func Init(logCfg *config.Logging) {
 	if logCfg.ShowLine {
 		log = log.WithOptions(zap.AddCaller(), zap.AddCallerSkip(1))
 	}
-	L = log.Sugar()
+	Logger = log.Sugar()
 }
 
 // 自定义调用者的位置编码器
@@ -120,40 +120,40 @@ func levelChoice(level string) zapcore.Level {
 }
 
 func Debug(args ...interface{}) {
-	L.Debug(args...)
+	Logger.Debug(args...)
 }
 
 func Debugf(fmt string, args ...interface{}) {
-	L.Debugf(fmt, args...)
+	Logger.Debugf(fmt, args...)
 }
 
 func Info(args ...interface{}) {
-	L.Info(args...)
+	Logger.Info(args...)
 }
 
 func Infof(fmt string, args ...interface{}) {
-	L.Infof(fmt, args...)
+	Logger.Infof(fmt, args...)
 }
 
 func Warn(args ...interface{}) {
-	L.Warn(args...)
+	Logger.Warn(args...)
 }
 func Warnf(fmt string, args ...interface{}) {
-	L.Warnf(fmt, args...)
+	Logger.Warnf(fmt, args...)
 }
 
 func Error(args ...interface{}) {
-	L.Error(args...)
+	Logger.Error(args...)
 }
 
 func Errorf(fmt string, args ...interface{}) {
-	L.Errorf(fmt, args...)
+	Logger.Errorf(fmt, args...)
 }
 
 func Panic(args ...interface{}) {
-	L.Panic(args...)
+	Logger.Panic(args...)
 }
 
 func Panicf(fmt string, args ...interface{}) {
-	L.Panicf(fmt, args...)
+	Logger.Panicf(fmt, args...)
 }
