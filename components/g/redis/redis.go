@@ -47,7 +47,7 @@ func Init(cfg *config.Redis) {
 		if err != nil {
 			log.Fatalln("redis connect ping failed, err:", zap.Error(err))
 		} else {
-			glog.Debug("redis connect ping response:", zap.String("pong", pong))
+			glog.Info("redis connect ping response:", zap.String("pong", pong))
 		}
 	})
 }
