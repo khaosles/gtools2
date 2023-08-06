@@ -9,6 +9,7 @@ package glog
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -35,7 +36,7 @@ func Init(logCfg *config.Logging) {
 		CallerKey:      "caller",
 		EncodeLevel:    zapcore.CapitalLevelEncoder,
 		EncodeTime:     encodeTime,
-		EncodeCaller:   zapcore.ShortCallerEncoder,
+		EncodeCaller:   customCallerEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 	})
 
@@ -85,7 +86,7 @@ func customCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayE
 // 获取相对路径
 func getRelativePath(absPath string) string {
 	wk, _ := os.Getwd()
-	return strings.TrimPrefix(absPath, wk)
+	return strings.TrimPrefix(absPath, filepath.Dir(wk))
 }
 
 func logPath(path string) string {
