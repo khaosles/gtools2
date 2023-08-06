@@ -328,16 +328,20 @@ func RemoveExpire(key string) error {
 }
 
 // Subscribe 订阅消息
-func Subscribe(channel string, cb func(string)) {
+func Subscribe(channel string, cb func(string)) *redis.PubSub {
 	pubsub := RDB.Subscribe(context.Background(), channel)
-	defer pubsub.Close()
 	// 处理接收到的消息
 	for msg := range pubsub.Channel() {
 		cb(msg.Payload)
 	}
+	return pubsub
 }
 
 // Publish 发布消息
 func Publish(channel, message string) {
 	RDB.Publish(context.Background(), channel, message)
+}
+
+func Eval(script string, keys []string, args ...interface{}) error {
+	return RDB.Eval(context.Background(), script, keys, args...).Err()
 }
