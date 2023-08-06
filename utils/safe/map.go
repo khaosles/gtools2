@@ -57,3 +57,9 @@ func (s *Map[K, V]) Value() map[K]V {
 	defer s.mutex.Unlock()
 	return s.m
 }
+
+func (s *Map[K, V]) Range(cb func(key K, value V)) {
+	for k, v := range s.m {
+		cb(k, v)
+	}
+}

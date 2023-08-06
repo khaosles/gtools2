@@ -60,6 +60,10 @@ func (s *Slice[T]) Iter() []*T {
 	return s.v
 }
 
+func (s *Slice[T]) Len() int {
+	return s.len
+}
+
 // Clear 删除全部元素
 func (s *Slice[T]) Clear() {
 	s.m.Lock()
