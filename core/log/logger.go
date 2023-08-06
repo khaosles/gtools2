@@ -64,7 +64,7 @@ func Init(logCfg *config.Logging) {
 		cores = append(cores, zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), levelConsole))
 	}
 	core := zapcore.NewTee(cores...)
-	log := zap.New(core)
+	log := zap.New(core, zap.AddCallerSkip(1), zap.AddCaller())
 	if logCfg.ShowLine {
 		log = log.WithOptions(zap.AddCaller())
 	}
