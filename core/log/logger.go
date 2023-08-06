@@ -23,7 +23,7 @@ var prefix string
 
 var logger *zap.SugaredLogger
 
-func InitLogger(logCfg *config.Logging) {
+func Init(logCfg *config.Logging) {
 
 	prefix = logCfg.Prefix
 	encoder := zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
