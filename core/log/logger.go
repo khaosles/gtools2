@@ -9,6 +9,7 @@ package glog
 
 import (
 	"os"
+	"strings"
 	"time"
 
 	"github.com/khaosles/gtools2/core/config"
@@ -34,7 +35,7 @@ func Init(logCfg *config.Logging) {
 		CallerKey:      "caller",
 		EncodeLevel:    zapcore.CapitalLevelEncoder,
 		EncodeTime:     encodeTime,
-		EncodeCaller:   zapcore.FullCallerEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 	})
 
@@ -63,12 +64,28 @@ func Init(logCfg *config.Logging) {
 	} else {
 		cores = append(cores, zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), levelConsole))
 	}
+	cores = append(cores)
 	core := zapcore.NewTee(cores...)
-	log := zap.New(core, zap.AddCallerSkip(1), zap.AddCaller())
+	log := zap.New(core)
 	if logCfg.ShowLine {
-		log = log.WithOptions(zap.AddCaller())
+		log = log.WithOptions(zap.AddCaller(), zap.AddCallerSkip(1))
 	}
 	L = log.Sugar()
+}
+
+// 自定义调用者的位置编码器
+func customCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
+	// 获取相对路径
+	relPath := getRelativePath(caller.TrimmedPath())
+
+	// 使用相对路径编码
+	enc.AppendString(relPath)
+}
+
+// 获取相对路径
+func getRelativePath(absPath string) string {
+	wk, _ := os.Getwd()
+	return strings.TrimPrefix(absPath, wk)
 }
 
 func logPath(path string) string {
