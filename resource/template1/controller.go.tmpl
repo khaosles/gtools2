@@ -1,0 +1,27 @@
+package controller
+
+import (
+	"{{.Project}}/model"
+	"{{.Project}}/service"
+	"github.com/khaosles/gtools2/components/g"
+)
+
+/*
+   @File: {{.NameSnake}}_controller.go
+   @Author: khaosles
+   @Time: {{.Date}}
+   @Desc: auto-generated code
+*/
+
+var {{.NameUpper}}Controller = new({{.Name}}Controller)
+
+type {{.Name}}Controller struct {
+	g.BaseController[{{.Pkg}}Model.{{.NameUpper}}]
+}
+
+func init() {
+    var {{.Name}}Ctl {{.Name}}Controller
+    {{.Name}}Ctl.Service = service.Get{{.NameUpper}}ServiceInstance()
+    {{.NameUpper}}Controller = &{{.Name}}Ctl
+}
+

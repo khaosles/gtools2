@@ -12,47 +12,47 @@ import (
 */
 
 type BaseService[T any] struct {
-	Mapper Mapper[T]
+	Dao Dao[T]
 }
 
 func (srv BaseService[T]) Save(entity *T) error {
-	return srv.Mapper.Save(entity)
+	return srv.Dao.Save(entity)
 }
 
 func (srv BaseService[T]) Saves(entities []*T) error {
-	return srv.Mapper.InsertList(entities)
+	return srv.Dao.InsertList(entities)
 }
 
 func (srv BaseService[T]) DeleteById(id string) error {
-	return srv.Mapper.DeleteById(id)
+	return srv.Dao.DeleteById(id)
 }
 
 func (srv BaseService[T]) DeleteByIds(ids ...string) error {
-	return srv.Mapper.DeleteByIds(ids...)
+	return srv.Dao.DeleteByIds(ids...)
 }
 
 func (srv BaseService[T]) Update(entity *T) error {
-	return srv.Mapper.Update(entity)
+	return srv.Dao.Update(entity)
 }
 
 func (srv BaseService[T]) FindById(id string) (*T, error) {
-	return srv.Mapper.SelectById(id)
+	return srv.Dao.SelectById(id)
 }
 
 func (srv BaseService[T]) FindBy(colName string, value any) (*T, error) {
 	var record T
 	gstru.SetField(&record, colName, value)
-	return srv.Mapper.SelectOne(&record)
+	return srv.Dao.SelectOne(&record)
 }
 
 func (srv BaseService[T]) FindByIds(ids ...string) ([]*T, error) {
-	return srv.Mapper.SelectByIds(ids...)
+	return srv.Dao.SelectByIds(ids...)
 }
 
 func (srv BaseService[T]) FindByCondition(conditions *Conditions) ([]*T, error) {
-	return srv.Mapper.SelectByCondition(conditions)
+	return srv.Dao.SelectByCondition(conditions)
 }
 
 func (srv BaseService[T]) FindAll() ([]*T, error) {
-	return srv.Mapper.SelectAll()
+	return srv.Dao.SelectAll()
 }

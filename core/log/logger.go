@@ -9,6 +9,8 @@ package glog
 
 import (
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/khaosles/gtools2/core/config"
@@ -21,9 +23,9 @@ const ONE_DAY = time.Hour * 24
 
 var prefix string
 
-var logger *zap.SugaredLogger
+var Logger *zap.SugaredLogger
 
-func InitLogger(logCfg *config.Logging) {
+func Init(logCfg *config.Logging) {
 
 	prefix = logCfg.Prefix
 	encoder := zapcore.NewConsoleEncoder(zapcore.EncoderConfig{
@@ -34,7 +36,7 @@ func InitLogger(logCfg *config.Logging) {
 		CallerKey:      "caller",
 		EncodeLevel:    zapcore.CapitalLevelEncoder,
 		EncodeTime:     encodeTime,
-		EncodeCaller:   zapcore.FullCallerEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 	})
 
@@ -63,12 +65,28 @@ func InitLogger(logCfg *config.Logging) {
 	} else {
 		cores = append(cores, zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), levelConsole))
 	}
+	cores = append(cores)
 	core := zapcore.NewTee(cores...)
 	log := zap.New(core)
 	if logCfg.ShowLine {
-		log = log.WithOptions(zap.AddCaller())
+		log = log.WithOptions(zap.AddCaller(), zap.AddCallerSkip(1))
 	}
-	logger = log.Sugar()
+	Logger = log.Sugar()
+}
+
+// 自定义调用者的位置编码器
+func customCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
+	// 获取相对路径
+	relPath := getRelativePath(caller.TrimmedPath())
+
+	// 使用相对路径编码
+	enc.AppendString(relPath)
+}
+
+// 获取相对路径
+func getRelativePath(absPath string) string {
+	wk, _ := os.Getwd()
+	return strings.TrimPrefix(absPath, filepath.Dir(wk))
 }
 
 func logPath(path string) string {
@@ -102,21 +120,40 @@ func levelChoice(level string) zapcore.Level {
 }
 
 func Debug(args ...interface{}) {
-	logger.Debug(args...)
+	Logger.Debug(args...)
+}
+
+func Debugf(fmt string, args ...interface{}) {
+	Logger.Debugf(fmt, args...)
 }
 
 func Info(args ...interface{}) {
-	logger.Info(args...)
+	Logger.Info(args...)
+}
+
+func Infof(fmt string, args ...interface{}) {
+	Logger.Infof(fmt, args...)
 }
 
 func Warn(args ...interface{}) {
-	logger.Warn(args...)
+	Logger.Warn(args...)
+}
+func Warnf(fmt string, args ...interface{}) {
+	Logger.Warnf(fmt, args...)
 }
 
 func Error(args ...interface{}) {
-	logger.Error(args...)
+	Logger.Error(args...)
+}
+
+func Errorf(fmt string, args ...interface{}) {
+	Logger.Errorf(fmt, args...)
 }
 
 func Panic(args ...interface{}) {
-	logger.Panic(args...)
+	Logger.Panic(args...)
+}
+
+func Panicf(fmt string, args ...interface{}) {
+	Logger.Panicf(fmt, args...)
 }

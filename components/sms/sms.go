@@ -6,7 +6,7 @@ import (
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
 
-	gcfg "github.com/khaosles/gtools2/core/cfg"
+	//gcfg "github.com/khaosles/gtools2/core/cfg"
 	glog "github.com/khaosles/gtools2/core/log"
 )
 
@@ -24,10 +24,10 @@ type Instance struct {
 var instance *Instance
 
 func (i *Instance) Load() error {
-	err := gcfg.GetComponentConfiguration(name, i)
-	if err != nil {
-		return err
-	}
+	//err := gcfg.GetComponentConfiguration(name, i)
+	//if err != nil {
+	//	return err
+	//}
 	return i.Run()
 }
 

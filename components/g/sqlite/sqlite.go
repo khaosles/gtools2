@@ -27,7 +27,7 @@ func NewSqlite(cfg *config.Sqlite) *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(cfg.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(cfg.MaxOpenConns)
-		glog.Debug("Database connection successful...")
+		glog.Info("Database connection successful...")
 	}
 	return db
 }

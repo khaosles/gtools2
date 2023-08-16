@@ -7,45 +7,41 @@ import (
 )
 
 /*
-   @File: timestamp.go
+   @File: timestamputc.go
    @Author: khaosles
    @Time: 2023/6/16 14:25
    @Desc: json格式化返回 YYYY-mm-dd HH:MM:SS 格式的时间字段
 */
 
 // 时间格式
-const timeLayout = time.DateTime
+type TimestampUTC time.Time
 
-type Timestamp time.Time
-
-func (ts *Timestamp) UnmarshalJSON(data []byte) error {
-	// 加载上海时区
-	location, _ := time.LoadLocation("Asia/Shanghai")
-	t, err := time.ParseInLocation(`"`+timeLayout+`"`, string(data), location)
+func (ts *TimestampUTC) UnmarshalJSON(data []byte) error {
+	t, err := time.Parse(`"`+timeLayout+`"`, string(data))
 	if err != nil {
 		return err
 	}
-	*ts = Timestamp(t)
+	*ts = TimestampUTC(t)
 	return nil
 }
 
-func (ts Timestamp) MarshalJSON() ([]byte, error) {
+func (ts TimestampUTC) MarshalJSON() ([]byte, error) {
 	t := time.Time(ts)
 	formatted := fmt.Sprintf(`"%s"`, t.Format(timeLayout))
 	return []byte(formatted), nil
 }
 
-func (ts Timestamp) Value() (driver.Value, error) {
+func (ts TimestampUTC) Value() (driver.Value, error) {
 	return time.Time(ts), nil
 }
 
-func (ts *Timestamp) Scan(value interface{}) error {
+func (ts *TimestampUTC) Scan(value interface{}) error {
 	if value == nil {
-		*ts = Timestamp(time.Time{})
+		*ts = TimestampUTC(time.Time{})
 		return nil
 	}
 	if t, ok := value.(time.Time); ok {
-		*ts = Timestamp(t)
+		*ts = TimestampUTC(t)
 		return nil
 	}
 	return fmt.Errorf("failed to scan CustomTime value")
