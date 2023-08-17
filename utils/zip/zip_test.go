@@ -12,6 +12,8 @@ import (
 */
 
 func TestCompress(t *testing.T) {
+	path := "/Users/yherguot/doraemon/data/gfs/product/gfs-atmos/2023/07/09/18/numerical/temperature_2m_20230709180000.bin"
+	Compress("/Users/yherguot/doraemon/data/gfs/product/gfs-atmos/2023/07/09/18/numerical/temperature_2m_20230709180000.zip", path)
 
 	//err := Compress("/Users/yherguot/doraemon/data/test/estofs.t06z.fields.htp.csv.zip", "/Users/yherguot/doraemon/data/test/estofs.t06z.fields.htp.csv")
 	//if err != nil {

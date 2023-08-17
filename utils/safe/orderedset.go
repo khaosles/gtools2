@@ -114,7 +114,7 @@ func (s *OrderedSet[T]) Foreach(callback func(i int, val T) bool) {
 }
 
 // Put adds a single item into the set
-func (s *OrderedSet[T]) put(item interface{}) {
+func (s *OrderedSet[T]) put(item T) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 

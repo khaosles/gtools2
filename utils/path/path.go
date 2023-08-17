@@ -187,7 +187,7 @@ func FileNameWithoutExt(filename string) string {
 	return strings.TrimSuffix(filename, filepath.Ext(filename))
 }
 
-func GenUniqueFilename(filename string, tries int, rule func(name string) string) (string, error) {
+func GenUniqueFilename(filename string, tries int, callback func(name string) string) (string, error) {
 	if !Exist(filename) {
 		return filename, nil
 	}
@@ -198,8 +198,8 @@ func GenUniqueFilename(filename string, tries int, rule func(name string) string
 	i := 1
 
 	for {
-		if rule != nil {
-			newName = rule(name)
+		if callback != nil {
+			newName = callback(name)
 		} else {
 			newName = fmt.Sprintf("%s%d", name, i)
 		}
@@ -211,7 +211,6 @@ func GenUniqueFilename(filename string, tries int, rule func(name string) string
 			return "", errors.New("too many tries")
 		}
 		i++
-
 	}
 }
 
@@ -258,21 +257,16 @@ func CleanPath(p string) string {
 		case p[r] == '/':
 			// empty path element, trailing slash is added after the end
 			r++
-
 		case p[r] == '.' && r+1 == n:
 			trailing = true
 			r++
-
 		case p[r] == '.' && p[r+1] == '/':
 			// . element
 			r += 2
-
 		case p[r] == '.' && p[r+1] == '.' && (r+2 == n || p[r+2] == '/'):
 			// .. element: remove to last /
 			r += 3
-
 			if w > 1 {
-				// can backtrack
 				w--
 				if len(buf) == 0 {
 					for w > 1 && p[w] != '/' {
@@ -307,7 +301,6 @@ func CleanPath(p string) string {
 	}
 	// If the original string was not modified (or only shortened at the end),
 	// return the respective substring of the original string.
-	// Otherwise return a new string from the buffer.
 	if len(buf) == 0 {
 		return p[:w]
 	}
